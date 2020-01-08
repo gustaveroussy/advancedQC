@@ -16,7 +16,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		      .getLogger(AdvancedQcApplication.class);
 	
 	public static void main(String[] args) {
-		LOG.info("Hello World drdrdrfrf");
+		LOG.info("Hello World huhuhu");
 		SpringApplication.run(AdvancedQcApplication.class, args);		
         LOG.info("Bye Bye");
 	}

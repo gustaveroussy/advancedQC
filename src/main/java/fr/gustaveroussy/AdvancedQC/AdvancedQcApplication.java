@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
@@ -47,6 +48,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 //			resultArray[i] = lines.get(i).split("\t"); //tab-separated 
 //					
 //	}
+		double R = 0.0;
 		lines.remove(0);
 		Map<String,List<Double>> geneMap = new HashMap<String,List<Double>>();
 		for(String str : lines){
@@ -73,15 +75,29 @@ public class AdvancedQcApplication implements CommandLineRunner {
 //		        resultDouble[i][j]= Double.parseDouble(resultArray[i][j]);
 //		    }
 //		}
-	
-		
-		
-		
-		
-		
-		
-	}
+
+
+for (Entry<String, List<Double>> entry :geneMap.entrySet()) { // acceder au valeur de la liste de double
+    String key = entry.getKey();
+    List<Double> value = entry.getValue();
+    for(Double aString : value){
+    	
+        System.out.println("key : " + key + " value : " + aString);
+    }
 }
+ //ou 
+ 
+for (String i : geneMap.keySet())
+	   for (Double s : geneMap.get(i))
+
+	      LOG.info(" key :" + i + " value: " + s);
+
+
+
+		}
+	}
+
+
 
 
 

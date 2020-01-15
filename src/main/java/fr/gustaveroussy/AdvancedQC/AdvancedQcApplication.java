@@ -5,6 +5,7 @@ package fr.gustaveroussy.AdvancedQC;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,58 +45,48 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		String[]resultArray ; 
 		
 
-//		for(int i =0; i<lines.size(); i++){ 
-//			resultArray[i] = lines.get(i).split("\t"); //tab-separated 
-//					
-//	}
-		double R = 0.0;
+		int k = 0;
+		double Pourcentage;//pourcentage de valeurs nulles pour la totalité des genes
+		double P= 0.0;
+		
 		lines.remove(0);
-		Map<String,List<Double>> geneMap = new HashMap<String,List<Double>>();
+		Map<String,Double> geneMap = new HashMap<String,Double>();
 		for(String str : lines){
 				resultArray = str.split("\t"); //tab-separated 
-				List <Double> valDouble = new ArrayList<Double>() ;
-				for( int i= 1; i< resultArray.length; i++) {
-					valDouble.add(Double.parseDouble(resultArray[i]))  ;
-				}
-				geneMap.put(resultArray[0], valDouble);
-				
+    			String valArray = resultArray [1];
+      			double valDouble = Double.parseDouble (valArray);
+      			
+      			
+//				for( int i= 1; i< 2; i++) {
+//					valDouble.add(Double.parseDouble(resultArray[i]))  ;
+//				}
+				geneMap.put(resultArray[0], valDouble);		
 		}
 		LOG.info(geneMap.toString());
 		
-//		LOG.info("création du tableau à partir des données du fichier.tsv effectuée");
-//		LOG.info( Arrays.deepToString( resultArray ) );// affichage du tableau
-//		
-//		LOG.info( "lancement conversion du tableau String en Double");
-//		
-//		double[][] resultDouble = new double [resultArray.length][resultArray[0].length]; //conversion du tableau String en Double
-//		for(int i=1; i<resultArray.length; i++) {
-//			LOG.info(Arrays.deepToString (resultArray [i]));
-//		    for(int j=1; j<resultArray[i].length; j++) {
-//		    	LOG.info (resultArray [i][j]);
-//		        resultDouble[i][j]= Double.parseDouble(resultArray[i][j]);
-//		    }
-//		}
-
-
-for (Entry<String, List<Double>> entry :geneMap.entrySet()) { // acceder au valeur de la liste de double
-    String key = entry.getKey();
-    List<Double> value = entry.getValue();
-    for(Double aString : value){
-    	
-        System.out.println("key : " + key + " value : " + aString);
-    }
-}
- //ou 
- 
-for (String i : geneMap.keySet())
-	   for (Double s : geneMap.get(i))
-
-	      LOG.info(" key :" + i + " value: " + s);
-
-
-
-		}
+		 for (Entry<String, Double> entry : geneMap.entrySet()) {
+	            if (entry.getValue().equals(0.0)){
+	            	k= k+1;
+	                LOG.info( "Gène: "+ entry.getKey() + ", Valeur: "+ entry.getValue() ); //renvoie les keys corresp aux valeurs nulles
+//		for ( String str : lines) {
+//			LOG.info(" valeurs nulles ? " + geneMap.containsValue(0.0));//renvoie true dès qu'il trouve une val= 0.0
+//	                }
+	            }  
+		 }
+		 Pourcentage = (k * 100)/9;
+		 LOG.info("le pourcentage de valeurs nulles vaut: "+ Pourcentage);
+		 
+		 
+//		 Map<String,Double> genePourcentMap = new HashMap<String,Double>();//faire une map avec les pourcentages
+//		 for (Entry<String, Double> entry : geneMap.entrySet()) { 
+//			 //if( geneMap.containsValue(0.0))
+//			 if (entry.getValue().equals(0.0));
+//			 genePourcentMap.put(resultArray[0], calculdupourcentage);	
+//		 }
+//		 LOG.info(genePourcentMap.toString());
 	}
+}
+
 
 
 

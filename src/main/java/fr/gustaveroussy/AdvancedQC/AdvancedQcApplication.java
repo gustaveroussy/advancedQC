@@ -46,6 +46,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		
 
 		int k = 0;
+		double n;
 		double Pourcentage;//pourcentage de valeurs nulles pour la totalité des genes
 		double P= 0.0;
 		
@@ -69,23 +70,22 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	            	k= k+1;
 	                LOG.info( "Gène: "+ entry.getKey() + ", Valeur: "+ entry.getValue() ); //renvoie les keys corresp aux valeurs nulles
 //		for ( String str : lines) {
-//			LOG.info(" valeurs nulles ? " + geneMap.containsValue(0.0));//renvoie true dès qu'il trouve une val= 0.0
+//			LOG.info(" valeurs nulles ? " + geneMap.containsValue(0.0));//renvoie "true" dès qu'il trouve une val= 0.0
 //	                }
 	            }  
 		 }
-		 Pourcentage = (k * 100)/9;
+		 Pourcentage = (k * 100)/9; //calcul du pourcentage de valeur nulles sur la totalité de l'echantillon
 		 LOG.info("le pourcentage de valeurs nulles vaut: "+ Pourcentage);
 		 
 		 
-//		 Map<String,Double> genePourcentMap = new HashMap<String,Double>();//faire une map avec les pourcentages
-//		 for (Entry<String, Double> entry : geneMap.entrySet()) { 
-//			 //if( geneMap.containsValue(0.0))
-//			 if (entry.getValue().equals(0.0));
-//			 genePourcentMap.put(resultArray[0], calculdupourcentage);	
-//		 }
-//		 LOG.info(genePourcentMap.toString());
+				for( Double glu : geneMap.values()) { //itération sur les valeurs de la hashmap et permet de faire calcul pour chaque gene
+			     n= (glu *100)/9;
+			    LOG.info("Resultat du calcul  = " + n);
+			}
 	}
-}
+	}
+	
+
 
 
 

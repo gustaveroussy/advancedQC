@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
@@ -45,18 +46,16 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		String[]resultArray ; 
 		
 
-		int k = 0;
-		double n;
-		double Pourcentage;//pourcentage de valeurs nulles pour la totalité des genes
-		double P= 0.0;
+		int compteur = 0;
+		double resultatCalcul =0;
+		double PourcentageTotal;//pourcentage de valeurs nulles pour la totalité des genes
 		
-		lines.remove(0);
+		lines.remove(0); //elimination du header
 		Map<String,Double> geneMap = new HashMap<String,Double>();
 		for(String str : lines){
 				resultArray = str.split("\t"); //tab-separated 
-    			String valArray = resultArray [1];
-      			double valDouble = Double.parseDouble (valArray);
-      			
+    			String valArray = resultArray [1]; //les valeurs sont dans [1] du tableau
+      			double valDouble = Double.parseDouble (valArray);	// le tableau est initialement de type string, transformation en type double de façon à pouvoir effectuer des calculs à partir des valeurs qu'il contient		
       			
 //				for( int i= 1; i< 2; i++) {
 //					valDouble.add(Double.parseDouble(resultArray[i]))  ;
@@ -67,23 +66,33 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		
 		 for (Entry<String, Double> entry : geneMap.entrySet()) {
 	            if (entry.getValue().equals(0.0)){
-	            	k= k+1;
+	            	compteur= compteur+1;
 	                LOG.info( "Gène: "+ entry.getKey() + ", Valeur: "+ entry.getValue() ); //renvoie les keys corresp aux valeurs nulles
 //		for ( String str : lines) {
 //			LOG.info(" valeurs nulles ? " + geneMap.containsValue(0.0));//renvoie "true" dès qu'il trouve une val= 0.0
 //	                }
 	            }  
 		 }
-		 Pourcentage = (k * 100)/9; //calcul du pourcentage de valeur nulles sur la totalité de l'echantillon
-		 LOG.info("le pourcentage de valeurs nulles vaut: "+ Pourcentage);
+		 PourcentageTotal = (compteur * 100)/9; //calcul du pourcentage de valeurs nulles sur la totalité de l'echantillon
+		 LOG.info("le pourcentage de valeurs nulles dans l'echantillon 1 vaut: "+ PourcentageTotal + "%");
+		
+		 Map<String,Double> genepourcentageMap = new HashMap<String,Double>();
 		 
 		 
-				for( Double glu : geneMap.values()) { //itération sur les valeurs de la hashmap et permet de faire calcul pour chaque gene
-			     n= (glu *100)/9;
-			    LOG.info("Resultat du calcul  = " + n);
-			}
+		 for(Entry<String, Double> e : geneMap.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
+		        String keyHM2 = e.getKey();//HM2 = hashmap numéro 2
+		        Double valeursHM2 = e.getValue();
+		        resultatCalcul = (valeursHM2 *100)/9;
+		    
+				genepourcentageMap.put(keyHM2, resultatCalcul);			
+				}
+		 LOG.info(" Voici la nouvelle hashmap");
+			LOG.info(genepourcentageMap.toString());
+			
 	}
-	}
+}
+
+
 	
 
 

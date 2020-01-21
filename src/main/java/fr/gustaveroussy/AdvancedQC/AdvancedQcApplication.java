@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
@@ -43,44 +44,44 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		List<String> lines = Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8); 
 
-		String[]resultArray ; 
-		
-
-		int compteur = 0;
-		double resultatCalcul =0;
-		double PourcentageTotal;//pourcentage de valeurs nulles pour la totalité des genes
-		
-		lines.remove(0); //elimination du header
-		Map<String,Double> geneMap = new HashMap<String,Double>();
-		for(String str : lines){
-				resultArray = str.split("\t"); //tab-separated 
-    			String valArray = resultArray [1]; //les valeurs de l'ech 1 sont dans la case[1] du tableau
-      			double valDouble = Double.parseDouble (valArray);	// le tableau est initialement de type string, transformation en type double de façon à pouvoir effectuer des calculs		
-      			
-				geneMap.put(resultArray[0], valDouble);		
-		}
-		LOG.info(geneMap.toString());
+		String[]resultArray = null ; 
+		lines.remove(0); //elimination du header de la liste "lines"
 		
 		
-		Compteur(geneMap);//Nombre de valeurs nulles dans l'echantillon
+		Map<String,Double> geneMap1 = new HashMap<String,Double>();
+		Tab_Donnees(resultArray, geneMap1, 1, lines);
+//		for(String str : lines){
+//				resultArray = str.split("\t"); //tab-separated 
+//    			String valArray = resultArray [1]; //les valeurs de l'ech 1 sont dans la case[1] du tableau
+//      			double valDouble = Double.parseDouble (valArray);	// le tableau est initialement de type string, transformation en type double de façon à pouvoir effectuer des calculs		
+//      			
+//				geneMap1.put(resultArray[0], valDouble);		
+//		}
+//		LOG.info(geneMap1.toString());
 		
-		PourcentageTotal (geneMap); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon
-	
+		Compteur(geneMap1);//Nombre de valeurs nulles dans l'echantillon		
+		PourcentageTotal (geneMap1); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon
 		 
-		Map<String,Double> genepourcentageMap = new HashMap<String,Double>();	
-	NouvelMapPourcent(genepourcentageMap,geneMap);
-		
-//		 for(Entry<String, Double> e : geneMap.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
-//		        String keyHM2 = e.getKey();//HM2 = hashmap n°2
-//		        Double valeursHM2 = e.getValue();
-//		        resultatCalcul = (valeursHM2 *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
-//		    
-//				genepourcentageMap.put(keyHM2, resultatCalcul);			
-//		 }
-//		 LOG.info(" Voici la nouvelle hashmap");
-//		 LOG.info(genepourcentageMap.toString());
-			
+		Map<String,Double> genepourcentageMap = new HashMap<String,Double>();//declarer la nouvelle map
+	    RemplirMapPourcent(genepourcentageMap,geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
 	}
+
+	
+
+ List <String> lines ; //= Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8); 	
+ public void Tab_Donnees(String [] tab, Map<String, Double> MaMap1, Integer i, List L) throws IOException {	
+	// TODO Auto-generated method stub
+	
+	for(String str : lines){
+		tab = str.split("\t"); //tab-separated 
+		String tab_i = tab [i]; //les valeurs de l'ech 1 sont dans la case[1] du tableau
+			double valDouble = Double.parseDouble (tab_i);	// le tableau est initialement de type string, transformation en type double de façon à pouvoir effectuer des calculs		
+			
+		MaMap1.put(tab [0], valDouble);		
+}
+LOG.info(MaMap1.toString());
+	}
+
 
 
 
@@ -99,7 +100,6 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 //Methode pour calculer le Pourcentage
 	public double PourcentageTotal;
-	
 	private void PourcentageTotal(Map<String, Double> MaMap) {
 		// TODO Auto-generated method stub
 	PourcentageTotal = (Counter * 100)/MaMap.size();
@@ -107,33 +107,19 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	}
 	
 	
-	
+//Methode pour créé un nouvelle map à partir d'un map deja existante	
 	public double ValeurMaMap2Final;
-	private void NouvelMapPourcent(Map<String, Double> MaMap2, Map<String, Double> MaMap1) {
+	private void RemplirMapPourcent(Map<String, Double> MaMap2, Map<String, Double> MaMap1) {
 		// TODO Auto-generated method stub
-		 for(Entry<String, Double> e : MaMap1.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
+		 for(Entry<String, Double> e : MaMap1.entrySet()) {// on utilise les données de MaMap1 pour créer MaMap2
 		        String keyMaMap2 = e.getKey();
 		        Double valeursMaMap2interm = e.getValue();
 		        ValeurMaMap2Final = (valeursMaMap2interm *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
 		    
 				MaMap2.put(keyMaMap2, ValeurMaMap2Final);			
 		 }
-		 LOG.info(" Voici la nouvelle hashmap");
-		 LOG.info(MaMap2.toString());
+		 LOG.info(" Voici la nouvelle hashmap: "+MaMap2.toString());
 			
 	}
 		
 }
-
-	
-
-
-
-	
-
-
-
-
-
-
-

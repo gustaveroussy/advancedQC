@@ -5,22 +5,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Compteur {
-	private static final Map<String, Double> MaMap = new HashMap<>();
-	private  double Counter
+	public HashMap<String, Double> MaMap = new HashMap<>();
+	public static int Counter;
 
-
-
-	public static Compteur (Map <String, Double>){
-		for (Entry<String, Double> entry : MaMap.entrySet()) {
-			 if (entry.getValue().equals(0.0)){ 	
-		         			Counter = Counter + 1 ;
-		         }  
-			 }
-			 System.out.println("il y a "+Counter+ " valeurs nulles dans cet echantillon.");
-			return null;	
-			
+	private void Compteur (Map <String,Double> MaMap) {
+		for (Entry <String, Double> entry: MaMap.entrySet()) {
+			if(entry.getValue().equals(0.0)) {
+				Counter = Counter+1 ;
+			}
 		}
-
+		System.out.println ("Il y a "+Counter+ " valeurs nulles");
+	}
+		
+	}
 
 
 	

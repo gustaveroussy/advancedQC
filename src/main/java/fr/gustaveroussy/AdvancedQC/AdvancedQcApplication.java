@@ -65,9 +65,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		LOG.info(geneMap.toString());
 		
 		
-		geneMap.NombreValeursNulles(0.0);
-		
-//		 for (Entry<String, Double> entry : geneMap.entrySet()) { ****
+		Compteur(geneMap);
+
+		// Ancien code pour compter les valeurs nulles*****		
+//		 for (Entry<String, Double> entry : geneMap.entrySet()) { 
 //	            if (entry.getValue().equals(0.0)){
 //	            	compteur= compteur+1;
 //	                LOG.info( "Gène: "+ entry.getKey() + ", Valeur: "+ entry.getValue() ); //renvoie les keys corresp aux valeurs nulles
@@ -78,9 +79,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
 //		 }
 //		 LOG.info("il y a "+compteur+ " valeurs nulles dans cet echantillon.");***
 		 
-		 
-		 PourcentageTotal = (compteur * 100)/9; //calcul du pourcentage de valeurs nulles sur la totalité de l'echantillon
-		 LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ PourcentageTotal + " %");
+		
+		
+		PourcentageTotal (geneMap);
+		// PourcentageTotal = (Counter * 100)/geneMap.size(); //calcul du pourcentage de valeurs nulles sur la totalité de l'echantillon
+		// LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ PourcentageTotal + " %");
 		
 		 
 		 Map<String,Double> genepourcentageMap = new HashMap<String,Double>();	 
@@ -95,7 +98,41 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		 LOG.info(genepourcentageMap.toString());
 			
 	}
-}
+
+	
+	
+	
+
+
+
+
+
+//Methode pour compter les valeurs nulles par échantillon
+	public int Counter;
+
+	private void Compteur (Map <String,Double> MaMap) {
+		// TODO Auto-generated method stub
+		for (Entry <String, Double> entry: MaMap.entrySet()) {
+			if(entry.getValue().equals(0.0)) {
+				Counter = Counter+1 ;
+			}
+		}
+		LOG.info ("Il y a "+ Counter+ " valeurs nulles");
+	}
+	
+	
+	public double PourcentageTotal;
+	
+	private void PourcentageTotal(Map<String, Double> MaMap) {
+		// TODO Auto-generated method stub
+	PourcentageTotal = (Counter * 100)/MaMap.size();
+	LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ PourcentageTotal + " %");
+	}
+		
+	}
+
+	
+
 
 
 	

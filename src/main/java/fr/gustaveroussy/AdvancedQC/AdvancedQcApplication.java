@@ -57,53 +57,30 @@ public class AdvancedQcApplication implements CommandLineRunner {
     			String valArray = resultArray [1]; //les valeurs de l'ech 1 sont dans la case[1] du tableau
       			double valDouble = Double.parseDouble (valArray);	// le tableau est initialement de type string, transformation en type double de façon à pouvoir effectuer des calculs		
       			
-//				for( int i= 1; i< 3; i++) {
-//					valDouble.add(Double.parseDouble(resultArray[i]))  ;
-//				}
 				geneMap.put(resultArray[0], valDouble);		
 		}
 		LOG.info(geneMap.toString());
 		
 		
-		Compteur(geneMap);
-
-		// Ancien code pour compter les valeurs nulles*****		
-//		 for (Entry<String, Double> entry : geneMap.entrySet()) { 
-//	            if (entry.getValue().equals(0.0)){
-//	            	compteur= compteur+1;
-//	                LOG.info( "Gène: "+ entry.getKey() + ", Valeur: "+ entry.getValue() ); //renvoie les keys corresp aux valeurs nulles
-////		for ( String str : lines) {
-////			LOG.info(" valeurs nulles ? " + geneMap.containsValue(0.0));//renvoie "true" dès qu'il trouve une val= 0.0
-////	                }
-//	            }  
+		Compteur(geneMap);//Nombre de valeurs nulles dans l'echantillon
+		
+		PourcentageTotal (geneMap); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon
+	
+		 
+		Map<String,Double> genepourcentageMap = new HashMap<String,Double>();	
+	NouvelMapPourcent(genepourcentageMap,geneMap);
+		
+//		 for(Entry<String, Double> e : geneMap.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
+//		        String keyHM2 = e.getKey();//HM2 = hashmap n°2
+//		        Double valeursHM2 = e.getValue();
+//		        resultatCalcul = (valeursHM2 *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
+//		    
+//				genepourcentageMap.put(keyHM2, resultatCalcul);			
 //		 }
-//		 LOG.info("il y a "+compteur+ " valeurs nulles dans cet echantillon.");***
-		 
-		
-		
-		PourcentageTotal (geneMap);
-		// PourcentageTotal = (Counter * 100)/geneMap.size(); //calcul du pourcentage de valeurs nulles sur la totalité de l'echantillon
-		// LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ PourcentageTotal + " %");
-		
-		 
-		 Map<String,Double> genepourcentageMap = new HashMap<String,Double>();	 
-		 for(Entry<String, Double> e : geneMap.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
-		        String keyHM2 = e.getKey();//HM2 = hashmap n°2
-		        Double valeursHM2 = e.getValue();
-		        resultatCalcul = (valeursHM2 *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
-		    
-				genepourcentageMap.put(keyHM2, resultatCalcul);			
-				}
-		 LOG.info(" Voici la nouvelle hashmap");
-		 LOG.info(genepourcentageMap.toString());
+//		 LOG.info(" Voici la nouvelle hashmap");
+//		 LOG.info(genepourcentageMap.toString());
 			
 	}
-
-	
-	
-	
-
-
 
 
 
@@ -120,7 +97,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		LOG.info ("Il y a "+ Counter+ " valeurs nulles");
 	}
 	
-	
+//Methode pour calculer le Pourcentage
 	public double PourcentageTotal;
 	
 	private void PourcentageTotal(Map<String, Double> MaMap) {
@@ -128,8 +105,25 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	PourcentageTotal = (Counter * 100)/MaMap.size();
 	LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ PourcentageTotal + " %");
 	}
-		
+	
+	
+	
+	public double ValeurMaMap2Final;
+	private void NouvelMapPourcent(Map<String, Double> MaMap2, Map<String, Double> MaMap1) {
+		// TODO Auto-generated method stub
+		 for(Entry<String, Double> e : MaMap1.entrySet()) {// création d'une nouvelle hashmap avec des valeurs modifiées après calcul
+		        String keyMaMap2 = e.getKey();
+		        Double valeursMaMap2interm = e.getValue();
+		        ValeurMaMap2Final = (valeursMaMap2interm *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
+		    
+				MaMap2.put(keyMaMap2, ValeurMaMap2Final);			
+		 }
+		 LOG.info(" Voici la nouvelle hashmap");
+		 LOG.info(MaMap2.toString());
+			
 	}
+		
+}
 
 	
 

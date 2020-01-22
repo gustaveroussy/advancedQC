@@ -68,7 +68,7 @@ public String transformListenTabExploitable(List<String> lignesàtransformer, In
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesàtransformer){	
 			 String[] toutesmeslignes = str.split("\t");			
-				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les echantillons
+//				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les echantillons
 				String valeurStringdufichier = toutesmeslignes [numechantillon]; 
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);	
 				maMap.put(toutesmeslignes [0], valeurDoubledufichier);
@@ -105,7 +105,7 @@ public String transformListenTabExploitable(List<String> lignesàtransformer, In
 	}
 	
 	
-//Methode pour créer un nouvelle map à partir d'un map déjà existante	
+//Methode pour créer un nouvelle map à partir d'une map déjà existante	
 	
 	private String remplirMapPourcent(Map<String, Double> MaMap2, Map<String, Double> maMap) {
 		// TODO Auto-generated method stub

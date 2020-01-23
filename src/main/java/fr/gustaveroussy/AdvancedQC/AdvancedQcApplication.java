@@ -39,9 +39,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		
 		List<String> lines = Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8);  
-		lines.remove(0); //elimination du header de la liste "lines"	
+	
 		
-		
+	
+		renvoieDonneesTraitees(lines);
 		
 //		Map<String,Double> geneMap1=transformListenTabExploitable(lines, 1);
 ////		Compteur test = new Compteur(); //
@@ -50,20 +51,21 @@ public class AdvancedQcApplication implements CommandLineRunner {
 //	    remplirMapPourcent(geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
 //    	}
 		
-		renvoieDonneesTraitees(lines);
+		
 	}
-	
-	
-	
 	
 	
 public Map <String, Double> renvoieDonneesTraitees (List<String> lignesdefichier){
 		 // TODO Auto-generated method stub
 	Map<String,Double> maMap = null;
-			for (int i = 1; i<lignesdefichier.size()-1; i++) {
+	lignesdefichier.remove(0); //elimination du header de la liste "lines"
+		 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
+			for (int i = 1; i<toutesmescolonnes.length; i++) {
 				 maMap=transformListenTabExploitable(lignesdefichier, i);	
 				pourcentageTotal (maMap); 
+				LOG.info("Ma Map pour l'echantillon "+ i + ": "+maMap.toString());
 			    remplirMapPourcent(maMap);
+		  
 			}
 			return (maMap);
 	}
@@ -75,13 +77,15 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesatransformer){	
-			 String[] toutesmeslignes = str.split("\t");			
+			 String[] toutesmescolonnes = str.split("\t");			
 //				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les echantillons
-				String valeurStringdufichier = toutesmeslignes [numechantillon]; 
+				String valeurStringdufichier = toutesmescolonnes [numechantillon]; 
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);	
-				maMap.put(toutesmeslignes [0], valeurDoubledufichier);
+				maMap.put(toutesmescolonnes [0], valeurDoubledufichier);
+				
+
 		}
-		LOG.info(maMap.toString());
+		
 		return (maMap) ;
 		}
 

@@ -39,25 +39,42 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		
 		List<String> lines = Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8);  
-		lines.remove(0); //elimination du header de la liste "lines"
-		
-		Map<String,Double> geneMap1=transformListenTabExploitable(lines, 1);
+		lines.remove(0); //elimination du header de la liste "lines"	
 		
 		
-//		Compteur test = new Compteur(); //
-//		test.Counter(geneMap1);
-		pourcentageTotal (geneMap1); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon		 
-	    remplirMapPourcent(geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
-    	}
 		
+//		Map<String,Double> geneMap1=transformListenTabExploitable(lines, 1);
+////		Compteur test = new Compteur(); //
+////		test.Counter(geneMap1);
+//		pourcentageTotal (geneMap1); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon		 
+//	    remplirMapPourcent(geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
+//    	}
+		
+		renvoieDonneesTraitees(lines);
+	}
 	
+	
+	
+	
+	
+public Map <String, Double> renvoieDonneesTraitees (List<String> lignesdefichier){
+		 // TODO Auto-generated method stub
+	Map<String,Double> maMap = null;
+			for (int i = 1; i<lignesdefichier.size()-1; i++) {
+				 maMap=transformListenTabExploitable(lignesdefichier, i);	
+				pourcentageTotal (maMap); 
+			    remplirMapPourcent(maMap);
+			}
+			return (maMap);
+	}
+		
 	
 	//Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
 	
-public Map<String, Double> transformListenTabExploitable(List<String> lignesàtransformer, Integer numechantillon) {
+public Map<String, Double> transformListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
 		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
-		for(String str : lignesàtransformer){	
+		for(String str : lignesatransformer){	
 			 String[] toutesmeslignes = str.split("\t");			
 //				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les echantillons
 				String valeurStringdufichier = toutesmeslignes [numechantillon]; 

@@ -28,7 +28,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		      .getLogger(AdvancedQcApplication.class);
 	
 	public static void main(String[] args) {
-		LOG.info("Hello World :)");
+		LOG.info("Hello World ");
 		SpringApplication.run(AdvancedQcApplication.class, args);
 		LOG.info("Bye Bye World");
 		
@@ -37,34 +37,25 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		//lectureFichier("/Users/hadidjasaid/Documents/small_example_dataset.tsv");
 		
 		List<String> lines = Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8);  
 		lines.remove(0); //elimination du header de la liste "lines"
-		Map<String,Double> geneMap1 = new HashMap<String,Double>();
 		
-	
+		Map<String,Double> geneMap1=transformListenTabExploitable(lines, 1);
 		
-		transformListenTabExploitable(lines, 2);
+		
+//		Compteur test = new Compteur(); //
+//		test.Counter(geneMap1);
 		pourcentageTotal (geneMap1); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon		 
-		Map<String,Double> genepourcentageMap = new HashMap<String,Double>();//declarer la nouvelle map qui lie gene et pourcentage
-	    remplirMapPourcent(genepourcentageMap,geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
+	    remplirMapPourcent(geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
     	}
 		
-
-	
-	
-	
-	
-	
-	
 	
 	
 	//Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
 	
-public String transformListenTabExploitable(List<String> lignesàtransformer, Integer numechantillon) {
+public Map<String, Double> transformListenTabExploitable(List<String> lignesàtransformer, Integer numechantillon) {
 		// TODO Auto-generated method stub
-	//String[] toutesmeslignes = null;
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesàtransformer){	
 			 String[] toutesmeslignes = str.split("\t");			
@@ -74,8 +65,9 @@ public String transformListenTabExploitable(List<String> lignesàtransformer, In
 				maMap.put(toutesmeslignes [0], valeurDoubledufichier);
 		}
 		LOG.info(maMap.toString());
-		return (maMap.toString()) ;
+		return (maMap) ;
 		}
+
 
 
 
@@ -107,18 +99,19 @@ public String transformListenTabExploitable(List<String> lignesàtransformer, In
 	
 //Methode pour créer un nouvelle map à partir d'une map déjà existante	
 	
-	private String remplirMapPourcent(Map<String, Double> MaMap2, Map<String, Double> maMap) {
+	private Map<String, Double> remplirMapPourcent(Map<String, Double> maMap) {
 		// TODO Auto-generated method stub
-		 double ValeurMaMap2Final;
-		 for(Entry<String, Double> e : maMap.entrySet()) {// on utilise les données de MaMap1 pour créer MaMap2
-		        String keyMaMap2 = e.getKey();
-		        Double valeursMaMap2interm = e.getValue();
-		        ValeurMaMap2Final = (valeursMaMap2interm *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
+		 double valeurmaMap2Final;
+		 Map<String, Double> maMap2= new HashMap<String,Double>();
+		 for(Entry<String, Double> e : maMap.entrySet()) {// on utilise les données de maMap pour créer maMap2
+		        String keymaMap2 = e.getKey();
+		        Double valeursmaMap2interm = e.getValue();
+		        valeurmaMap2Final = (valeursmaMap2interm *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
 		    
-				MaMap2.put(keyMaMap2, ValeurMaMap2Final);			
+				maMap2.put(keymaMap2, valeurmaMap2Final);			
 		 }
-		 LOG.info(" Voici la nouvelle hashmap: "+MaMap2.toString());
-		return null;
+		 LOG.info(" Voici la nouvelle hashmap: "+maMap2.toString());
+		return (maMap2);
 			
 	}
 		

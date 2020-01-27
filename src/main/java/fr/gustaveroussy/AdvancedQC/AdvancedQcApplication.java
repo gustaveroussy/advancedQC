@@ -3,12 +3,12 @@ package fr.gustaveroussy.AdvancedQC;
 
 
 import java.nio.file.Paths;
-
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
@@ -37,53 +37,69 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		
-		List<String> lines = Files.readAllLines(Paths.get("/Users/hadidjasaid/Documents/small_example_dataset.tsv"), StandardCharsets.UTF_8);  
+		if(args.length == 1) {
+			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
 	
 		
-	
-		renvoieDonneesTraitees(lines);
-		
-//		Map<String,Double> geneMap1=transformListenTabExploitable(lines, 1);
-////		Compteur test = new Compteur(); //
-////		test.Counter(geneMap1);
-//		pourcentageTotal (geneMap1); //Pourcentage de valeurs nulle sur l'ensemble de l'echantillon		 
-//	    remplirMapPourcent(geneMap1);//remplit la nouvelle map à partir de geneMap, conservation des mêmes keys et modif des veleurs par calcul				
-//    	}
-		
+			renvoieDonneesTraitees(lines);
+		}else {
+			LOG.error("args must be 1");
+		}	
 		
 	}
 	
 	
-public Map <String, Double> renvoieDonneesTraitees (List<String> lignesdefichier){
-		 // TODO Auto-generated method stub
-	Map<String,Double> maMap = null;
-	lignesdefichier.remove(0); //elimination du header de la liste "lines"
-		 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
-			for (int i = 1; i<toutesmescolonnes.length; i++) {
-				 maMap=transformListenTabExploitable(lignesdefichier, i);	
-				pourcentageTotal (maMap); 
-				LOG.info("Ma Map pour l'echantillon "+ i + ": "+maMap.toString());
-			    remplirMapPourcent(maMap);
-		  
-			}
-			return (maMap);
-	}
-		
+//public Set<Map<String,Double>> renvoieDonneesTraitees (List<String> lignesdefichier){
+//		 // TODO Auto-generated method stub
+//	Set<Map<String, Double>> toutesMesMaps = new HashSet<Map<String, Double>>();
+//	
+//	Map<String,Double> maMap = null;
+//	lignesdefichier.remove(0); //elimination du header de la liste "lines"
+//		 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
+//			for (int i = 1; i<toutesmescolonnes.length; i++) {
+//				maMap=transformListenTabExploitable(lignesdefichier, i);	
+//				pourcentageTotal (maMap);
+//				LOG.info("Map de l'echantillon "+ i + ": "+maMap.toString());
+//			    remplirMapPourcent(maMap);
+//			    toutesMesMaps.add(maMap);
+//			    
+//			}
+//		  LOG.info ( "Mes Maps: " + toutesMesMaps);//renvoie les maps avec les valeurs d'origine et non les valeurs calculées
+//	
+//			return (toutesMesMaps);
+//	}
 	
-	//Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
+
+//****************Test modif: RENVOIE DONNEES TRAITEES, pour obtenir un set de données qui sera réutiliser par les autre parties du prgrm
+	
+public Set<Map<String,Double>> renvoieDonneesTraitees (List<String> lignesdefichier){
+	 // TODO Auto-generated method stub
+Set<Map<String, Double>> toutesMesMaps = new HashSet<Map<String, Double>>();
+
+Map<String,Double> maMap = null;
+lignesdefichier.remove(0); //elimination du header de la liste "lines"
+	 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
+		for (int i = 1; i<toutesmescolonnes.length; i++) {
+			maMap=transformListenTabExploitable(lignesdefichier, i);	
+		    toutesMesMaps.add(maMap);		    
+		}
+	  LOG.info ( "Mes Maps: " + toutesMesMaps);//renvoie les maps avec les valeurs d'origine et non les valeurs calculées
+	  LOG.info ( "taille de mesMaps: " + toutesMesMaps.size());
+		return (toutesMesMaps);
+}
+
+	
+//Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
 	
 public Map<String, Double> transformListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
 		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesatransformer){	
 			 String[] toutesmescolonnes = str.split("\t");			
-//				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les echantillons
+//				LOG.info("Mes lignes [0]" +toutesmeslignes[0]);// renvoie bien le nom de tout les genes
 				String valeurStringdufichier = toutesmescolonnes [numechantillon]; 
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);	
 				maMap.put(toutesmescolonnes [0], valeurDoubledufichier);
-				
-
 		}
 		
 		return (maMap) ;
@@ -106,6 +122,8 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 		return Counter;
 	}
 	
+
+	
 //Methode pour calculer le Pourcentage
 	
 	public double pourcentageTotal(Map<String, Double> maMap) {
@@ -118,22 +136,26 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 	}
 	
 	
+	
+	
 //Methode pour créer un nouvelle map à partir d'une map déjà existante	
 	
-	private Map<String, Double> remplirMapPourcent(Map<String, Double> maMap) {
-		// TODO Auto-generated method stub
-		 double valeurmaMap2Final;
-		 Map<String, Double> maMap2= new HashMap<String,Double>();
-		 for(Entry<String, Double> e : maMap.entrySet()) {// on utilise les données de maMap pour créer maMap2
-		        String keymaMap2 = e.getKey();
-		        Double valeursmaMap2interm = e.getValue();
-		        valeurmaMap2Final = (valeursmaMap2interm *100/1);// pour la suite: additionner les valeurs des ech + diviser par nbr total d'ech
-		    
-				maMap2.put(keymaMap2, valeurmaMap2Final);			
+	public Map<String, Double> remplirMapPourcent(Set<Map<String, Double>> monSetDeMaps) {
+		// TODO Auto-generated method stub	 		 
+		 for(Entry<Set<Map<String, Double>>> monSet: monSetDeMaps) {
+			   valeurmaMap2Final = (somme des valeurs pour une key *100)/toutesMesMaps.size());
+			   maMap2.put(keymaMap2, valeurmaMap2Final);
 		 }
-		 LOG.info(" Voici la nouvelle hashmap: "+maMap2.toString());
-		return (maMap2);
+		 
+		// LOG.info(" Voici la nouvelle hashmap: "+maMap2.toString());
+		 //LOG.info(" Ma nouvelle : "+maMap2.toString());
+		 LOG.info("taille de ma collection de map "+toutesMesMaps.size());
+			return (maMap2);
+		
 			
 	}
 		
+		 
+	
+	
 }

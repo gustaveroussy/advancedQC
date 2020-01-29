@@ -3,6 +3,7 @@ package fr.gustaveroussy.AdvancedQC;
 
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,11 +14,14 @@ import java.util.Map.Entry;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
 
 
 
@@ -44,7 +48,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
 	
 		
-			renvoieDonneesTraitees(lines);//données exploitables création de la premiere map
+			List<Map<String, Double>> toutesMesMaps =renvoieDonneesTraitees(lines);//données exploitables création de la premiere map
 			remplirMapPourcent(toutesMesMaps);
 		}else {
 			LOG.error("args must be 1");
@@ -54,9 +58,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 	
 //**************** Modif méthode RENVOIE DONNEES TRAITEES, pour obtenir un set de données qui sera réutiliser par les autre parties du prgrm
-	Set<Map<String, Double>> toutesMesMaps = new HashSet<Map<String, Double>>();
-public Set<Map<String,Double>> renvoieDonneesTraitees (List<String> lignesdefichier){
-	 // TODO Auto-generated method stub
+public List<Map<String,Double>> renvoieDonneesTraitees (List<String> lignesdefichier){
+	List<Map<String, Double>> toutesMesMaps = new ArrayList<Map<String, Double>>();
+
 Map<String,Double> maMap = null;
 lignesdefichier.remove(0); //elimination du header de la liste "lines"
 	 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
@@ -71,7 +75,6 @@ lignesdefichier.remove(0); //elimination du header de la liste "lines"
 
 	
 //Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
-Map<String,Double> maMap = new HashMap<String,Double>();
 public Map<String, Double> transformListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
 		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
@@ -81,7 +84,7 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);	
 				maMap.put(toutesmescolonnes [0], valeurDoubledufichier);
 		}
-		
+		LOG.info( "map exploitable"+maMap);
 		return (maMap) ;
 		}
 
@@ -111,76 +114,30 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 	LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ pourcentageTotal + " %");
 	return pourcentageTotal;
 	}
-		
-	
-//Modif méthode pour CREATION DU NVL MAP À PARTIR DE MAP DEJA EXISTANTE, la meth doit prendre en entrée un set de maps et renvoyer une map ac % taux expression	
-	
-	public Map<String, Double> remplirMapPourcent(Set<Map<String, Double>> toutesMesMaps) {
-		System.out.println(toutesMesMaps);
-		// TODO Auto-generated method stub	 	
-		Map<String, Double> duplicatMap = new HashMap<>();
-		Map<String,Double> mouenne = new HashMap<>();
-		Iterator it = toutesMesMaps.iterator();
-      
-		
-		int i = 0;
-       
-        while(it.hasNext()) {
-        	duplicatMap = (Map<String, Double>) it.next();
-            
-            
-            Set clefs = duplicatMap.keySet();
-            
-            Iterator itbis = clefs.iterator();
-            i = i + 1;
-            
-            
-            while(itbis.hasNext()){
-            	
-            	String clef = itbis.next().toString();
-            	
-            	if(!mouenne.containsKey(clef)) {
-            	
-            		mouenne.put(clef, duplicatMap.get(clef));
-            	
-            	} else {
-            		
-            		Double valeur = mouenne.get(clef);
-            		mouenne.put(clef, duplicatMap.get(clef) + valeur);
-            		
-            	}
-            	
-            }
-            
-            
-            
-            System.out.println("test");
-        }
-        
-        System.out.println(mouenne);
-        
-        Set clefs = mouenne.keySet();
-        Iterator itbis = clefs.iterator();
-        
-        Map<String,Double> mouennebis = new HashMap<>();
-        System.out.println(i);
-        while(itbis.hasNext()){
-        	String clef = itbis.next().toString();
-        	Double valeur = mouenne.get(clef)/i;
-//        	System.out.println(valeur);
-        	mouennebis.put(clef, valeur);
-//        	System.out.println(mouenne);
-        	System.out.println(clef);
 
-        	
-        }
-//        System.out.println(i);
-        System.out.println(mouennebis);
-        return (mouennebis);					
-}
 		
-}	
-		 
 	
+//Modif méthode pour CREATION DU NVL MAP À PARTIR DE MAP DEJA EXISTANTE, la meth doit prendre en entrée une liste de maps et renvoyer une map ac % taux expression	
+	 
+	public Map<String, Double> remplirMapPourcent(List<Map<String, Double>> toutesMesMaps) {
+		LOG.info("mon set de map"+ toutesMesMaps);
+		Map<String, Double> mapMeanByGene = new HashMap<String,Double>();
+		
+		for (String geneKey : toutesMesMaps.get(0).keySet() ) {
+        	DescriptiveStatistics stats = new DescriptiveStatistics ();
+
+        	Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
+    		
+			//itération dans la liste
+	        while(it.hasNext()) { 		
+	        	stats.addValue(it.next().get(geneKey) );
+	        }
+	        mapMeanByGene.put(geneKey, stats.getMean());    
+		}
+		 LOG.info("remplirMapPourcent : "+mapMeanByGene.toString());
+		
+		  return mapMeanByGene;		  
+        }	
+}
 	
 

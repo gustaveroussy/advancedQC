@@ -5,11 +5,9 @@ package fr.gustaveroussy.AdvancedQC;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
@@ -44,15 +42,22 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
+		
+		
 		if(args.length == 1) {
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
-	
-		
+			
 			List<Map<String, Double>> toutesMesMaps =renvoieDonneesTraitees(lines);//données exploitables création de la premiere map
-			remplirMapPourcent(toutesMesMaps);
+			//remplirMapPourcent(toutesMesMaps);
+			
+			Compteur(toutesMesMaps);
+			LOG.info ("Les valeurs nulles ont été dénombrées avec succès");
 		}else {
 			LOG.error("args must be 1");
-		}	
+		}
+	//	Compteur compte= new Compteur();
+	//	compte.Compteur(MaMap);
 		
 	}
 	
@@ -75,6 +80,7 @@ lignesdefichier.remove(0); //elimination du header de la liste "lines"
 
 	
 //Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
+
 public Map<String, Double> transformListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
 		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
@@ -91,26 +97,49 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 
 //Methode pour compter les valeurs nulles par échantillon
  
-	private int Compteur (Map <String,Double> maMap) {
+	private int Compteur (List<Map<String, Double>> toutesMesMaps) {
 		 int Counter = 0;
 		// TODO Auto-generated method stub
-		for (Entry <String, Double> entry: maMap.entrySet()) {
-			if(entry.getValue().equals(0.0)) {
-				Counter = Counter+1 ;
-			}
+		 
+//		for (Entry <String, Double> entry: maMap.entrySet()) {
+//			if(entry.getValue().equals(0.0)) {
+//				Counter = Counter+1 ;
+//			}
+//		}
+//		LOG.info ("Il y a "+ Counter+ " valeurs nulles");
+//		//return Counter;
+//	//} fin
+	
+	// Iteration foncitonnelle mais compte 2 fois la meme map
+	Map<String, Double> mapinter = new HashMap<String,Double>();
+
+		 for (Double geneVal : toutesMesMaps.get(0).values()){
+		Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
+		while(it.hasNext()) {
+			it.next();
+			LOG.info ("les valeurs étudiées"+ geneVal);
+			if( geneVal.equals (0.0)){
+				Counter = Counter+1; 	
+				}
 		}
-		LOG.info ("Il y a "+ Counter+ " valeurs nulles");
-		return Counter;
 	}
+	LOG.info ("Il y a "+ Counter+ " valeurs nulles");
+//	}
+	return Counter;
+		 
+	} 
+		
+	
+
 	
 	
 //Methode pour calculer le Pourcentage
 	
-	public double pourcentageTotal(Map<String, Double> maMap) {
+	public double pourcentageTotal(List<Map<String, Double>> toutesMesMaps) {
 		// TODO Auto-generated method stub
 		 double pourcentageTotal;
-		 int Counter =Compteur(maMap);//Nombre de valeurs nulles dans l'echantillon
-	pourcentageTotal = (Counter * 100)/maMap.size();
+		 int Counter =Compteur(toutesMesMaps);//Nombre de valeurs nulles dans l'echantillon
+	pourcentageTotal = (Counter * 100)/toutesMesMaps.size();
 	LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ pourcentageTotal + " %");
 	return pourcentageTotal;
 	}

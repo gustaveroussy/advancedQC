@@ -111,18 +111,16 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 //	//} fin
 	
 	// Iteration foncitonnelle mais compte 2 fois la meme map
-	Map<String, Double> mapinter = new HashMap<String,Double>();
-
-		 for (Double geneVal : toutesMesMaps.get(0).values()){
-		Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
-		while(it.hasNext()) {
-			it.next();
-			LOG.info ("les valeurs étudiées"+ geneVal);
-			if( geneVal.equals (0.0)){
-				Counter = Counter+1; 	
-				}
+		 for (int i= 0 ; i<toutesMesMaps.size (); i++){
+			for (Double geneVal : toutesMesMaps.get(i).values()) {
+				if( geneVal.equals (0.0)){
+					Counter = Counter+1; 	
+					}
+				LOG.info ("les valeurs étudiées"+ geneVal);
+			}
+		
 		}
-	}
+
 	LOG.info ("Il y a "+ Counter+ " valeurs nulles");
 //	}
 	return Counter;

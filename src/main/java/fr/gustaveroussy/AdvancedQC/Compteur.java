@@ -1,24 +1,27 @@
 package fr.gustaveroussy.AdvancedQC;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class Compteur {
 	
 
-	public static int Compteur (Map <String,Double> MaMap) {
-		int counter = 0;
-		for (Entry <String, Double> entry: MaMap.entrySet()) {
-			if(entry.getValue().equals(0.0)) {
-				counter  = counter+1 ;
+	public int Compteur (List<Map<String, Double>> toutesMesMaps) {
+		 int Counter = 0;
+		 for (int i= 0 ; i<toutesMesMaps.size (); i++){
+			for (Double geneVal : toutesMesMaps.get(i).values()) {
+				if( geneVal.equals (0.0)){
+					Counter = Counter+1; 	
+					}
 			}
 		}
-		System.out.println ("Il y a "+ counter+ " valeurs nulles");
-		return counter;
-		
-	}
-		
-	}
+		 
+		 System.out.println ("Il y a "+ Counter+ " valeurs nulles ");
+	return Counter;
+		 
+	} 
+}
 
 
  

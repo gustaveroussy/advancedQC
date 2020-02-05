@@ -42,27 +42,23 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		
-		
-		
-		if(args.length == 1) {
+			if(args.length == 1) {
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
 			
 			List<Map<String, Double>> toutesMesMaps =renvoieDonneesTraitees(lines);//données exploitables création de la premiere map
-			//remplirMapPourcent(toutesMesMaps);
+			remplirMapPourcent(toutesMesMaps);
+			PourcentageTotal monpourcent = new PourcentageTotal();
+			monpourcent.pourcenTotale(toutesMesMaps);
 			
-			Compteur(toutesMesMaps);
-			LOG.info ("Les valeurs nulles ont été dénombrées avec succès");
+			
+			
 		}else {
 			LOG.error("args must be 1");
 		}
-	//	Compteur compte= new Compteur();
-	//	compte.Compteur(MaMap);
-		
 	}
 	
 	
-//**************** Modif méthode RENVOIE DONNEES TRAITEES, pour obtenir un set de données qui sera réutiliser par les autre parties du prgrm
+// méthode RENVOIE DONNEES TRAITEES,modifiée pour obtenir un set de données qui sera réutiliser par les autre parties du prgrm
 public List<Map<String,Double>> renvoieDonneesTraitees (List<String> lignesdefichier){
 	List<Map<String, Double>> toutesMesMaps = new ArrayList<Map<String, Double>>();
 
@@ -80,9 +76,7 @@ lignesdefichier.remove(0); //elimination du header de la liste "lines"
 
 	
 //Méthode pour créer, à partir du fichier .tsv, un tableau de données exploitable
-
 public Map<String, Double> transformListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
-		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesatransformer){	
 			 String[] toutesmescolonnes = str.split("\t");			
@@ -93,72 +87,22 @@ public Map<String, Double> transformListenTabExploitable(List<String> lignesatra
 		LOG.info( "map exploitable"+maMap);
 		return (maMap) ;
 		}
-
-
-//Methode pour compter les valeurs nulles par échantillon
- 
-	private int Compteur (List<Map<String, Double>> toutesMesMaps) {
-		 int Counter = 0;
-		// TODO Auto-generated method stub
-		 
-//		for (Entry <String, Double> entry: maMap.entrySet()) {
-//			if(entry.getValue().equals(0.0)) {
-//				Counter = Counter+1 ;
-//			}
-//		}
-//		LOG.info ("Il y a "+ Counter+ " valeurs nulles");
-//		//return Counter;
-//	//} fin
 	
-	// Iteration foncitonnelle mais compte 2 fois la meme map
-		 for (int i= 0 ; i<toutesMesMaps.size (); i++){
-			for (Double geneVal : toutesMesMaps.get(i).values()) {
-				if( geneVal.equals (0.0)){
-					Counter = Counter+1; 	
-					}
-				LOG.info ("les valeurs étudiées"+ geneVal);
-			}
-		
-		}
-
-	LOG.info ("Il y a "+ Counter+ " valeurs nulles");
-//	}
-	return Counter;
-		 
-	} 
-		
-	
-
-	
-	
-//Methode pour calculer le Pourcentage
-	
-	public double pourcentageTotal(List<Map<String, Double>> toutesMesMaps) {
-		// TODO Auto-generated method stub
-		 double pourcentageTotal;
-		 int Counter =Compteur(toutesMesMaps);//Nombre de valeurs nulles dans l'echantillon
-	pourcentageTotal = (Counter * 100)/toutesMesMaps.size();
-	LOG.info("le pourcentage de valeurs nulles dans cet échantillon vaut: "+ pourcentageTotal + " %");
-	return pourcentageTotal;
-	}
-
-		
-	
-//Modif méthode pour CREATION DU NVL MAP À PARTIR DE MAP DEJA EXISTANTE, la meth doit prendre en entrée une liste de maps et renvoyer une map ac % taux expression	
-	 
+//Modif méthode pour CREATION DU NVL MAP À PARTIR DE MAP DEJA EXISTANTE, la meth doit prendre en entrée une liste de maps et renvoyer une map ac % taux expression		 
 	public Map<String, Double> remplirMapPourcent(List<Map<String, Double>> toutesMesMaps) {
 		LOG.info("mon set de map"+ toutesMesMaps);
 		Map<String, Double> mapMeanByGene = new HashMap<String,Double>();
 		
 		for (String geneKey : toutesMesMaps.get(0).keySet() ) {
         	DescriptiveStatistics stats = new DescriptiveStatistics ();
-
         	Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
     		
 			//itération dans la liste
 	        while(it.hasNext()) { 		
 	        	stats.addValue(it.next().get(geneKey) );
+	        	
 	        }
+	        
 	        mapMeanByGene.put(geneKey, stats.getMean());    
 		}
 		 LOG.info("remplirMapPourcent : "+mapMeanByGene.toString());

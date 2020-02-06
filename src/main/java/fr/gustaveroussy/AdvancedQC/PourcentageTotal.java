@@ -1,5 +1,6 @@
 package fr.gustaveroussy.AdvancedQC;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,20 +16,49 @@ public class PourcentageTotal {
 
 	public Map<String, Double> pourcenTotale (List<Map<String, Double>> toutesMesMaps) {
 		
-		Map<String,Double> desmaps = new HashMap<String,Double>();
-double valinter =0;
+Map<String,Double> desmaps = new HashMap<String,Double>();
 Map<String,Double> desmapsbis = new HashMap<String,Double>();
-		
-		for (int i= 0; i < toutesMesMaps.size(); i++) {
-			
-			for (Double geneVal : toutesMesMaps.get(i).values()){	
-				LOG.info("mes val" + geneVal);
+Set<String> geneKey = toutesMesMaps.get(0).keySet();;
+Collection<Double> geneVal = toutesMesMaps.get(0).values();
+Iterator<Double> itgeneVal = geneVal.iterator();
+String genekeydecomp= null;
+Double geneValdecomp =0.0;
+Iterator <String> it = geneKey.iterator();
+
+	//	for (int i= 0; i < toutesMesMaps.size(); i++) {
+	
+			while (itgeneVal.hasNext()){	
+				geneValdecomp =itgeneVal.next();
+				while(it.hasNext()){
+					genekeydecomp = it.next();
+				//LOG.info(" Affichage genekeydecomp: "+ genekeydecomp);
+					LOG.info(" Affichage genekeydecomp"+ genekeydecomp);
+					
+					desmaps.put(genekeydecomp, geneValdecomp);
+					LOG.info(" création des desmaps"+ desmaps);// renvoi la meme valeur pour tout les genes
+				}
+				
+				
 			}
-		}	
+			
+			
+
+			
+			
+			for (Double geneVal2 : toutesMesMaps.get(1).values()){	
+				//LOG.info("mes val de maps 2: " + geneVal2);
+				//geneKey = toutesMesMaps.get(1).toString();
+				//desmapsbis.put(geneKey, geneVal);
+			
+		
+			}
+	
+		//LOG.info("map 1"+ desmaps +"  map 2"+ desmapsbis);
+		
+		pourcentTotal(desmaps);
+		//pourcentTotal(desmapsbis);
 		
 		
-		
-		//pourcentTotal(desmaps);
 		return desmaps;
 	
 	

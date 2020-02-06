@@ -18,38 +18,19 @@ public class PourcentageTotal {
 		Map<String,Double> desmaps = new HashMap<String,Double>();
 
 Map<String,Double> desmapsbis = new HashMap<String,Double>();
-Set<String> geneKey = toutesMesMaps.get(0).keySet();;
-String genekeydecomp= null;
-Iterator <String> it = geneKey.iterator();
-		//for (int i= 0; i < toutesMesMaps.size(); i++) {
-			
-	while(it.hasNext()){
-	genekeydecomp = it.next();
-	LOG.info(" Affichage genekeydecomp"+ genekeydecomp);
-		
-	for (Double geneVal : toutesMesMaps.get(0).values()){	
-			LOG.info("mes val de map 1: " + geneVal);
-			geneKey = toutesMesMaps.get(0).keySet();	
-			desmaps.put(genekeydecomp, geneVal);
-			
+//Set<String> geneKey = toutesMesMaps.get(0).keySet();;
+
+//Iterator <String> it = geneKey.iterator();
+
+
+		for (int i= 0; i < toutesMesMaps.size(); i++) {
+			desmaps= toutesMesMaps.get(i);
+	        LOG.info("map "+ desmaps);
+	        pourcentTotal(desmaps);
 		}
-	}
-	
-	for (Double geneVal2 : toutesMesMaps.get(1).values()){	
-		LOG.info("mes val de maps 2: " + geneVal2);
-		//geneKey = toutesMesMaps.get(1).toString();
-		//desmapsbis.put(geneKey, geneVal);
-	}
-	
-		LOG.info("map 1"+ desmaps +"  map 2"+ desmapsbis);
 		
-		pourcentTotal(desmaps);
-		pourcentTotal(desmapsbis);
-		
-		
+		//pourcentTotal(desmapsbis);	
 		return desmaps;
-	
-	
 	}
 	
 	private double pourcentTotal(Map<String, Double> maMap) {

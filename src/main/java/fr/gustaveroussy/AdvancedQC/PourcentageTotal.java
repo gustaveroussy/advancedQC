@@ -18,13 +18,13 @@ public class PourcentageTotal {
 
 
 		for (int i= 0; i < toutesMesMaps.size(); i++) {
-			LOG.info("map "+ toutesMesMaps.get(i));
+			LOG.debug("map "+ toutesMesMaps.get(i));
 			Double currPercent = pourcentTotal(toutesMesMaps.get(i));
 
 	        
 			//FIXME faire remonter le nom de l'échantillon dans la structure de donnée
 			SampleValue currSampleValue = new SampleValue("sampleName"+i, currPercent);
-	        LOG.info("le pourcentage de valeurs nulles pour "+ currSampleValue.toString());
+	        LOG.debug("le pourcentage de valeurs nulles pour "+ currSampleValue.toString());
 			sampleValueList.add(currSampleValue);
 			
 		}

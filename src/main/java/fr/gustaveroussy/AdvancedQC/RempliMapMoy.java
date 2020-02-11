@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 
- public class rempliMapPourcent {
+ public class RempliMapMoy {
 //	public Map<String, Double> remplirMapPourcent(List<Map<String, Double>> toutesMesMaps) {
 //		LOG.debug("mon set de map"+ toutesMesMaps);
 //		Map<String, Double> mapMeanByGene = new HashMap<String,Double>();
@@ -50,10 +50,10 @@ import fr.gustaveroussy.AdvancedQC.model.SampleValue;
         }
         geneExpressionList.add(geneExpression);
 	}
-    	LOG.info("liste des tx d'expression des genes: " +geneExpressionList);
+    	LOG.debug("liste des tx d'expression des genes: " +geneExpressionList);
     	return geneExpressionList;
 }
 	private static Logger LOG = LoggerFactory
-		      .getLogger(rempliMapPourcent.class);
+		      .getLogger(RempliMapMoy.class);
 }
 

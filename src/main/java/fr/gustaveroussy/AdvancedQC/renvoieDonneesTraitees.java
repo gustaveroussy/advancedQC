@@ -21,7 +21,7 @@ public class renvoieDonneesTraitees {
 				maMap = transformeMonFichier.changeListenTabExploitable(lignesdefichier, i);	
 			    toutesMesMaps.add(maMap);		    
 			}
-		  LOG.debug ( "Mes Maps: " + toutesMesMaps);//renvoie les maps avec les valeurs d'origine et non les valeurs calculées
+		  LOG.debug ( "Mes Maps: " + toutesMesMaps);//renvoie les maps avec les valeurs d'origines et non les valeurs calculées
 		  LOG.debug ( "taille de mesMaps: " + toutesMesMaps.size());
 			return (toutesMesMaps);
 	}
@@ -31,7 +31,6 @@ public class renvoieDonneesTraitees {
 public class transformListenTabExploitable {
 	
 	public Map<String, Double> changeListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
-		// TODO Auto-generated method stub
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesatransformer){	
 			 String[] toutesmescolonnes = str.split("\t");			

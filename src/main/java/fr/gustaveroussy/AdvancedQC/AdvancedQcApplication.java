@@ -19,6 +19,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import fr.gustaveroussy.AdvancedQC.model.SampleValue;
+
 
 
 
@@ -44,13 +46,15 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		if(args.length == 1) {
 			renvoieDonneesTraitees renvoiMesDonnees = new renvoieDonneesTraitees();
-			PourcentageTotal monpourcent = new PourcentageTotal();
-			rempliMapPourcent mapAssocPourcentExp =new rempliMapPourcent();
+			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
+			RempliMapMoy mapMoyExpDesGenes =new RempliMapMoy();
 	
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
-			List<Map<String, Double>> toutesMesMaps=renvoiMesDonnees.renvoyerDonneesTraitees(lines);			
-			monpourcent.pourcenTotale(toutesMesMaps);
-			mapAssocPourcentExp.geneExpressionMean(toutesMesMaps);
+			List<Map<String, Double>> toutesMesMaps =renvoiMesDonnees.renvoyerDonneesTraitees(lines);			
+			List<SampleValue>listPercentValNull = pourcentageDeValNull.pourcenTotale(toutesMesMaps);
+			LOG.info("pourcentage de valeurs nulles: " + listPercentValNull);
+			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(toutesMesMaps);
+			LOG.info("moyenne de taux d'expression des genes" + listMeanGeneExpression);
 		
 		
 		

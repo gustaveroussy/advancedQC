@@ -13,26 +13,6 @@ import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 
  public class RempliMapMoy {
-//	public Map<String, Double> remplirMapPourcent(List<Map<String, Double>> toutesMesMaps) {
-//		LOG.debug("mon set de map"+ toutesMesMaps);
-//		Map<String, Double> mapMeanByGene = new HashMap<String,Double>();
-//		
-//		for (String geneKey : toutesMesMaps.get(0).keySet() ) {
-//        	DescriptiveStatistics stats = new DescriptiveStatistics ();
-//        	Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
-//    		
-//			//itération dans la liste
-//	        while(it.hasNext()) { 		
-//	        	stats.addValue(it.next().get(geneKey) );
-//	        }
-//	        mapMeanByGene.put(geneKey, stats.getMean());    
-//		}
-//		 LOG.debug("remplirMapPourcent : "+mapMeanByGene.toString());
-//		
-//		  return mapMeanByGene;		  
-//        }	
-
-	
 	
 	//modif pour rendre le code plus facilement lisible: en entrée liste de maps et en sortir liste gene/mynn des tx expression
 	 

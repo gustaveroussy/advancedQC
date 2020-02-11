@@ -12,25 +12,28 @@ public class renvoieDonneesTraitees {
 	
 	public List<Map<String,Double>> renvoyerDonneesTraitees (List<String> lignesdefichier){
 		List<Map<String, Double>> toutesMesMaps = new ArrayList<Map<String, Double>>();
-		transformListenTabExploitable transformeMonFichier = new transformListenTabExploitable();
 		
 	Map<String,Double> maMap = null;
+	Map<String,Map<String,Double>>mapheader = null;
 	lignesdefichier.remove(0); //elimination du header de la liste "lines"
-		 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");	
+	
+	
+		 String[] toutesmescolonnes = lignesdefichier.get(0).split("\t");
+		
+			 
 			for (int i = 1; i<toutesmescolonnes.length; i++) {
-				maMap = transformeMonFichier.changeListenTabExploitable(lignesdefichier, i);	
-			    toutesMesMaps.add(maMap);		    
-			}
+				maMap = changeListenTabExploitable(lignesdefichier, i);	
+			    toutesMesMaps.add(maMap);	
+		 }
+			for(int j=0; j<toutesmescolonnes.length;j++) {  	
+		    	mapheader.put(toutesmescolonnes[j],maMap);
+		    }
 		  LOG.debug ( "Mes Maps: " + toutesMesMaps);//renvoie les maps avec les valeurs d'origines et non les valeurs calculées
 		  LOG.debug ( "taille de mesMaps: " + toutesMesMaps.size());
 			return (toutesMesMaps);
 	}
-
-
-
-public class transformListenTabExploitable {
 	
-	public Map<String, Double> changeListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
+	private Map<String, Double> changeListenTabExploitable(List<String> lignesatransformer, Integer numechantillon) {
 	Map<String,Double> maMap = new HashMap<String,Double>();
 		for(String str : lignesatransformer){	
 			 String[] toutesmescolonnes = str.split("\t");			
@@ -42,7 +45,7 @@ public class transformListenTabExploitable {
 		return (maMap) ;
 		}
 
-}
+
 
 	private static Logger LOG = LoggerFactory
 	.getLogger(renvoieDonneesTraitees.class);

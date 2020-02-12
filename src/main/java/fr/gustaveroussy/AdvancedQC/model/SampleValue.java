@@ -2,21 +2,21 @@ package fr.gustaveroussy.AdvancedQC.model;
 
 public class SampleValue {
 	String sampleName;
-	Double SampleValue;
+	Double sampleValue;
 	public SampleValue(String sampleName, Double sampleValue) {
 		super();
 		this.sampleName = sampleName;
-		this.SampleValue = sampleValue;
+		this.sampleValue = sampleValue;
 	}
 	public String getSampleName() {
 		return sampleName;
 	}
 	public Double getSampleValue() {
-		return SampleValue;
+		return sampleValue;
 	}
 	@Override
 	public String toString() {
-		return this.sampleName + " " + this.SampleValue +  " " ;
+		return this.sampleName + " " + this.sampleValue +  " " ;
 	}
 	
 }

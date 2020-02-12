@@ -19,6 +19,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import fr.gustaveroussy.AdvancedQC.header.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 
 
@@ -45,15 +46,15 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		if(args.length == 1) {
-			renvoieDonneesTraitees renvoiMesDonnees = new renvoieDonneesTraitees();
+			IRenvoieDonnesTraitees renvoiMesDonnees = new renvoieDonneesTraitees();
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes =new RempliMapMoy();
 	
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);  
-			List<Map<String, Double>> toutesMesMaps =renvoiMesDonnees.renvoyerDonneesTraitees(lines);			
-			List<SampleValue>listPercentValNull = pourcentageDeValNull.pourcenTotale(toutesMesMaps);
+			List<SamplewHeader> listwHeader=renvoiMesDonnees.renvoyerDonneesTraitees(lines);			
+			List<SampleValue>listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
 			LOG.info("pourcentage de valeurs nulles: " + listPercentValNull);
-			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(toutesMesMaps);
+			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes" + listMeanGeneExpression);
 		
 		

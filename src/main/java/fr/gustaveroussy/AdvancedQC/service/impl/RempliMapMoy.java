@@ -15,32 +15,7 @@ import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
  public class RempliMapMoy {
 
-	
-	
-	//modif pour rendre le code plus facilement lisible: en entrée liste de maps et en sortir liste gene/mynn des tx expression
-	 
-//	public List<SampleValue> geneExpressionMean (List<Map<String, Double>> toutesMesMaps) {
-//	List<SampleValue> geneExpressionList = new ArrayList<SampleValue>();
-//	SampleValue geneExpression = null;
-//	
-//    	for (String geneKey : toutesMesMaps.get(0).keySet() ) {
-//        	DescriptiveStatistics stats = new DescriptiveStatistics ();
-//        	Iterator<Map<String, Double>> it = toutesMesMaps.iterator();
-//		//itération dans la liste
-//        while(it.hasNext()) { 		
-//        	stats.addValue(it.next().get(geneKey) );
-//         geneExpression= new SampleValue(geneKey, stats.getMean());
-//        }
-//        geneExpressionList.add(geneExpression);
-//	}
-//    	LOG.debug("liste des tx d'expression des genes: " +geneExpressionList);
-//    	return geneExpressionList;
-//}
-//	private static Logger LOG = LoggerFactory
-//		      .getLogger(RempliMapMoy.class);
-//}
-	 
-/////////
+
 	public List<SampleValue> geneExpressionMean (List<SamplewHeader> listwHeader ) {
 	List<SampleValue> geneExpressionList = new ArrayList<SampleValue>();
 	SampleValue geneExpression = null;

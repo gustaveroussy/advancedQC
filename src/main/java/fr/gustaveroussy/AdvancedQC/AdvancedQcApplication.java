@@ -19,8 +19,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import fr.gustaveroussy.AdvancedQC.header.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
+import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
+import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
 
 
 
@@ -46,7 +50,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		if(args.length == 1) {
-			IRenvoieDonnesTraitees renvoiMesDonnees = new renvoieDonneesTraitees();
+			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes =new RempliMapMoy();
 	

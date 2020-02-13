@@ -1,4 +1,4 @@
-package fr.gustaveroussy.AdvancedQC.header;
+package fr.gustaveroussy.AdvancedQC.model;
 
 import java.util.Map;
 

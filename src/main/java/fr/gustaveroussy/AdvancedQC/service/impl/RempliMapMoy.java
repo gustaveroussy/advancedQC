@@ -1,4 +1,4 @@
-package fr.gustaveroussy.AdvancedQC;
+package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,8 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.gustaveroussy.AdvancedQC.header.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
  public class RempliMapMoy {
 

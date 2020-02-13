@@ -1,7 +1,6 @@
-package fr.gustaveroussy.AdvancedQC;
+package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +8,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.gustaveroussy.AdvancedQC.header.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 
-public class renvoieDonneesTraitees implements IRenvoieDonnesTraitees {
+public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 	
 	@Override
 	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignesdefichier) {
@@ -48,6 +48,6 @@ public class renvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 
 
 	private static Logger LOG = LoggerFactory
-	.getLogger(renvoieDonneesTraitees.class);
+	.getLogger(RenvoieDonneesTraitees.class);
 
 }

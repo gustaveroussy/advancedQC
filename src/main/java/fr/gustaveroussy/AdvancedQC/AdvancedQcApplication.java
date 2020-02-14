@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
-import fr.gustaveroussy.AdvancedQC.service.impl.CalculDecileMin;
+import fr.gustaveroussy.AdvancedQC.service.impl.CalculPercentil;
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
@@ -58,8 +58,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			LOG.info("pourcentage de valeurs nulles: " + listPercentValNull);
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes" + listMeanGeneExpression);
-			CalculDecileMin calcdecmin = new CalculDecileMin();
-			calcdecmin.percentileValue(listwHeader, 25.0);
+			CalculPercentil calcdecmin = new CalculPercentil();
+			calcdecmin.percentileCalc(listwHeader);
 		
 		
 		}else {

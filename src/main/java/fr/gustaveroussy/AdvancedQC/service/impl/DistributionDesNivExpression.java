@@ -1,9 +1,10 @@
-package fr.gustaveroussy.AdvancedQC.service;
+package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.util.List;
 
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.service.IDistributionDesNivExpression;
 
 public class DistributionDesNivExpression implements IDistributionDesNivExpression {
 

@@ -59,7 +59,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes" + listMeanGeneExpression);
 			CalculDecileMin calcdecmin = new CalculDecileMin();
-			calcdecmin.decilemin(listwHeader);
+			calcdecmin.percentileValue(listwHeader, 25.0);
 		
 		
 		}else {

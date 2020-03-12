@@ -1,0 +1,28 @@
+{
+	"id": "test_BarGRAPH",
+	"section_name": "Bargraph",
+	"description": "compte des valeurs nulles",
+	"plot_type": "bargraph",
+	"pconfig": {
+		"id": "count_data_json",
+		"title": "Histogramme compte val nulles",
+		"ylab": " Number"
+	},
+
+	"data": {
+		"echantillon_p1": {
+
+			
+			"valeurs nulles":2,
+			"non nulles":7
+			
+
+		},
+		"echantillon_p2": {
+			"valeurs nulles":4,
+			"non nulles":5
+			
+			
+		}	
+	}
+}

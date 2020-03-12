@@ -1,0 +1,38 @@
+{
+    "id": "test_Beeswarm",
+    "section_name": "Beeswarm",
+    "description": " trying to obtain a beeswarm plot",
+    "plot_type": "table",
+    
+    "pconfig": {
+        "id": "custom_data_json_table_table",
+        "title": "JSON table with ordered columns",
+        "ytype": "logarithmic"
+		  
+    },
+   "data": { 
+		"D1": {
+			"sample_p1": 0.0,
+			"sample_p2": 0.0
+		},
+		"Q1": {
+			"sample_p1": 0.18558550000000001 ,
+			"sample_p2": 0.0
+		},
+			
+		"Median": {
+			"sample_p1": 208.227 ,
+			"sample_p2": 192.34599999999998 
+		},
+			
+		"Q3": {
+			"sample_p1": 2105.5099999999998 ,
+			"sample_p2": 1849.0905 
+		},
+		
+		"D9": { 
+			"sample_p1": 18437.7,
+			"sample_p2": 17945.2
+		}
+	}
+}

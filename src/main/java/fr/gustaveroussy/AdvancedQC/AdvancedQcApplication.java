@@ -20,7 +20,6 @@ import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
-import fr.gustaveroussy.AdvancedQC.service.impl.CalculPercentil;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;

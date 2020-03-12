@@ -30,7 +30,7 @@ import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
      }
      geneExpressionList.add(geneExpression);
 	}
- 	LOG.debug("liste des tx d'expression des genes: " +geneExpressionList);
+ 	LOG.debug("liste des tx d'expression des genes:{} " ,geneExpressionList);
  	return geneExpressionList;
 }
 	private static Logger LOG = LoggerFactory

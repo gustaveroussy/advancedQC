@@ -27,9 +27,9 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 			listwHeader.add(sampleheader);
 
 		}
-		LOG.debug("Mes Maps: " + listwHeader);// renvoie les maps avec les valeurs d'origines et non les valeurs
+		LOG.debug("Mes Maps:{} ", listwHeader);// renvoie les maps avec les valeurs d'origines et non les valeurs
 												// calculées
-		LOG.debug("taille de mesMaps: " + listwHeader.size());
+		LOG.debug("taille de mesMaps:{} ",listwHeader.size());
 		return listwHeader;
 	}
 	

@@ -7,11 +7,11 @@ import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public interface IDistributionNivExpression {
 	
-	List<SampleValue> calculDecileMin(List<SamplewHeader> listwHeader);
-	List<SampleValue> calculDecileMax(List<SamplewHeader> listwHeader);
-	List<SampleValue> calculMediane(List<SamplewHeader> listwHeader);
-	List<SampleValue> calculQ1(List<SamplewHeader> listwHeader);
-	List<SampleValue> calculQ3(List<SamplewHeader> listwHeader);
+	List<SampleValue> calculDecileMin(SamplewHeader sample);
+	List<SampleValue> calculDecileMax(SamplewHeader sample);
+	List<SampleValue> calculMediane(SamplewHeader sample);
+	List<SampleValue> calculQ1(SamplewHeader sample);
+	List<SampleValue> calculQ3(SamplewHeader sample);
 	
 
 }

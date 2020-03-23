@@ -26,14 +26,10 @@ public List<SampleValue> pourcenTotale (List<SamplewHeader> listwHeader) {
 			SampleValue currSampleValue = new SampleValue(samplewheader.getSampleID(), currPercent);
 			//SamplewHeader currSamplewheader = new SampleValue(currSamplewheader.getSampleID(i), currPercent));
 	        LOG.debug("le pourcentage de valeurs nulles pour {}", currSampleValue.toString());
-			sampleValueList.add(currSampleValue);
-			
+			sampleValueList.add(currSampleValue);	
 		}
-		return sampleValueList;
-		
+		return sampleValueList;		
 	}
-
-
 
 
 	private double pourcentTotal(SamplewHeader samplewheader) {

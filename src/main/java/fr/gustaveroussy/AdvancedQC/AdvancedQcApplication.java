@@ -3,13 +3,15 @@ package fr.gustaveroussy.AdvancedQC;
 
 
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
-
+import org.apache.commons.lang3.ArrayUtils;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,9 +20,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
+import fr.gustaveroussy.AdvancedQC.service.impl.LectureJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
@@ -53,25 +58,29 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
 			IDistributionNivExpression distrNivExpr = new DistributionDesNivExpression();
-
+            ICreationJSON creationjson = new CreationJSON();
+            
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
+			LOG.info ("listwheader{}",listwHeader);
 			List<SampleValue> listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
-			LOG.info("pourcentage de valeurs nulles: " + listPercentValNull);
+			LOG.info("pourcentage de valeurs nulles: {} " , listPercentValNull);
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
-			LOG.info("moyenne de taux d'expression des genes" + listMeanGeneExpression);
+			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
 		
-			List<SampleValue> decilemin = distrNivExpr.calculDecileMin(listwHeader);
+			JSONObject decilemin = distrNivExpr.calculDecileMin(listwHeader);
 			LOG.info("D1 {}", decilemin);
-			List<SampleValue> decilemax = distrNivExpr.calculDecileMax(listwHeader);
+			JSONObject  decilemax = distrNivExpr.calculDecileMax(listwHeader);
 			LOG.info("D9 {}", decilemax);
-			List<SampleValue> quartileQ1= distrNivExpr.calculQ1(listwHeader);
+			JSONObject  quartileQ1= distrNivExpr.calculQ1(listwHeader);
 			LOG.info("Q1 {}", quartileQ1);
-			List<SampleValue> quartileQ3= distrNivExpr.calculQ3(listwHeader);
+			JSONObject  quartileQ3= distrNivExpr.calculQ3(listwHeader);
 			LOG.info("Q3 {}", quartileQ3);
-			List<SampleValue> mediane = distrNivExpr.calculMediane(listwHeader);
+			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
 			LOG.info("mediane {}", mediane);
-		
+			
+			creationjson.createJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
+			
 		
 		}else {
 			LOG.error("args must be 1");

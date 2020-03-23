@@ -6,91 +6,81 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+  
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
+import org.json.simple.JSONArray;
+
 
 public class DistributionDesNivExpression implements IDistributionNivExpression {
-
+	
 //DECILES
-	public List<SampleValue> calculDecileMin(SamplewHeader sample) {
+	@Override
+	public JSONObject calculDecileMin(List<SamplewHeader> listwHeader) {
 		// TODO Auto-generated method stub
-		List<SampleValue> listD1 = percentileValue(sample, 10.0);
+		JSONObject listD1 = percentileValue(listwHeader, 10.0);
 		LOG.debug("résultat D1: {}", listD1);
+	//	JSONObject crejson = createJSON(listD1);
+	//	LOG.info("json{}",crejson);
 		return listD1;
 	}
+	
 
-	public List<SampleValue> calculDecileMax (SamplewHeader sample) {
-		List<SampleValue> listD9 = percentileValue(sample, 90.0);
+	public JSONObject calculDecileMax(List<SamplewHeader> listwHeader) {
+		JSONObject listD9 = percentileValue(listwHeader, 90.0);
 		LOG.debug("résultat D9: {}", listD9);
 		return listD9;
 	}
 	
 //MEDIANE
-	
-	public List<SampleValue> calculMediane (SamplewHeader sample) {
-		List<SampleValue> listmed = percentileValue(sample, 50.0);
+	@Override
+	public JSONObject calculMediane(List<SamplewHeader> listwHeader) {
+		JSONObject listmed = percentileValue(listwHeader, 50.0);
 		LOG.debug("résultat median: {}", listmed);
 		return listmed;
 	}
 
 //QUARTILES
-	public List<SampleValue> calculQ1 (SamplewHeader sample) {
-		List<SampleValue> listQ1 = percentileValue(sample, 25.0);
+	@Override
+	public JSONObject calculQ1(List<SamplewHeader> listwHeader) {
+		JSONObject listQ1 = percentileValue(listwHeader, 25.0);
 		LOG.debug("résultat Q1: {}", listQ1);
 		return listQ1;
 	}
 
-	public List<SampleValue> calculQ3(SamplewHeader sample) {
-		List<SampleValue> listQ3 = percentileValue(sample, 75.0);
-		LOG.debug("résultat Q3: {}", listQ3);
+	public JSONObject calculQ3(List<SamplewHeader> listwHeader) {
+		JSONObject listQ3 = percentileValue(listwHeader, 75.0);
+		
+		LOG.debug("résultat Q3: {}", listQ3);	
 		return listQ3;
 	}
-	
-//	private List<SampleValue> percentileValue(List<SamplewHeader> listwHeader, Double percentile) {
-//		List<SampleValue> listPercentileCal = new ArrayList<>();
-//		for (int i = 0; i < listwHeader.size(); i++) {
-//			Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
-//			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
-//			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
-//			double percentilecal = StatUtils.percentile(valsamplefinal, percentile);
-//			LOG.debug("decilemin{}", percentilecal);
-//			SampleValue samplevaluespercentile = new SampleValue(listwHeader.get(i).getSampleID(), percentilecal);
-//			listPercentileCal.add(samplevaluespercentile);
-//		}
-//		LOG.debug("resultat percentile{} ", listPercentileCal);
-//		return listPercentileCal;
-//	}
-	
-	private static Logger LOG = LoggerFactory.getLogger(DistributionDesNivExpression.class);
-	
-	
-	//Modification de la methode pour json
-	private List<SampleValue> percentileValue(SamplewHeader sample, Double percentile) {//en argument on ne prend plus la listwheader mais samplweader qui contient deja les valeurs recherchées
+		
+	@SuppressWarnings("unchecked")
+	private JSONObject percentileValue(List<SamplewHeader> listwHeader, Double percentile) {
 		List<SampleValue> listPercentileCal = new ArrayList<>();
-		for (int i = 0; i< sample.getSampleGeneVal().size(); i++){//taille de la map
-			Collection<Double> valsample1= sample.getSampleGeneVal().values();
-			Double[] valsample2 = valsample1.toArray(new Double[valsample1.size()]);
-			double[] valsample3 = ArrayUtils.toPrimitive(valsample2);
-			double percentilecal2 = StatUtils.percentile(valsample3, percentile);
-//          LOG.debug("decilemin{}", percentilecal2);
-			SampleValue samplevaluespercentile = new SampleValue(sample.getSampleID(), percentilecal2);
-			listPercentileCal.add(samplevaluespercentile);
+		JSONObject quantilDetails = new JSONObject();
+		JSONObject quantilGrp = new JSONObject();
+		
+		
+		for (int i = 0; i < listwHeader.size(); i++) {
+			Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
+			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
+			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
+			double percentilecal = StatUtils.percentile(valsamplefinal, percentile);
+			LOG.debug("decilemin{}", percentilecal);
+			//SampleValue samplevaluespercentile = new SampleValue(listwHeader.get(i).getSampleID(), percentilecal);
+			quantilDetails.put(listwHeader.get(i).getSampleID(), percentilecal);
+			quantilGrp.put("test", quantilDetails);
+		
 		}
-		LOG.debug("resultat percentile{} ", listPercentileCal);
-		return listPercentileCal;
+		LOG.info("resultat percentile{} ", listPercentileCal);
+		return quantilGrp;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
+	private static Logger LOG = LoggerFactory
+		      .getLogger(DistributionDesNivExpression.class);
 }

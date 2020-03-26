@@ -61,7 +61,6 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 		
 	@SuppressWarnings("unchecked")
 	private JSONObject percentileValue(List<SamplewHeader> listwHeader, Double percentile) {
-		List<SampleValue> listPercentileCal = new ArrayList<>();
 		JSONObject quantilDetails = new JSONObject();
 		JSONObject quantilGrp = new JSONObject();
 		
@@ -72,12 +71,11 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
 			double percentilecal = StatUtils.percentile(valsamplefinal, percentile);
 			LOG.debug("decilemin{}", percentilecal);
-			//SampleValue samplevaluespercentile = new SampleValue(listwHeader.get(i).getSampleID(), percentilecal);
 			quantilDetails.put(listwHeader.get(i).getSampleID(), percentilecal);
-			quantilGrp.put("test", quantilDetails);
+			quantilGrp.put(percentile, quantilDetails);
 		
 		}
-		LOG.info("resultat percentile{} ", listPercentileCal);
+		
 		return quantilGrp;
 	}
 	

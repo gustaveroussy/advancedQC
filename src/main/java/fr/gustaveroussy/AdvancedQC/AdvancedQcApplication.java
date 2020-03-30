@@ -3,14 +3,14 @@ package fr.gustaveroussy.AdvancedQC;
 
 
 import java.nio.file.Paths;
-import java.util.Collection;
+
 import java.util.List;
 
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 
-import org.apache.commons.lang3.ArrayUtils;
+
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
-import fr.gustaveroussy.AdvancedQC.service.impl.LectureJSON;
+
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;

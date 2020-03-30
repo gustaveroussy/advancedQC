@@ -1,6 +1,6 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -10,10 +10,9 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
-import fr.gustaveroussy.AdvancedQC.model.SampleValue;
+
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
-import org.json.simple.JSONArray;
 
 
 public class DistributionDesNivExpression implements IDistributionNivExpression {

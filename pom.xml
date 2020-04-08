@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.gustaveroussy</groupId>
-	<artifactId>AdvancedQC</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>advancedQC</artifactId>
+	<version>1.0.0</version>
 	<name>AdvancedQC</name>
-	<description>Demo project for Spring Boot</description>
+	<description>generate metric for multiQC report</description>
 
 	<properties>
 		<java.version>13</java.version>

@@ -1,0 +1,6 @@
+#install
+conda env create -f fichier.yaml
+#activate
+conda activate multiqc1.8
+#check install
+which multiqc

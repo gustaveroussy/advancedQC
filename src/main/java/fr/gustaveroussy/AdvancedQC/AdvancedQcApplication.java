@@ -20,10 +20,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
+import fr.gustaveroussy.AdvancedQC.service.ICreationBeeswarmJSON;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
-import fr.gustaveroussy.AdvancedQC.service.impl.CreationJSON;
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationBeeswarmJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
 
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
@@ -58,7 +58,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
 			IDistributionNivExpression distrNivExpr = new DistributionDesNivExpression();
-            ICreationJSON creationjson = new CreationJSON();
+            ICreationBeeswarmJSON creationjson = new CreationBeeswarmJSON();
             
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
@@ -79,7 +79,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
 			LOG.info("mediane {}", mediane);
 			
-			creationjson.createJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
+			creationjson.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
 			
 		
 		}else {

@@ -20,9 +20,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
 import fr.gustaveroussy.AdvancedQC.service.ICreationBeeswarmJSON;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationBargraphJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBeeswarmJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
 
@@ -58,12 +60,13 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
 			IDistributionNivExpression distrNivExpr = new DistributionDesNivExpression();
-            ICreationBeeswarmJSON creationjson = new CreationBeeswarmJSON();
+            ICreationBeeswarmJSON creationbeeswarm = new CreationBeeswarmJSON();
+            ICreationBargraphJSON creationbargraph =new CreationBargraphJSON();
             
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
 			LOG.info ("listwheader{}",listwHeader);
-			List<SampleValue> listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
+			JSONObject listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
 			LOG.info("pourcentage de valeurs nulles: {} " , listPercentValNull);
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
@@ -79,7 +82,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
 			LOG.info("mediane {}", mediane);
 			
-			creationjson.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
+			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
+			creationbargraph.createBrGJSON(listPercentValNull);
+			
 			
 		
 		}else {

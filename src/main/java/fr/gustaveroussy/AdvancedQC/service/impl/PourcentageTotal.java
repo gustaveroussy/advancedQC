@@ -1,34 +1,39 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public class PourcentageTotal {
 	
 //correction: remplacement de toutesMesMaps par listwHeader cad list des gene+val avec les headers 
-public List<SampleValue> pourcenTotale (List<SamplewHeader> listwHeader) {
-		
-		List<SampleValue> sampleValueList = new ArrayList<SampleValue>();
-
-
+	@SuppressWarnings("unchecked")
+public JSONObject pourcenTotale (List<SamplewHeader> listwHeader) {
+	 
+		//List<SampleValue> sampleValueList = new ArrayList<SampleValue>();
+        JSONObject percentList = new JSONObject();
+        JSONObject percentEch =new JSONObject();
+        
+        
 		for (int i= 0; i < listwHeader.size(); i++) {
 			SamplewHeader samplewheader = listwHeader.get(i);
 			LOG.debug("liste avec les headers {}", samplewheader);
 			Double currPercent = pourcentTotal (samplewheader);
 			LOG.debug("currPercent{}", currPercent);
-			SampleValue currSampleValue = new SampleValue(samplewheader.getSampleID(), currPercent);
-			//SamplewHeader currSamplewheader = new SampleValue(currSamplewheader.getSampleID(i), currPercent));
-	        LOG.debug("le pourcentage de valeurs nulles pour {}", currSampleValue.toString());
-			sampleValueList.add(currSampleValue);	
+			//SampleValue currSampleValue = new SampleValue(samplewheader.getSampleID(), currPercent);
+			percentEch.put(samplewheader.getSampleID(), currPercent);
+			LOG.debug("le pourcentage de val nul {}", percentEch);
+	       // LOG.debug("le pourcentage de valeurs nulles pour {}", currSampleValue.toString());
+		   //sampleValueList.add(currSampleValue);	
+			percentList.putAll(percentEch);
 		}
-		return sampleValueList;		
+		LOG.debug("liste de % {}", percentList);
+		return percentList;		
 	}
 
 

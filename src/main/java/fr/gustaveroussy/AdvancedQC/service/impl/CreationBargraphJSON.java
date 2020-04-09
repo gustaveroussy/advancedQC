@@ -8,9 +8,12 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CreationBargraphJSON {
+import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
+
+public class CreationBargraphJSON implements ICreationBargraphJSON {
+	
 	@SuppressWarnings("unchecked")
-	public JSONObject createBrGJSON (JSONObject ech1, JSONObject ech2) {
+	public JSONObject createBrGJSON (JSONObject percentList) {
 		String path = "avdancedQC_brg_mqc.json";
 		String base = "/users/hadidjasaid/Documents/GitHub/advancedQC/MultiQC_file/ ";
 		String relative = new File(base).toURI().relativize(new File(path).toURI()).getPath();	
@@ -39,12 +42,12 @@ public class CreationBargraphJSON {
 	
 	//construction du bloc data
 	JSONObject data = new JSONObject();
-	JSONObject percent = new JSONObject(); 
-	percent.putAll(ech1);
-	percent.putAll(ech2);
-
+	JSONObject percentData = new JSONObject(); 
+	percentData.putAll(percentList);
 	
-	data.put("data", percent);
+ 
+	
+	data.put("data", percentData);
 	
 //ensemble des données constituant le fichier json cad header+data
 	JSONObject fichierJSONfinal = new JSONObject();
@@ -69,5 +72,5 @@ public class CreationBargraphJSON {
 
 }
 	private static Logger LOG = LoggerFactory
-		      .getLogger(CreationBeeswarmJSON.class);
+		      .getLogger(CreationBargraphJSON.class);
 }

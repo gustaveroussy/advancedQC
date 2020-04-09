@@ -23,8 +23,6 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 		// TODO Auto-generated method stub
 		JSONObject listD1 = percentileValue(listwHeader, 10.0);
 		LOG.debug("résultat D1: {}", listD1);
-	//	JSONObject crejson = createJSON(listD1);
-	//	LOG.info("json{}",crejson);
 		return listD1;
 	}
 	

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<!-- from https://bl.ocks.org/domoritz/cd636b15fa0e187b51b73fc60b4d3014 -->
+<!-- https://bl.ocks.org/domoritz/455e1c7872c4b38a58b90df0c3d7b1b9 -->
+<!--  https://github.com/vega/vega-embed  -->
+<head>
+    <meta charset="utf-8"/>
+    <script src="vega.min.js"></script>
+    <!-- <script src="vega-lite.min.js"></script> -->
+    <script src="vega-embed.min.js"></script>
+</head>
+
+<body>  
+  <div id="vis"></div>
+  
+  <script type="text/javascript" >
+    const spec = "bar.vg.json";
+  	vegaEmbed("#vis", spec)
+      // result.view provides access to the Vega View API
+      .then(result => console.log(result))
+      .catch(console.warn);
+  </script>
+</body>
+</html>
+
+
+
+

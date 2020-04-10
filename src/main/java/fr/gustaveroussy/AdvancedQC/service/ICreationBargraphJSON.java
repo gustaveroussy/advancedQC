@@ -4,5 +4,4 @@ import org.json.simple.JSONObject;
 
 public interface ICreationBargraphJSON {
 	JSONObject createBrGJSON (JSONObject percentlist);
-
 }

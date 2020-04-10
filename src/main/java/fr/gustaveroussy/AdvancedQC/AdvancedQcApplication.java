@@ -1,23 +1,15 @@
 package fr.gustaveroussy.AdvancedQC;
 
-
-
 import java.nio.file.Paths;
-
 import java.util.List;
-
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
-
-
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
@@ -27,18 +19,12 @@ import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBargraphJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBeeswarmJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
-
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
 
-
-
-
-
-
 @SpringBootApplication
-public class AdvancedQcApplication implements CommandLineRunner {
+public class AdvancedQcApplication implements CommandLineRunner {	
 	
 	private static Logger LOG = LoggerFactory
 		      .getLogger(AdvancedQcApplication.class);
@@ -46,12 +32,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		LOG.info("Hello World ");
 		SpringApplication.run(AdvancedQcApplication.class, args);
-		LOG.info("Bye Bye World");
-		
+		LOG.info("Bye Bye World");		
 	}
-
-	
-	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
@@ -84,13 +66,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			
 			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
 			creationbargraph.createBrGJSON(listPercentValNull);
-			
-			
 		
 		}else {
 			LOG.error("args must be 1");
 		}
 	}	
 }
-	
-

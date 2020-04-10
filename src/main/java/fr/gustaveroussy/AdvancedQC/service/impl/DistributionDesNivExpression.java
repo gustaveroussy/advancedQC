@@ -1,19 +1,13 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
-
-
 import java.util.Collection;
 import java.util.List;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-  
-
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
-
 
 public class DistributionDesNivExpression implements IDistributionNivExpression {
 	
@@ -25,14 +19,11 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 		LOG.debug("résultat D1: {}", listD1);
 		return listD1;
 	}
-	
-
 	public JSONObject calculDecileMax(List<SamplewHeader> listwHeader) {
 		JSONObject listD9 = percentileValue(listwHeader, 90.0);
 		LOG.debug("résultat D9: {}", listD9);
 		return listD9;
-	}
-	
+	}	
 //MEDIANE
 	@Override
 	public JSONObject calculMediane(List<SamplewHeader> listwHeader) {
@@ -40,7 +31,6 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 		LOG.debug("résultat median: {}", listmed);
 		return listmed;
 	}
-
 //QUARTILES
 	@Override
 	public JSONObject calculQ1(List<SamplewHeader> listwHeader) {
@@ -48,20 +38,17 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 		LOG.debug("résultat Q1: {}", listQ1);
 		return listQ1;
 	}
-
 	public JSONObject calculQ3(List<SamplewHeader> listwHeader) {
 		JSONObject listQ3 = percentileValue(listwHeader, 75.0);
 		
 		LOG.debug("résultat Q3: {}", listQ3);	
 		return listQ3;
-	}
-		
+	}		
 	@SuppressWarnings("unchecked")
 	private JSONObject percentileValue(List<SamplewHeader> listwHeader, Double percentile) {
 		JSONObject quantilDetails = new JSONObject();
 		JSONObject quantilGrp = new JSONObject();
-		
-		
+			
 		for (int i = 0; i < listwHeader.size(); i++) {
 			Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
 			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
@@ -70,9 +57,7 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 			LOG.debug("decilemin{}", percentilecal);
 			quantilDetails.put(listwHeader.get(i).getSampleID(), percentilecal);
 			quantilGrp.put(percentile, quantilDetails);
-		
-		}
-		
+		}	
 		return quantilGrp;
 	}
 	

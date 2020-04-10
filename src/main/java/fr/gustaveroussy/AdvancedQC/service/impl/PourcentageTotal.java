@@ -1,6 +1,4 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
-
-
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

@@ -14,8 +14,10 @@ public class PourcentageTotal {
 public JSONObject pourcenTotale (List<SamplewHeader> listwHeader) {
 	 
 		//List<SampleValue> sampleValueList = new ArrayList<SampleValue>();
-        JSONObject percentList = new JSONObject();
-        JSONObject percentEch =new JSONObject();
+        JSONObject percentList = new JSONObject(); //remplace sampleValueList
+        JSONObject currsampl =new JSONObject();// remplace currSampleValue key=samplewheader.getSampleID, val=samplepercent
+        JSONObject samplepercent = new JSONObject();//key= "pourcentage val nul", val =percent 
+        
         
         
 		for (int i= 0; i < listwHeader.size(); i++) {
@@ -23,12 +25,12 @@ public JSONObject pourcenTotale (List<SamplewHeader> listwHeader) {
 			LOG.debug("liste avec les headers {}", samplewheader);
 			Double currPercent = pourcentTotal (samplewheader);
 			LOG.debug("currPercent{}", currPercent);
-			//SampleValue currSampleValue = new SampleValue(samplewheader.getSampleID(), currPercent);
-			percentEch.put(samplewheader.getSampleID(), currPercent);
-			LOG.debug("le pourcentage de val nul {}", percentEch);
-	       // LOG.debug("le pourcentage de valeurs nulles pour {}", currSampleValue.toString());
-		   //sampleValueList.add(currSampleValue);	
-			percentList.putAll(percentEch);
+			samplepercent.put("poucentage valeurs nulle", currPercent);
+			LOG.debug("samplepercent{}", samplepercent);
+			currsampl.put(samplewheader.getSampleID(), samplepercent);
+			LOG.debug("le pourcentage de val nul {}", currsampl);
+	      
+			percentList.putAll(currsampl);// la liste ne contient qu'un des pourcentages suite à intriduction de "putAll" a la place de "add"
 		}
 		LOG.debug("liste de % {}", percentList);
 		return percentList;		

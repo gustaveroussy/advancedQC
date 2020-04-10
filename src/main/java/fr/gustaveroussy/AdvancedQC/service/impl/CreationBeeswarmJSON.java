@@ -22,17 +22,15 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 			JSONObject pconfig = new JSONObject ();
 			JSONObject myHeader = new JSONObject ();
 			
-			
+			header1.put("id", "beeswarm_test");
+			header1.put("section_name", "Beeswarm");
+			header1.put("plot_type", "table");
+			LOG.debug("header1{}", header1);
 			
 			pconfig.put("id", "custom data json table");
 			pconfig.put("title", " beeswarms quantiles");
 			pconfig.put("ytype", "linear");
 			LOG.debug("pconfig{}", pconfig);
-			
-			header1.put("id", "beeswarm_test");
-			header1.put("section_name", "Beeswarm");
-			header1.put("plot_type", "table");
-			LOG.debug("header1{}", header1);
 			
 			header2.put("pconfig", pconfig);
 			LOG.debug("header2{}", header2);
@@ -52,12 +50,11 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 			
 		//ensemble des données constituant le fichier json cad header+data
 			JSONObject fichierJSONfinal = new JSONObject();
-			fichierJSONfinal.putAll(data);
 			fichierJSONfinal.putAll(header1);//putAll ne rajoute pas de quote supp
 			fichierJSONfinal.putAll(header2);
+			fichierJSONfinal.putAll(data);
 			
-			
-			LOG.info("beeswarm {}",fichierJSONfinal);  
+			LOG.debug("beeswarm {}",fichierJSONfinal);  
 	      
 	     //Write JSON file
 	        try (FileWriter file = new FileWriter(relative)) {

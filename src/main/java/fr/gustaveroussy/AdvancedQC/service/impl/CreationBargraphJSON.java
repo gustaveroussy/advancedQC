@@ -28,24 +28,24 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	header1.put("plot_type", "bargraph");
 	LOG.info("header1{}", header1);
 	
-//	pconfig.put("id", "custom data json bargraph");
-//	pconfig.put("title", " percent val nul");
-//	pconfig.put("ylab", "Number");
-//	LOG.debug("pconfig{}", pconfig);
+	pconfig.put("id", "custom data json bargraph");
+	pconfig.put("title", " percent val nul");
+	pconfig.put("ylab", "Number");
+	LOG.debug("pconfig{}", pconfig);
 	
-//	header2.put("pconfig", pconfig);//header 2 = 2nde partie du header avec pconfig
-//	LOG.debug("header2{}", header2);
+	header2.put("pconfig", pconfig);//header 2 = 2nde partie du header avec pconfig
+	LOG.debug("header2{}", header2);
 	
 	myHeader.putAll(header1);
-	//myHeader.putAll(header2);
-	LOG.info("header bargraph{}", myHeader);
+	myHeader.putAll(header2);
+	LOG.debug("header bargraph{}", myHeader);
 	//construction du bloc data
 	JSONObject data = new JSONObject();
 	JSONObject percentData = new JSONObject(); 
 	percentData.putAll(percentList);
 	
 	data.put("data", percentData);
-	LOG.info("data bargraph{}", data);
+	LOG.debug("data bargraph{}", data);
 	
 //ensemble des données constituant le fichier json cad header+data
 	JSONObject fichierJSONfinal = new JSONObject();
@@ -53,7 +53,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	fichierJSONfinal.putAll(header2);
 	fichierJSONfinal.putAll(data);
 	
-	LOG.info("fichierJSONfinale {}",fichierJSONfinal);  
+	LOG.debug("fichierJSONfinale {}",fichierJSONfinal);  
   
    	 
     //Write JSON file

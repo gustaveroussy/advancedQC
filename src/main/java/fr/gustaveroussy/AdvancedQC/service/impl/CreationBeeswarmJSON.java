@@ -12,14 +12,14 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 	
 		@SuppressWarnings("unchecked")
 		public JSONObject createBWJSON (JSONObject D1, JSONObject D9, JSONObject Q1,JSONObject Med,JSONObject Q3 ) {
-			String path = "avdancedQC_bw_mqc.json";
+			String path = "avdancedQC_bw2_mqc.json";
 			String base = "/users/hadidjasaid/Documents/GitHub/advancedQC/MultiQC_file/ ";
 			String relative = new File(base).toURI().relativize(new File(path).toURI()).getPath();	
 			
 		//construction du bloc  header
 			JSONObject header1 = new JSONObject ();
-			JSONObject pconfigComplet= new JSONObject();
-			JSONObject pconfig1 = new JSONObject ();
+			JSONObject pconfigComplet= new JSONObject();//=2nde partie du header, permet d'avoir la bonne mise en forme
+			JSONObject pconfig1 = new JSONObject ();//info brute du pconfig
 			
 			header1.put("id", "beeswarm_test");
 			header1.put("section_name", "Beeswarm");

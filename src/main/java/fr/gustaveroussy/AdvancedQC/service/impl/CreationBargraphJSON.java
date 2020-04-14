@@ -11,34 +11,29 @@ import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
 public class CreationBargraphJSON implements ICreationBargraphJSON {
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject createBrGJSON (JSONObject percentList) {
-		String path = "avdancedQC_BGR_mqc.json";
-		String base = "/users/hadidjasaid/Documents ";
-		String relative = new File(base).toURI().relativize(new File(path).toURI()).getPath();	
+	public JSONObject createBrGJSON (JSONObject percentList, String path) {
+		String filename = "avdancedQC_BGR_mqc.json ";
+		path = "/users/hadidjasaid/Documents/";
+		String relative = new File(path).toURI().relativize(new File(filename).toURI()).getPath();
 	
 	//construction du bloc  header
 	JSONObject header1 = new JSONObject ();
-	JSONObject header2= new JSONObject();
-	JSONObject pconfig = new JSONObject ();
-	JSONObject myHeader = new JSONObject ();
-	
+	JSONObject pconfigComplet= new JSONObject();//=2nde partie du header, permet d'avoir la bonne mise en forme
+	JSONObject pconfig1 = new JSONObject ();//info brute du pconfig
 	
 	header1.put("id", "bargraph_test");
 	header1.put("section_name", "Bargraph");
 	header1.put("plot_type", "bargraph");
 	LOG.debug("header1{}", header1);
 	
-	pconfig.put("id", "custom data json bargraph");
-	pconfig.put("title", " percent val nul");
-	pconfig.put("ylab", "Number");
-	LOG.debug("pconfig{}", pconfig);
+	pconfig1.put("id", "custom data json bargraph");
+	pconfig1.put("title", " percent val nul");
+	pconfig1.put("ylab", "Number");
+	LOG.debug("pconfig{}", pconfig1);
 	
-	header2.put("pconfig", pconfig);//header 2 = 2nde partie du header avec pconfig
-	LOG.debug("header2{}", header2);
+	pconfigComplet.put("pconfig", pconfig1);
+	LOG.debug("pconfig{}", pconfigComplet);
 	
-	myHeader.putAll(header1);
-	myHeader.putAll(header2);
-	LOG.debug("header bargraph{}", myHeader);
 	//construction du bloc data
 	JSONObject data = new JSONObject();
 	JSONObject percentData = new JSONObject(); 
@@ -50,7 +45,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 //ensemble des données constituant le fichier json cad header+data
 	JSONObject fichierJSONfinal = new JSONObject();
 	fichierJSONfinal.putAll(header1);
-	fichierJSONfinal.putAll(header2);
+	fichierJSONfinal.putAll(pconfigComplet);
 	fichierJSONfinal.putAll(data);
 	
 	LOG.info("fichierJSONfinale {}",fichierJSONfinal);  

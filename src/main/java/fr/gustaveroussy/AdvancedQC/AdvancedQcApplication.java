@@ -54,18 +54,14 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
 		
 			JSONObject decilemin = distrNivExpr.calculDecileMin(listwHeader);
-			LOG.info("D1 {}", decilemin);
 			JSONObject  decilemax = distrNivExpr.calculDecileMax(listwHeader);
-			LOG.info("D9 {}", decilemax);
 			JSONObject  quartileQ1= distrNivExpr.calculQ1(listwHeader);
-			LOG.info("Q1 {}", quartileQ1);
 			JSONObject  quartileQ3= distrNivExpr.calculQ3(listwHeader);
-			LOG.info("Q3 {}", quartileQ3);
 			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
-			LOG.info("mediane {}", mediane);
+			LOG.info("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane +"Q1 {}", quartileQ1 +"Q3 {}", quartileQ3);
 			
 			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
-			creationbargraph.createBrGJSON(listPercentValNull);
+			creationbargraph.createBrGJSON(listPercentValNull, "/users/hadidjasaid/ ");
 		
 		}else {
 			LOG.error("args must be 1");

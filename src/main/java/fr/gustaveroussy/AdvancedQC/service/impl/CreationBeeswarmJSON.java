@@ -18,24 +18,21 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 			
 		//construction du bloc  header
 			JSONObject header1 = new JSONObject ();
-			JSONObject header2= new JSONObject();
-			JSONObject pconfig = new JSONObject ();
-			JSONObject myHeader = new JSONObject ();
+			JSONObject pconfigComplet= new JSONObject();
+			JSONObject pconfig1 = new JSONObject ();
 			
 			header1.put("id", "beeswarm_test");
 			header1.put("section_name", "Beeswarm");
 			header1.put("plot_type", "table");
 			LOG.debug("header1{}", header1);
 			
-			pconfig.put("id", "custom data json table");
-			pconfig.put("title", " beeswarms quantiles");
-			pconfig.put("ytype", "linear");
-			LOG.debug("pconfig{}", pconfig);
+			pconfig1.put("id", "custom data json table");
+			pconfig1.put("title", " beeswarms quantiles");
+			pconfig1.put("ytype", "linear");
+			LOG.debug("pconfig{}", pconfig1);
 			
-			header2.put("pconfig", pconfig);
-			LOG.debug("header2{}", header2);
-			
-			myHeader.put(header1, header2);
+			pconfigComplet.put("pconfig", pconfig1);
+			LOG.debug("header2{}", pconfigComplet);		
 			
 		//construction du bloc data
 			JSONObject data = new JSONObject();
@@ -51,7 +48,7 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 		//ensemble des données constituant le fichier json cad header+data
 			JSONObject fichierJSONfinal = new JSONObject();
 			fichierJSONfinal.putAll(header1);//putAll ne rajoute pas de quote supp
-			fichierJSONfinal.putAll(header2);
+			fichierJSONfinal.putAll(pconfigComplet);
 			fichierJSONfinal.putAll(data);
 			
 			LOG.debug("beeswarm {}",fichierJSONfinal);  
@@ -65,7 +62,7 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-			return data;
+			return fichierJSONfinal;
 	 }	
 		private static Logger LOG = LoggerFactory
 			      .getLogger(CreationBeeswarmJSON.class);

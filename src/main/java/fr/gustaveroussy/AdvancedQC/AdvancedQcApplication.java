@@ -18,7 +18,7 @@ import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBargraphJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBeeswarmJSON;
-import fr.gustaveroussy.AdvancedQC.service.impl.DistributionDesNivExpression;
+import fr.gustaveroussy.AdvancedQC.service.impl.DistributionNivExpression;
 import fr.gustaveroussy.AdvancedQC.service.impl.PourcentageTotal;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
@@ -41,7 +41,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
 			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
-			IDistributionNivExpression distrNivExpr = new DistributionDesNivExpression();
+			IDistributionNivExpression distrNivExpr = new DistributionNivExpression();
             ICreationBeeswarmJSON creationbeeswarm = new CreationBeeswarmJSON();
             ICreationBargraphJSON creationbargraph =new CreationBargraphJSON();
             

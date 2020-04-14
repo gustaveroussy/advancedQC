@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.IDistributionNivExpression;
 
-public class DistributionDesNivExpression implements IDistributionNivExpression {
+public class DistributionNivExpression implements IDistributionNivExpression {
 	
 //DECILES
 	@Override
@@ -62,5 +62,5 @@ public class DistributionDesNivExpression implements IDistributionNivExpression 
 	}
 	
 	private static Logger LOG = LoggerFactory
-		      .getLogger(DistributionDesNivExpression.class);
+		      .getLogger(DistributionNivExpression.class);
 }

@@ -7,7 +7,7 @@
     "pconfig": {
         "id": "custom_data_json_table_table",
         "title": "JSON table with ordered columns",
-        "ytype": "logarithmic"
+        "ytype": "linear"
 		  
     },
    "data": { 

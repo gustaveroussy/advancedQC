@@ -12,8 +12,8 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject createBrGJSON (JSONObject percentList) {
-		String path = "avdancedQC_brg_mqc.json";
-		String base = "/users/hadidjasaid/Documents/GitHub/advancedQC/MultiQC_file/ ";
+		String path = "avdancedQC_BGR_mqc.json";
+		String base = "/users/hadidjasaid/Documents ";
 		String relative = new File(base).toURI().relativize(new File(path).toURI()).getPath();	
 	
 	//construction du bloc  header
@@ -26,7 +26,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	header1.put("id", "bargraph_test");
 	header1.put("section_name", "Bargraph");
 	header1.put("plot_type", "bargraph");
-	LOG.info("header1{}", header1);
+	LOG.debug("header1{}", header1);
 	
 	pconfig.put("id", "custom data json bargraph");
 	pconfig.put("title", " percent val nul");
@@ -53,7 +53,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	fichierJSONfinal.putAll(header2);
 	fichierJSONfinal.putAll(data);
 	
-	LOG.debug("fichierJSONfinale {}",fichierJSONfinal);  
+	LOG.info("fichierJSONfinale {}",fichierJSONfinal);  
   
    	 
     //Write JSON file
@@ -66,7 +66,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
         e.printStackTrace();
     }
 	
-	return data;
+	return fichierJSONfinal;
 
 }
 	private static Logger LOG = LoggerFactory

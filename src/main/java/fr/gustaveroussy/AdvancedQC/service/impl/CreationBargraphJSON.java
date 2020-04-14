@@ -12,14 +12,13 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject createBrGJSON (JSONObject percentList, String path) {
-		String filename = "avdancedQC_BGR_mqc.json ";
-		path = "/users/hadidjasaid/Documents/";
-		String relative = new File(path).toURI().relativize(new File(filename).toURI()).getPath();
+		String fileNam = "BGR3_mqc.json";
+		String relative = new File(path).toURI().relativize(new File(fileNam).toURI()).getPath();
 	
 	//construction du bloc  header
 	JSONObject header1 = new JSONObject ();
-	JSONObject pconfigComplet= new JSONObject();//=2nde partie du header, permet d'avoir la bonne mise en forme
-	JSONObject pconfig1 = new JSONObject ();//info brute du pconfig
+	JSONObject pconfigComplet= new JSONObject();//=2nde partie du header, permet d'avoir la bonne mise en forme pour pconfig
+	JSONObject pconfig1 = new JSONObject ();//info brute de pconfig
 	
 	header1.put("id", "bargraph_test");
 	header1.put("section_name", "Bargraph");
@@ -53,7 +52,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
    	 
     //Write JSON file
     try (FileWriter file = new FileWriter(relative)) {
-
+LOG.info("filewriter file{}", file);
         file.write(fichierJSONfinal.toJSONString());
         file.flush();
 

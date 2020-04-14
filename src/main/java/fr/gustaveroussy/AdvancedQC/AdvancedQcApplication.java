@@ -60,8 +60,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
 			LOG.info("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane +"Q1 {}", quartileQ1 +"Q3 {}", quartileQ3);
 			
-			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3);
-			creationbargraph.createBrGJSON(listPercentValNull, "/users/hadidjasaid/ ");
+			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3, "/users/hadidjasaid/data");
+			creationbargraph.createBrGJSON(listPercentValNull, "/users/hadidjasaid/data");
 		
 		}else {
 			LOG.error("args must be 1");

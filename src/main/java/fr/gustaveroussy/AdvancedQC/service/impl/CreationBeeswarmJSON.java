@@ -11,11 +11,11 @@ import fr.gustaveroussy.AdvancedQC.service.ICreationBeeswarmJSON;
 public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 	
 		@SuppressWarnings("unchecked")
-		public JSONObject createBWJSON (JSONObject D1, JSONObject D9, JSONObject Q1,JSONObject Med,JSONObject Q3 ) {
-			String path = "avdancedQC_bw2_mqc.json";
-			String base = "/users/hadidjasaid/Documents/GitHub/advancedQC/MultiQC_file/ ";
-			String relative = new File(base).toURI().relativize(new File(path).toURI()).getPath();	
-			
+		public JSONObject createBWJSON (JSONObject D1, JSONObject D9, JSONObject Q1,JSONObject Med,JSONObject Q3 , String basePath) {
+			String fileName = "BW3_mqc.json";
+			String relative = new File(basePath).toURI().relativize(new File(fileName).toURI()).getPath();	
+			LOG.info("relative path {}",relative);
+			LOG.info("basePath{}",basePath);
 		//construction du bloc  header
 			JSONObject header1 = new JSONObject ();
 			JSONObject pconfigComplet= new JSONObject();//=2nde partie du header, permet d'avoir la bonne mise en forme

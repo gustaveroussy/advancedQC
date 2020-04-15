@@ -7,5 +7,5 @@ import org.json.simple.JSONObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public interface ICreationBargraphJSON {
-	JSONObject createBrGJSON (List<SamplewHeader> listwHeader, String path);
+	JSONObject createBrGJSON (List<SamplewHeader> listwHeader);
 }

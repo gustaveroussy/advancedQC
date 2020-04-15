@@ -1,7 +1,9 @@
 package fr.gustaveroussy.AdvancedQC.service;
 
+import java.util.List;
 import org.json.simple.JSONObject;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public interface ICreationBeeswarmJSON {
-	JSONObject createBWJSON (JSONObject Q1, JSONObject Q2, JSONObject Q3,JSONObject Q4,JSONObject Q5);
+	JSONObject createBWJSON (List<SamplewHeader> listwHeader);
 }

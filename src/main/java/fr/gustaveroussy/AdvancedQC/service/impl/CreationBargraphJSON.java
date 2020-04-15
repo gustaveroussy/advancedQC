@@ -1,15 +1,11 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
 
@@ -17,11 +13,11 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 
 //CREATION DU FICHIER JSON	
 	@SuppressWarnings("unchecked")
-	public JSONObject createBrGJSON(List<SamplewHeader> listwHeader, String path) {
-		
+	public JSONObject createBrGJSON(List<SamplewHeader> listwHeader) {
+
 		JSONObject percentotal = pourcenTotale(listwHeader);
 		JSONObject fichierJSONfinal = new JSONObject();
-		
+
 		// construction du bloc header
 		JSONObject header1 = new JSONObject();
 		JSONObject pconfigComplet = new JSONObject();// =2nde partie du header, permet d'avoir la bonne mise en forme
@@ -56,20 +52,13 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 
 		LOG.info("fichierJSONfinale {}", fichierJSONfinal);
 
-		// Write JSON file
-		try (FileWriter file = new FileWriter(path)) {
-			file.write(fichierJSONfinal.toJSONString());
-			file.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return fichierJSONfinal;
 	}
 
 	// CALCUL DU POURCENTAGE
 	@SuppressWarnings({ "unchecked" })
 	private JSONObject pourcenTotale(List<SamplewHeader> listwHeader) {
-		// List<SampleValue> sampleValueList = new ArrayList<SampleValue>();
+
 		JSONObject percentList = new JSONObject(); // remplace sampleValueList
 		for (int i = 0; i < listwHeader.size(); i++) {
 			JSONObject currsampl = new JSONObject();// remplace currSampleValue key=samplewheader.getSampleID,

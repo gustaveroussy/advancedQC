@@ -18,9 +18,10 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 //CREATION DU FICHIER JSON	
 	@SuppressWarnings("unchecked")
 	public JSONObject createBrGJSON(List<SamplewHeader> listwHeader, String path) {
-		PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
-		JSONObject listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
+		
+		JSONObject percentotal = pourcenTotale(listwHeader);
 		JSONObject fichierJSONfinal = new JSONObject();
+		
 		// construction du bloc header
 		JSONObject header1 = new JSONObject();
 		JSONObject pconfigComplet = new JSONObject();// =2nde partie du header, permet d'avoir la bonne mise en forme
@@ -43,7 +44,7 @@ public class CreationBargraphJSON implements ICreationBargraphJSON {
 		// construction du bloc data
 		JSONObject data = new JSONObject();
 		JSONObject percentData = new JSONObject();
-		percentData.putAll(listPercentValNull);
+		percentData.putAll(percentotal);
 
 		data.put("data", percentData);
 		LOG.debug("data bargraph{}", data);

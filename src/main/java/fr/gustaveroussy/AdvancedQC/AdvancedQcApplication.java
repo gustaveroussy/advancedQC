@@ -39,7 +39,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		if (args.length == 1) {
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
-			PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
+			//PourcentageTotal pourcentageDeValNull = new PourcentageTotal();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
 			IDistributionNivExpression distrNivExpr = new DistributionNivExpression();
             ICreationBeeswarmJSON creationbeeswarm = new CreationBeeswarmJSON();
@@ -48,8 +48,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
 			LOG.info ("listwheader{}",listwHeader);
-			JSONObject listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
-			LOG.info("pourcentage de valeurs nulles: {} " , listPercentValNull);
+			//JSONObject listPercentValNull = pourcentageDeValNull.pourcenTotale(listwHeader);
+			//LOG.info("pourcentage de valeurs nulles: {} " , listPercentValNull);
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
 		
@@ -60,8 +60,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			JSONObject  mediane = distrNivExpr.calculMediane(listwHeader);
 			LOG.info("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane +"Q1 {}", quartileQ1 +"Q3 {}", quartileQ3);
 			
-			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3, "/users/hadidjasaid/data");
-			creationbargraph.createBrGJSON(listPercentValNull, "/users/hadidjasaid/data");
+			creationbeeswarm.createBWJSON(decilemin, decilemax, quartileQ1, mediane, quartileQ3, "/users/hadidjasaid/data/1/BW5_mqc.json");
+			//creationbargraph.createBrGJSON(listPercentValNull, "/users/hadidjasaid/data/1");
 		
 		}else {
 			LOG.error("args must be 1");

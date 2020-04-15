@@ -12,9 +12,9 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 	
 		@SuppressWarnings("unchecked")
 		public JSONObject createBWJSON (JSONObject D1, JSONObject D9, JSONObject Q1,JSONObject Med,JSONObject Q3 , String basePath) {
-			String fileName = "BW3_mqc.json";
-			String relative = new File(basePath).toURI().relativize(new File(fileName).toURI()).getPath();	
-			LOG.info("relative path {}",relative);
+			//String fileName = "BW3_mqc.json";
+			//String relative = new File(basePath).toURI().relativize(new File(fileName).toURI()).getPath();	
+			//LOG.info("relative path {}",relative);
 			LOG.info("basePath{}",basePath);
 		//construction du bloc  header
 			JSONObject header1 = new JSONObject ();
@@ -54,16 +54,25 @@ public class CreationBeeswarmJSON implements ICreationBeeswarmJSON{
 			LOG.debug("beeswarm {}",fichierJSONfinal);  
 	      
 	     //Write JSON file
-	        try (FileWriter file = new FileWriter(relative)) {
+	        try (FileWriter file = new FileWriter(basePath)) {
 	 
 	            file.write(fichierJSONfinal.toJSONString());
-	            file.flush();
+	            file.close();
 	 
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
 			return fichierJSONfinal;
-	 }	
+	 }
+		
+		//Modif Methode Write JSON file avec throws à la place de catch (en cours)
+//		@SuppressWarnings("resource")
+//		public void writeAfile (String relative)throws IOException{   
+//		relative = new File(path).toURI().relativize(new File(fileNam).toURI()).getPath();
+//		FileWriter file = new FileWriter(relative);
+//		file.write(fichierJSONfinal.toJSONString());
+//		file.flush();
+//		}
 		private static Logger LOG = LoggerFactory
 			      .getLogger(CreationBeeswarmJSON.class);
 }

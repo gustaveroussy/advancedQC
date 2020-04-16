@@ -14,10 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.ILectureJSON;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.impl.LectureJSON;
+import fr.gustaveroussy.AdvancedQC.service.impl.EcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
 
@@ -40,8 +40,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
             ICreationJSON creationjson1 = new CreationJSON();
             ICreationJSON creationjson2 =new CreationJSON();
-            ILectureJSON BWforMqc =new LectureJSON();
-            ILectureJSON BGforMqc =new LectureJSON();
+            IEcritureMqc BWforMqc =new EcritureMqc();
+            IEcritureMqc BGforMqc =new EcritureMqc();
             
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
@@ -52,9 +52,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 
 			JSONObject BWjson = creationjson1.createBWJSON(listwHeader);
-			BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
+			BWforMqc.ecritureMqc(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
 			JSONObject BGjson = creationjson2.createBGJSON(listwHeader);
-			BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
+			BGforMqc.ecritureMqc(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
 			
 		
 		}else {

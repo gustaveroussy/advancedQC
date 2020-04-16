@@ -3,11 +3,11 @@ package fr.gustaveroussy.AdvancedQC.service.impl;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.simple.JSONObject;
-import fr.gustaveroussy.AdvancedQC.service.ILectureJSON;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
 
-public class LectureJSON implements ILectureJSON{
+public class EcritureMqc implements IEcritureMqc{
 
-	public  JSONObject lectureJSON (JSONObject fichierJSONfinal, String pathAbsolute) throws IOException {
+	public  JSONObject ecritureMqc (JSONObject fichierJSONfinal, String pathAbsolute) throws IOException {
 		@SuppressWarnings("resource")
 		FileWriter file = new FileWriter(pathAbsolute);
 				file.write(fichierJSONfinal.toJSONString());

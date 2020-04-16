@@ -13,12 +13,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.service.ICreationBargraphJSON;
-import fr.gustaveroussy.AdvancedQC.service.ICreationBeeswarmJSON;
+import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.ILectureJSON;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
-import fr.gustaveroussy.AdvancedQC.service.impl.CreationBargraphJSON;
-import fr.gustaveroussy.AdvancedQC.service.impl.CreationBeeswarmJSON;
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.LectureJSON;
 import fr.gustaveroussy.AdvancedQC.service.impl.RempliMapMoy;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
@@ -40,8 +38,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		if (args.length == 1) {
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
-            ICreationBeeswarmJSON creationbeeswarm = new CreationBeeswarmJSON();
-            ICreationBargraphJSON creationbargraph =new CreationBargraphJSON();
+            ICreationJSON creationbeeswarm = new CreationJSON();
+            ICreationJSON creationbargraph =new CreationJSON();
             ILectureJSON BWforMqc =new LectureJSON();
             ILectureJSON BGforMqc =new LectureJSON();
             
@@ -54,10 +52,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 			
 			JSONObject BWjson = creationbeeswarm.createBWJSON(listwHeader);
-			JSONObject BWfile = BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW1_mqc.json");
+			JSONObject BWfile = BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
 			LOG.info("fichier Beeswarm {}",BWfile);
-			JSONObject BGjson = creationbargraph.createBrGJSON(listwHeader);
-			JSONObject BGfile = BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG1_mqc.json");
+			JSONObject BGjson = creationbargraph.createBGJSON(listwHeader);
+			JSONObject BGfile = BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
 			LOG.info("fichier Beeswarm {}",BGfile);
 		
 		}else {

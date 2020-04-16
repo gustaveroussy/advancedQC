@@ -50,7 +50,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			List<SampleValue> listMeanGeneExpression = mapMoyExpDesGenes.geneExpressionMean(listwHeader);
 			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
 	
-			
+
 			JSONObject BWjson = creationjson1.createBWJSON(listwHeader);
 			JSONObject BWfile = BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
 			LOG.info("fichier Beeswarm {}",BWfile);

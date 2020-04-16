@@ -23,7 +23,7 @@ public class CreationJSON implements ICreationJSON {
 		JSONObject quartileQ1 = calculQ1(listwHeader);
 		JSONObject quartileQ3 = calculQ3(listwHeader);
 		JSONObject mediane = calculMediane(listwHeader);
-		LOG.info("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane + "Q1 {}", quartileQ1 + "Q3 {}",
+		LOG.debug("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane + "Q1 {}", quartileQ1 + "Q3 {}",
 				quartileQ3);
 		JSONObject headerBW = new JSONObject();
 		JSONObject pconfigCompletBW = new JSONObject();// =2nde partie du header, permet d'avoir la bonne mise en forme
@@ -154,7 +154,7 @@ public class CreationJSON implements ICreationJSON {
 		bgJSONfinal.putAll(pconfigCompletBG);
 		bgJSONfinal.putAll(data);
 
-		LOG.info("fichierJSONfinale {}", bgJSONfinal);
+		LOG.debug("fichierJSONfinale {}", bgJSONfinal);
 
 		return bgJSONfinal;
 	}
@@ -178,7 +178,7 @@ public class CreationJSON implements ICreationJSON {
 			LOG.debug("le pourcentage de val nul {}", currsampl);
 			percentList.putAll(currsampl);// add"
 		}
-		LOG.info("liste de % {}", percentList);
+		LOG.debug("liste de % {}", percentList);
 		return percentList;
 	}
 

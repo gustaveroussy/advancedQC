@@ -52,11 +52,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 
 			JSONObject BWjson = creationjson1.createBWJSON(listwHeader);
-			JSONObject BWfile = BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
-			LOG.info("fichier Beeswarm {}",BWfile);
+			BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
 			JSONObject BGjson = creationjson2.createBGJSON(listwHeader);
-			JSONObject BGfile = BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
-			LOG.info("fichier Beeswarm {}",BGfile);
+			BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
+			
 		
 		}else {
 			LOG.error("args must be 1");

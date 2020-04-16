@@ -38,8 +38,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		if (args.length == 1) {
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
 			RempliMapMoy mapMoyExpDesGenes = new RempliMapMoy();
-            ICreationJSON creationbeeswarm = new CreationJSON();
-            ICreationJSON creationbargraph =new CreationJSON();
+            ICreationJSON creationjson1 = new CreationJSON();
+            ICreationJSON creationjson2 =new CreationJSON();
             ILectureJSON BWforMqc =new LectureJSON();
             ILectureJSON BGforMqc =new LectureJSON();
             
@@ -51,10 +51,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			LOG.info("moyenne de taux d'expression des genes {}", listMeanGeneExpression);
 	
 			
-			JSONObject BWjson = creationbeeswarm.createBWJSON(listwHeader);
+			JSONObject BWjson = creationjson1.createBWJSON(listwHeader);
 			JSONObject BWfile = BWforMqc.lectureJSON(BWjson , "/users/hadidjasaid/data/1/BW2_mqc.json");
 			LOG.info("fichier Beeswarm {}",BWfile);
-			JSONObject BGjson = creationbargraph.createBGJSON(listwHeader);
+			JSONObject BGjson = creationjson2.createBGJSON(listwHeader);
 			JSONObject BGfile = BGforMqc.lectureJSON(BGjson,"/users/hadidjasaid/data/1/BG2_mqc.json");
 			LOG.info("fichier Beeswarm {}",BGfile);
 		

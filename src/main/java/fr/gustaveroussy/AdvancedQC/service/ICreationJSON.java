@@ -5,6 +5,6 @@ import org.json.simple.JSONObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public interface ICreationJSON {
-	JSONObject createBWJSON (List<SamplewHeader> listwHeader);
-	JSONObject createBGJSON(List<SamplewHeader> listwHeader);
+	JSONObject createJSON (List<SamplewHeader> listwHeader);
+	
 }

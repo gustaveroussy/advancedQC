@@ -8,8 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-
+@Deprecated
  public class RempliMapMoy {
+	 
 	public List<SampleValue> geneExpressionMean (List<SamplewHeader> listwHeader ) {
 	List<SampleValue> geneExpressionList = new ArrayList<SampleValue>();
 	SampleValue geneExpression = null;

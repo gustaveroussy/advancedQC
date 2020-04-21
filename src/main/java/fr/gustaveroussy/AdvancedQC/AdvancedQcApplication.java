@@ -27,24 +27,27 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 	private static Logger LOG = LoggerFactory
 		      .getLogger(AdvancedQcApplication.class);
-	
+
 	public static void main(String[] args) {
 		LOG.info("Hello World ");
 		SpringApplication.run(AdvancedQcApplication.class, args);
+	
 		LOG.info("Bye Bye World");		
 	}
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
 		if (args.length == 2) {
+			
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
             ICreationJSON creationjson1 = new CreationBWjson();
             ICreationJSON creationjson2 =new CreationBGjson();
             ArrayList<ICreationJSON> creationjsonArray= new ArrayList<ICreationJSON>();
             creationjsonArray.add(creationjson1);
             creationjsonArray.add(creationjson2);
-            //String path1 = "/Users/hadidjasaid/data/1";
-            Path path1 = Paths.get(args[1]);
+           // String path1 = "/Users/hadidjasaid/data/1";
+            
             IEcritureMqc jsonForMqc =new EcritureMqc();
   
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
@@ -53,7 +56,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 			for (ICreationJSON creationprime : creationjsonArray) {
             	JSONObject filemqc = creationprime.createJSON(listwHeader);
-            	jsonForMqc.ecritureMqc (filemqc,path1+ creationprime.getClass().getName().concat("_mqc.json"));
+            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getName().concat("_mqc.json"));
             	LOG.info("filemqc{}",filemqc);
 				}
 

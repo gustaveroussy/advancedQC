@@ -21,7 +21,7 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 
 		String[] colonnewheader = lignesdefichier.get(0).split("\t");
 		lignesdefichier.remove(0);// elimination du header de la liste "lines"
-		for (int i = 1; i < colonnewheader.length; i++) {
+		for (int i = 1; i < colonnewheader.length-1; i++) {
 			Map<String, Double> maMap = changeListenTabExploitable(lignesdefichier, i);
 			SamplewHeader sampleheader = new SamplewHeader(colonnewheader[i], maMap);
 			listwHeader.add(sampleheader);

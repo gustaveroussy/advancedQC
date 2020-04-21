@@ -52,12 +52,12 @@ public class AdvancedQcApplication implements CommandLineRunner {
   
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
-			LOG.info ("listwheader{}",listwHeader);
+			LOG.debug ("listwheader{}",listwHeader);
 	
 			for (ICreationJSON creationprime : creationjsonArray) {
             	JSONObject filemqc = creationprime.createJSON(listwHeader);
-            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getName().concat("_mqc.json"));
-            	LOG.info("filemqc{}",filemqc);
+            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getName().concat("1_mqc.json"));
+            	LOG.debug("filemqc{}",filemqc);
 				}
 
 		}else {

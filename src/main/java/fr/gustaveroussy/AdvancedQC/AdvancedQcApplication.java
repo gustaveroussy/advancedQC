@@ -3,6 +3,7 @@ package fr.gustaveroussy.AdvancedQC;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
 import org.json.simple.JSONObject;
@@ -27,7 +28,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		      .getLogger(AdvancedQcApplication.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdvancedQcApplication.class, args);	
+		
+		SpringApplication.run(AdvancedQcApplication.class, args);
+		LOG.info("Done");		
 	}
 	@Override
 	public void run(String... args) throws Exception {
@@ -41,8 +44,6 @@ public class AdvancedQcApplication implements CommandLineRunner {
             ArrayList<ICreationJSON> creationjsonArray= new ArrayList<ICreationJSON>();
             creationjsonArray.add(creationjson1);
             creationjsonArray.add(creationjson2);
-           // String path1 = "/Users/hadidjasaid/data/1";
-            
             IEcritureMqc jsonForMqc =new EcritureMqc();
   
 			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
@@ -56,7 +57,14 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				}
 
 		}else {
-			LOG.error("args must be 2");
+			if (args.length !=2){
+				LOG.error("args must be 2");
+			}
+			
+			File localDirectory = new File(args[0]);
+			if(! localDirectory.isDirectory()){
+				throw new IllegalArgumentException();
 		}
 	}	
+  }
 }

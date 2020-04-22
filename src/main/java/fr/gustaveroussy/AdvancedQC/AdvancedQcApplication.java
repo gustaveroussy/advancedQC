@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files ;
-import java.nio.file.Path;
-import fr.gustaveroussy.AdvancedQC.model.SampleValue;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +27,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		      .getLogger(AdvancedQcApplication.class);
 
 	public static void main(String[] args) {
-		LOG.info("Hello World ");
-		SpringApplication.run(AdvancedQcApplication.class, args);
-	
-		LOG.info("Bye Bye World");		
+		SpringApplication.run(AdvancedQcApplication.class, args);	
 	}
 	@Override
 	public void run(String... args) throws Exception {
@@ -56,7 +51,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	
 			for (ICreationJSON creationprime : creationjsonArray) {
             	JSONObject filemqc = creationprime.createJSON(listwHeader);
-            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getName().concat("1_mqc.json"));
+            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getSimpleName().concat("2_mqc.json"));
             	LOG.debug("filemqc{}",filemqc);
 				}
 

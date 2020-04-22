@@ -1,6 +1,5 @@
 package fr.gustaveroussy.AdvancedQC;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
@@ -34,8 +33,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
+	
 		if (args.length == 2) {
 			
 			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
@@ -46,7 +44,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
             creationjsonArray.add(creationjson2);
             IEcritureMqc jsonForMqc =new EcritureMqc();
   
-			List<String> lines = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
+            File localDirectory = new File(args[0]);
+			if(! localDirectory.isFile()){
+				throw new IllegalArgumentException("'"+args[0] +"' is a not a file");
+			}
+			List<String> lines = Files.readAllLines(localDirectory.toPath(), StandardCharsets.UTF_8);
 			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
 			LOG.debug ("listwheader{}",listwHeader);
 	
@@ -59,12 +61,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		}else {
 			if (args.length !=2){
 				LOG.error("args must be 2");
-			}
+			}		
 			
-			File localDirectory = new File(args[0]);
-			if(! localDirectory.isDirectory()){
-				throw new IllegalArgumentException();
-		}
 	}	
   }
 }

@@ -6,6 +6,7 @@ Le but de ce projet est d'effectuer un contrôle qualité sur des données NGS.
 -Java 13
 -Springboot
 -MultiQC
+-fichier de données au format tsv
 
 -------------------------------------------------------------------------------
 **INSTRUCTION**

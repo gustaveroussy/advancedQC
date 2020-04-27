@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files ;
+import java.nio.file.Files;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,48 +21,50 @@ import fr.gustaveroussy.AdvancedQC.service.impl.EcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
 
 @SpringBootApplication
-public class AdvancedQcApplication implements CommandLineRunner {	
-	
-	private static Logger LOG = LoggerFactory
-		      .getLogger(AdvancedQcApplication.class);
+public class AdvancedQcApplication implements CommandLineRunner {
+
+	private static Logger LOG = LoggerFactory.getLogger(AdvancedQcApplication.class);
 
 	public static void main(String[] args) {
-		
+
 		SpringApplication.run(AdvancedQcApplication.class, args);
-		LOG.info("Done");		
+		LOG.info("Done");
 	}
+
 	@Override
 	public void run(String... args) throws Exception {
-	
-		if (args.length == 2) {
-			
-			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
-            ICreationJSON creationjson1 = new CreationBWjson();
-            ICreationJSON creationjson2 =new CreationBGjson();
-            ArrayList<ICreationJSON> creationjsonArray= new ArrayList<ICreationJSON>();
-            creationjsonArray.add(creationjson1);
-            creationjsonArray.add(creationjson2);
-            IEcritureMqc jsonForMqc =new EcritureMqc();
-  
-            File localDirectory = new File(args[0]);
-			if(! localDirectory.isFile()){
-				throw new IllegalArgumentException("'"+args[0] +"' is a not a file");
-			}
-			List<String> lines = Files.readAllLines(localDirectory.toPath(), StandardCharsets.UTF_8);
-			List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
-			LOG.debug ("listwheader{}",listwHeader);
-	
-			for (ICreationJSON creationprime : creationjsonArray) {
-            	JSONObject filemqc = creationprime.createJSON(listwHeader);
-            	jsonForMqc.ecritureMqc (filemqc,args[1]+ creationprime.getClass().getSimpleName().concat("3_mqc.json"));
-            	LOG.debug("filemqc{}",filemqc);
-				}
 
-		}else {
-			if (args.length !=2){
+		if (args.length == 2) {
+
+			IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
+			ICreationJSON creationjson1 = new CreationBWjson();
+			ICreationJSON creationjson2 = new CreationBGjson();
+			ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
+			creationjsonArray.add(creationjson1);
+			creationjsonArray.add(creationjson2);
+			IEcritureMqc jsonForMqc = new EcritureMqc();
+
+			File localDirectory = new File(args[0]);
+			File localDirectorybis = new File(args[1]);
+			if (localDirectory.isFile() & localDirectorybis.isDirectory()) {
+				List<String> lines = Files.readAllLines(localDirectory.toPath(), StandardCharsets.UTF_8);
+				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
+				LOG.debug("listwheader{}", listwHeader);
+
+				for (ICreationJSON creationprime : creationjsonArray) {
+					JSONObject filemqc = creationprime.createJSON(listwHeader);
+					jsonForMqc.ecritureMqc(filemqc,
+							args[1] + creationprime.getClass().getSimpleName().concat("3_mqc.json"));
+					LOG.debug("filemqc{}", filemqc);
+				}
+			} else {
+				throw new IllegalArgumentException(
+						"'" + args[0] + " is a not a file" + " or " + args[1] + " is a not a directory");
+			}
+		} else {
+			if (args.length != 2) {
 				LOG.error("args must be 2");
-			}		
-			
-	}	
-  }
+			}
+		}
+	}
 }

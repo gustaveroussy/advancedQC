@@ -1,4 +1,4 @@
-*AdvancedQC*
+**AdvancedQC**
 The goal of this project is to realise  a quality control on NGS data. It allows to generate json files and a multiQC report.
 
 --------

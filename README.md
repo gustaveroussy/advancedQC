@@ -19,4 +19,4 @@ Java -jar <absolute_path>/fichier.jar <absolute_path>/fichier.tsv </local direct
 In order to create a MultiQc report you have to scan the directory where the json files are saved.
 example: `MultiQC  <local directory> -c <local directory>/GitHub/advancedQC/MultiQC_file/multiqc_config.yaml`.
 - You must add the customized config file named "multiqc_config.yaml". This command is necessary to obtain the beeswarm.
-- The emplacement of the report can be chose by the user by adding this command:`-o <local directory>/Documents`
+- The emplacement of the report can be chose by adding this command:`-o <local directory>/Documents`

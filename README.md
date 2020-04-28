@@ -6,6 +6,7 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 - Maven 3.6.3
 - Java 13
 - Springboot
+- Dependencies:commons-math3 (version 3.6.1), json-simple (version 1.1.1), commons-lang3.
 - MultiQC
 
 ------
@@ -20,3 +21,5 @@ In order to create a MultiQc report you have to scan the directory where the jso
 example: `MultiQC  <local directory> -c <local directory>/GitHub/advancedQC/MultiQC_file/multiqc_config.yaml`.
 - You must add the customized config file named "multiqc_config.yaml". This command is necessary to obtain the beeswarm.
 - The emplacement of the report can be chose by adding this command:`-o <local directory>/Documents`
+
+https://stackedit.io/

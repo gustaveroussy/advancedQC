@@ -14,7 +14,7 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 
 'Java -jar <absolute_path>/fichier.jar <absolute_path>/fichier.tsv </local directory>'
 
-'MultiQC <local directory> -c <local directory>/GitHub/advancedQC/MultiQC_file/multiqc_config.yaml'
+'MultiQC </local directory> -c <local directory>/GitHub/advancedQC/MultiQC_file/multiqc_config.yaml'
   
 -------
 *Details*

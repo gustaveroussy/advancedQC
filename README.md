@@ -1,5 +1,5 @@
 **AdvancedQC**
-The goal of this project is to realise  a quality control on NGS data. It allows to generate json files and a multiQC report.
+The goal of this project is to realise  a quality control on NGS data. It allows to generate json files and a multiQC report.The report will help to detect inconsistency and determine if these NGS data can be use for a study
 
 --------
 *Requirements:*

@@ -33,7 +33,7 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 		for(String str : lignesatransformer){	
 			 String[] toutesmescolonnes = str.split(spliter);	
 			 if( numechantillon +1 >toutesmescolonnes.length) {
-					throw new IllegalArgumentException("verifiez le fichier");
+					throw new IllegalArgumentException("anomaly detected in the number of samples,please check your file");
 				}else {
 				String valeurStringdufichier = toutesmescolonnes [numechantillon]; 
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);			

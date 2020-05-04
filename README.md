@@ -25,4 +25,4 @@ In order to create a MultiQc report you have to scan the directory where the jso
 *How to build a jar*
 - Download [Maven](https://maven.apache.org/download.cgi)
 - Clone the project
-- From advancedQc's directory run "mvn install"
+- From advancedQC's directory run "mvn install"

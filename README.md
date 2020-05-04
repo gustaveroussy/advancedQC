@@ -21,3 +21,8 @@ In order to create a MultiQc report you have to scan the directory where the jso
 - You must also add the customized config file named "multiqc_config.yaml". This command is necessary to obtain the beeswarm.
 - The emplacement of the report can be chose by adding this command:`-o <local directory>/report/`
 
+-------
+*How to build a jar*
+- Download [Maven](https://maven.apache.org/download.cgi)
+- Clone the project
+- From advancedQc's directory run "mvn install"

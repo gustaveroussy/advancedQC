@@ -5,6 +5,11 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 *Requirements:*
 - Java 13
 - [MultiQC](https://github.com/ewels/MultiQC)
+-------
+*How to build a jar:*
+- Download [Maven](https://maven.apache.org/download.cgi)
+- Clone the project
+- From advancedQC's directory, run "mvn install"
 
 ------
 *Usage*
@@ -28,8 +33,3 @@ In order to create a MultiQc report you have to scan the directory where the jso
 - You must also add the customized config file named "multiqc_config.yaml". This command is necessary to obtain the beeswarm.
 - The emplacement of the report can be chose by adding this command:`-o <local directory>/report/`
 
--------
-*How to build a jar*
-- Download [Maven](https://maven.apache.org/download.cgi)
-- Clone the project
-- From advancedQC's directory, run "mvn install"

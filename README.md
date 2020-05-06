@@ -18,11 +18,10 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 - `<absolute_path>/fichier.tsv` is the path to the file which will be analysed.
 - the tsv file should look like this:  
 
- `target_id	28_UT7_parentale_SRSF2_WT_S28/	29_UT7_parentale_SRSF2_WT_S29/`
- 
- `ENST00000387460.2	0.0	0.0`
- 
- `ENST00000387459.1	906.4	786.8710000000001`
+ target_id	|28_UT7_parentale_SRSF2_WT_S28/| 29_UT7_parentale_SRSF2_WT_S29/
+ ----------|------------------------------|-----------------------------
+ ENST00000387460.2|	0.0|	0.0
+ ENST00000387459.1|	906.4	|786.8710000000001
 
 - `<local directory>` is the directory where the json files will be created.
 In order to create a MultiQc report you have to scan the directory where the json files are saved.

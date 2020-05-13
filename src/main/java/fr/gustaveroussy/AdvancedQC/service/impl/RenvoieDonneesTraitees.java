@@ -38,8 +38,7 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 				String valeurStringdufichier = toutesmescolonnes [numechantillon]; 
 				double valeurDoubledufichier = Double.parseDouble (valeurStringdufichier);			
 				maMap.put(toutesmescolonnes [0], valeurDoubledufichier);
-				}
-					
+				}			
 		}	
 		LOG.debug( "map exploitable {}",maMap);
 		return (maMap) ;

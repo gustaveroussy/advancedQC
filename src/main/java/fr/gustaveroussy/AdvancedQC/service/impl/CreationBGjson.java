@@ -23,7 +23,7 @@ public class CreationBGjson implements ICreationJSON{
 			JSONObject pconfigCompletBG = new JSONObject();
 			JSONObject pconfigBG1 = new JSONObject();
 
-			headerBG.put("id", "bargraph_test");
+			headerBG.put("id", "bargraph");
 			headerBG.put("section_name", "Bargraph");
 			headerBG.put("plot_type", "bargraph");
 			LOG.debug("header1{}", headerBG);
@@ -66,8 +66,10 @@ public class CreationBGjson implements ICreationJSON{
 				JSONObject samplepercent = new JSONObject();// key= pourcentage val nul et val =percent
 				LOG.debug("liste avec les headers {}", samplewheader);
 				Double currPercent = pourcentTotal(samplewheader);
+				double nonNulPercent= 100 - currPercent ;
 				LOG.debug("currPercent{}", currPercent);
-				samplepercent.put("poucentage valeurs nulle", currPercent);
+				samplepercent.put("poucentage valeurs nulles", currPercent);
+				samplepercent.put("poucentage valeurs non nulles", nonNulPercent);
 				LOG.debug("samplepercent{}", samplepercent);
 				currsampl.put(samplewheader.getSampleID(), samplepercent);
 				LOG.debug("le pourcentage de val nul {}", currsampl);
@@ -79,17 +81,21 @@ public class CreationBGjson implements ICreationJSON{
 
 		// Méthode comptage des valeurs nulles et calcul du pourcentage de celles-ci dans l'echantillon
 		private double pourcentTotal(SamplewHeader samplewheader) {
-			int counter = 0;
+			double counter = 0;
 			Map<String, Double> maMap = samplewheader.getSampleGeneVal();
 			for (Entry<String, Double> entry : maMap.entrySet()) {
 				if (entry.getValue().equals(0.0)) {
 					counter = counter + 1;
 				}
 			}
+			double result = (counter*100) / maMap.size();
+			
+			LOG.debug("result{}", result);
 			LOG.debug("compteur {},", counter);
 			LOG.debug("mamap.size {}", maMap.size());
-			return (counter * 100) / maMap.size();
+			return result ;
 		}
+	
 		private static Logger LOG = LoggerFactory.getLogger(CreationBGjson.class);
 }
 

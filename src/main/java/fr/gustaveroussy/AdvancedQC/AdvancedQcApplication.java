@@ -54,7 +54,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				for (ICreationJSON creationprime : creationjsonArray) {
 					JSONObject filemqc = creationprime.createJSON(listwHeader);
 					jsonForMqc.ecritureMqc(filemqc,
-							args[1] + creationprime.getClass().getSimpleName().concat("3_mqc.json"));
+							args[1] + creationprime.getClass().getSimpleName().concat("1_mqc.json"));
 					LOG.debug("filemqc{}", filemqc);
 				}
 			} else {

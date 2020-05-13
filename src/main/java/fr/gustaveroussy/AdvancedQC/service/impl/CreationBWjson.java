@@ -27,7 +27,7 @@ public class CreationBWjson implements ICreationJSON {
 														// de pconfig
 		JSONObject pconfigBW1 = new JSONObject();// infos brutes du pconfig
 
-		headerBW.put("id", "beeswarm_test");
+		headerBW.put("id", "beeswarm");
 		headerBW.put("section_name", "Beeswarm");
 		headerBW.put("plot_type", "table");
 		LOG.debug("header1{}", headerBW);

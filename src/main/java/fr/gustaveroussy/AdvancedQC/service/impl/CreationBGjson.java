@@ -29,7 +29,7 @@ public class CreationBGjson implements ICreationJSON{
 			LOG.debug("header1{}", headerBG);
 
 			pconfigBG1.put("id", "custom data json bargraph");
-			pconfigBG1.put("title", " percent val nul");
+			pconfigBG1.put("title", " counting null values");
 			pconfigBG1.put("ylab", "Number");
 			LOG.debug("pconfig{}", pconfigBG1);
 
@@ -68,8 +68,8 @@ public class CreationBGjson implements ICreationJSON{
 				Double currPercent = pourcentTotal(samplewheader);
 				double nonNulPercent= 100 - currPercent ;
 				LOG.debug("currPercent{}", currPercent);
-				samplepercent.put("poucentage valeurs nulles", currPercent);
-				samplepercent.put("poucentage valeurs non nulles", nonNulPercent);
+				samplepercent.put(" null values", currPercent);
+				samplepercent.put("non null values", nonNulPercent);
 				LOG.debug("samplepercent{}", samplepercent);
 				currsampl.put(samplewheader.getSampleID(), samplepercent);
 				LOG.debug("le pourcentage de val nul {}", currsampl);

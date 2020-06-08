@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8"/>
+<head>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+ 
+  <script type="text/javascript" src="demoData.json"></script>
+
+<body>
+  <!-- Chart Placement[2] -->
+  <div id="myChart"></div>
+
+
+<div id="tester" style="width:600px;height:250px;"></div>
+
+<script>
+	TESTER = document.getElementById('myChart');
+	Plotly.newPlot( TESTER, myConfig, {
+	margin: { t: 0 } } );
+</script>
+
+
+</body>
+</html>

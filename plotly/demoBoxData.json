@@ -1,0 +1,11 @@
+let myConfig = [ {
+  y: [1, 2, 3, 4, 5],
+  name: 'sampleA',
+  type: 'box'
+  },
+  {
+  y: [1, 2, 4, 8, 32],
+  name: 'sampleB',
+  type: 'box'
+  }
+  ];

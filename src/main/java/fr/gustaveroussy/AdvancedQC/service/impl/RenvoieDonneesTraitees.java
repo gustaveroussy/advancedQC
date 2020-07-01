@@ -1,4 +1,4 @@
-package fr.gustaveroussy.AdvancedQC.service.impl;
+ package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +41,7 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 				}			
 		}	
 		LOG.debug( "map exploitable {}",maMap);
+	
 		return (maMap) ;
 	}
 	private static Logger LOG = LoggerFactory

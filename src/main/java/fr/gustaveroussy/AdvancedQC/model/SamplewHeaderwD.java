@@ -4,14 +4,14 @@ import java.util.Map;
 
 public class SamplewHeaderwD extends SamplewHeader{
 
-	String sampleDesign;
+	Map<String, String> sampleDesign;
 	
-	public SamplewHeaderwD(String sampleID,String sampleDesign, Map<String,Double> sampleGeneVal) {
+	public SamplewHeaderwD(String sampleID,Map <String, String> sampleDesign, Map<String,Double> sampleGeneVal) {
 		super(sampleID, sampleGeneVal);
 		this.sampleDesign= sampleDesign;
 	}
 	
-	public String getSampleCondition() {
+	public Map<String, String> getSampleCondition() {
 		return sampleDesign;
 	}
 	

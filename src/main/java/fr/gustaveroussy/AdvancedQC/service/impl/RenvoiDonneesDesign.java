@@ -1,35 +1,41 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 
-
 public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
- 
+
+	@SuppressWarnings("null")
 	@Override
-	public List<SamplewHeaderwD> renvoyerDonneesDesign (List <String> lignefichierDesign){
-	List<SamplewHeaderwD> listwheaderwd = new ArrayList<>();
-    String spliter = "\t";
-	String[] colonnewheaderwd = lignefichierDesign.get(1).split(spliter);
-	lignefichierDesign.remove(0);
-	
-	
-	for (String str : lignefichierDesign ){
-		String [] toutesmescolonnes = str.split(spliter);
-	//for (int i = 2; i < colonnewheaderwd.length; i++) {
-	SamplewHeaderwD samplewheaderwd = new SamplewHeaderwD (toutesmescolonnes[2], toutesmescolonnes[3], null);
-	
-	listwheaderwd.add(samplewheaderwd);
+	public List<SamplewHeaderwD> renvoyerDonneesDesign(List<String> lignefichierDesign) {
+		List<SamplewHeaderwD> listwheaderwd = new ArrayList<>();
+		String spliter = "\t";
+		String[] colonnewheaderwd = lignefichierDesign.get(0).split(spliter);
+		lignefichierDesign.remove(0);			
+		
+			for (String strdesign : lignefichierDesign) {
+				String[] colonnedesign = strdesign.split(spliter);
+				Map <String, String> mapDesign =new HashMap <String, String>() ;
+				for(int i= 3; i< colonnedesign.length; i ++) {
+				 mapDesign.put(colonnewheaderwd[i],colonnedesign[i]);
+				}
+				LOG.debug("mapdesign {}", mapDesign);	
+				for (int j=2 ; j < 3; j++ ){
+					String sampleIDdesign= colonnedesign[j];
+					SamplewHeaderwD samplewhwd = new SamplewHeaderwD(sampleIDdesign, mapDesign, null);
+					LOG.debug("samplewheaderwd {}", samplewhwd);
+					listwheaderwd.add(samplewhwd);
+				}
+			}		
+		return listwheaderwd;
 	}
-	LOG.debug("listwheaderwd", listwheaderwd);
-	return listwheaderwd;
-}
-	
-	
-	private static Logger LOG = LoggerFactory
-    .getLogger(RenvoiDonneesDesign.class);
+			
+
+	private static Logger LOG = LoggerFactory.getLogger(RenvoiDonneesDesign.class);
 }

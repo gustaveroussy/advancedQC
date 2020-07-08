@@ -40,7 +40,7 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 				maMap.put(toutesmescolonnes [0], valeurDoubledufichier);
 				}			
 		}	
-		LOG.debug( "map exploitable {}",maMap);
+		LOG.debug ( "map exploitable {}",maMap);
 	
 		return (maMap) ;
 	}

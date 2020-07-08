@@ -17,25 +17,24 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 		List<SamplewHeaderwD> listwheaderwd = new ArrayList<>();
 		String spliter = "\t";
 		String[] colonnewheaderwd = lignefichierDesign.get(0).split(spliter);
-		lignefichierDesign.remove(0);			
+		lignefichierDesign.remove(0);
+
+		for (String strdesign : lignefichierDesign) {
+			String[] colonnedesign = strdesign.split(spliter);
+			Map<String, String> mapDesign = new HashMap<String, String>();
+			for (int i = 3; i < colonnedesign.length; i++) {
+				mapDesign.put(colonnewheaderwd[i], colonnedesign[i]);
+			}
+			LOG.debug("mapdesign {}", mapDesign);
+			
+			String sampleIDdesign = colonnedesign[2];
+			SamplewHeaderwD samplewhwd = new SamplewHeaderwD(sampleIDdesign, mapDesign, null);
+			LOG.debug("samplewheaderwd {}", samplewhwd);
+			listwheaderwd.add(samplewhwd);
 		
-			for (String strdesign : lignefichierDesign) {
-				String[] colonnedesign = strdesign.split(spliter);
-				Map <String, String> mapDesign =new HashMap <String, String>() ;
-				for(int i= 3; i< colonnedesign.length; i ++) {
-				 mapDesign.put(colonnewheaderwd[i],colonnedesign[i]);
-				}
-				LOG.debug("mapdesign {}", mapDesign);	
-				for (int j=2 ; j < 3; j++ ){
-					String sampleIDdesign= colonnedesign[j];
-					SamplewHeaderwD samplewhwd = new SamplewHeaderwD(sampleIDdesign, mapDesign, null);
-					LOG.debug("samplewheaderwd {}", samplewhwd);
-					listwheaderwd.add(samplewhwd);
-				}
-			}		
+		}
 		return listwheaderwd;
 	}
-			
 
 	private static Logger LOG = LoggerFactory.getLogger(RenvoiDonneesDesign.class);
 }

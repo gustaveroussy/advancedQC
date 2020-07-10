@@ -43,7 +43,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			ICreationJSON creationjson1 = new CreationBWjson();
 			ICreationJSON creationjson2 = new CreationBGjson();
 			ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-			creationjsonArray.add(creationjson1);
+			//creationjsonArray.add(creationjson1);
 			creationjsonArray.add(creationjson2);
 			IEcritureMqc jsonForMqc = new EcritureMqc();
 
@@ -55,13 +55,6 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
 				LOG.debug("listwheader{}", listwHeader);
-
-				for (ICreationJSON creationprime : creationjsonArray) {
-					JSONObject filemqc = creationprime.createJSON(listwHeader);
-					jsonForMqc.ecritureMqc(filemqc,
-							args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
-					LOG.debug("filemqc{}", filemqc);
-				}
 				// ajout du fichier design
 				IRenvoiDonneesDesign renvoiDesign = new RenvoiDonneesDesign();
 				;
@@ -69,6 +62,13 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				List<SamplewHeaderwD> listwHeaderwD = renvoiDesign.renvoyerDonneesDesign(linewdesign, listwHeader);
 				LOG.info("listwheaderwd {}", listwHeaderwD);
 				//
+
+				for (ICreationJSON creationprime : creationjsonArray) {
+					JSONObject filemqc = creationprime.createwDJSON(listwHeaderwD);
+					jsonForMqc.ecritureMqc(filemqc,args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
+					LOG.debug("filemqc{}", filemqc);
+				}
+				
 
 			} else {
 				if (args.length == 2) {

@@ -8,10 +8,17 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 
 public class CreationBWjson implements ICreationJSON {
 
+	
+	public JSONObject createwDJSON(List<SamplewHeaderwD> listwHeaderwD) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 //CREATION BEESWARM
 	@SuppressWarnings("unchecked")
 	public JSONObject createJSON(List<SamplewHeader> listwHeader) {

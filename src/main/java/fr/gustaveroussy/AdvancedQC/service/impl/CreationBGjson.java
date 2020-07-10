@@ -3,20 +3,33 @@ package fr.gustaveroussy.AdvancedQC.service.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
+import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 
-public class CreationBGjson implements ICreationJSON{
+public class CreationBGjson implements ICreationJSON{	
+	
+	@Override
+	public JSONObject createwDJSON(List<SamplewHeaderwD> listwHeaderwD) {
+		
+		// TODO Auto-generated method stub
+		return createJSONinternal(listwHeaderwD);
+	}
+	
+		
+	@Override
+	public JSONObject createJSON(List<SamplewHeader> listwHeader) {
+		return createJSONinternal(listwHeader);
+	}
 	
 	//CREATION BARGRAPH	
 		@SuppressWarnings("unchecked")
-		public JSONObject createJSON(List<SamplewHeader> listwHeader) {
-
+		
+		private JSONObject createJSONinternal(List<? extends SamplewHeader> listwHeader) {
+			
 			JSONObject percentotal = pourcenTotale(listwHeader);
 			// construction du bloc header
 			JSONObject headerBG = new JSONObject();
@@ -57,7 +70,7 @@ public class CreationBGjson implements ICreationJSON{
 
 		// creation d'une liste avec nom de l'echantillon et le pourcentage de valeur nulle associé
 		@SuppressWarnings({ "unchecked" })
-		private JSONObject pourcenTotale(List<SamplewHeader> listwHeader) {
+		private JSONObject pourcenTotale(List<? extends SamplewHeader> listwHeader) {
 
 			JSONObject percentList = new JSONObject();
 			//for (int i = 0; i < listwHeader.size(); i++) {
@@ -95,7 +108,6 @@ public class CreationBGjson implements ICreationJSON{
 			LOG.debug("mamap.size {}", maMap.size());
 			return result ;
 		}
-	
 		private static Logger LOG = LoggerFactory.getLogger(CreationBGjson.class);
 }
 

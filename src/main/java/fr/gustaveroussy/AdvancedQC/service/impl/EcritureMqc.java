@@ -16,6 +16,6 @@ public class EcritureMqc implements IEcritureMqc{
 				file.flush();
 				return fichierJSONfinal;
 				}
-//	private static Logger LOG = LoggerFactory.getLogger(LectureJSON.class);
+//	private static Logger LOG = LoggerFactory.getLogger(EcritureJSON.class);
 
 }

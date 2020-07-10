@@ -20,17 +20,8 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 		String spliter = "\t";
 		List<SamplewHeaderwD> listwhwD = new ArrayList<>();
 		String[] colonnewheaderwd = lignefichierDesign.get(0).split(spliter);
-//		List<SamplewHeader> listwh = new ArrayList<>();
-//		String[] colonwH = lignefichierData.get(0).split(spliter);
-//		lignefichierData.remove(0);
-//		for (int i = 1; i < colonwH.length; i++) {
-//			Map<String, Double> mapGeneVal = changeListenTabExploitable(lignefichierData, i, spliter);
-//			SamplewHeader sampleheader = new SamplewHeader(colonwH[i], mapGeneVal);
-//			listwh.add(sampleheader);
-//			LOG.debug("mapgeneval {}", mapGeneVal);
-//			LOG.debug("sampleId {}",sampleheader.getSampleID());
-//		}
 		lignefichierDesign.remove(0);
+		
 		for (String strdesign : lignefichierDesign) {
 			String[] colonnedesign = strdesign.split(spliter);
 			Map<String, String> mapDesign = new HashMap<String, String>();
@@ -48,8 +39,8 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 			}
 			
 			SamplewHeaderwD samplewhwd = new SamplewHeaderwD(sampleIDdesign, mapDesign,mapGeneValDsg);
-			LOG.info("mapGenValDsg {}",mapGeneValDsg);
-			LOG.info("samplewheaderwd {}", samplewhwd);
+			LOG.debug("mapGenValDsg {}",mapGeneValDsg);
+			LOG.debug("samplewheaderwd {}", samplewhwd);
 			listwhwD.add(samplewhwd);
 				
 		}
@@ -63,24 +54,5 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 		}
 		return null;
 	}
-
-	private Map<String, Double> changeListenTabExploitable(List<String> lignesatransformer, Integer numechantillon,
-			String spliter) throws IllegalArgumentException {
-		Map<String, Double> maMap = new HashMap<String, Double>();
-		for (String str : lignesatransformer) {
-			String[] toutesmescolonnes = str.split(spliter);
-			if (numechantillon + 1 > toutesmescolonnes.length) {
-				throw new IllegalArgumentException("anomaly detected in the number of samples,please check your file");
-			} else {
-				String valeurStringdufichier = toutesmescolonnes[numechantillon];
-				double valeurDoubledufichier = Double.parseDouble(valeurStringdufichier);
-				maMap.put(toutesmescolonnes[0], valeurDoubledufichier);
-			}
-		}
-		LOG.debug("map exploitable {}", maMap);
-
-		return (maMap);
-	}
-
 	private static Logger LOG = LoggerFactory.getLogger(RenvoiDonneesDesign.class);
 }

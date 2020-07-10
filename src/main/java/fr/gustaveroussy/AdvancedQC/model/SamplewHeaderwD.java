@@ -17,7 +17,7 @@ public class SamplewHeaderwD extends SamplewHeader{
 	
 	@Override
 	public String toString() {
-		return this.sampleID + " " + this.sampleDesign +  " "+this.sampleGeneVal ;
+		return this.sampleID + " " + this.sampleDesign +  " "+this.sampleGeneVal;
 	}
 	
 }

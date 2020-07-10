@@ -49,11 +49,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 			File localDirectoryData = new File(args[0]);
 			File localDirectoryjson = new File(args[1]);
-			File localDirectoryDesign= new File(args[2]);
-			
+			File localDirectoryDesign = new File(args[2]);
+
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
-				List<String> lines = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
-				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lines);
+				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
+				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
 				LOG.debug("listwheader{}", listwHeader);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
@@ -62,21 +62,36 @@ public class AdvancedQcApplication implements CommandLineRunner {
 							args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
 					LOG.debug("filemqc{}", filemqc);
 				}
-			
-				//ajout du fichier design			
-			IRenvoiDonneesDesign renvoiDesign = new RenvoiDonneesDesign();;
-			List <String> linewdesign= Files.readAllLines(localDirectoryDesign.toPath(), StandardCharsets.UTF_8);
-			List <SamplewHeaderwD> listwHeaderwD= renvoiDesign.renvoyerDonneesDesign(linewdesign);
-			LOG.info("listwheaderwd {}",listwHeaderwD);
-			  //
-			
+				// ajout du fichier design
+				IRenvoiDonneesDesign renvoiDesign = new RenvoiDonneesDesign();
+				;
+				List<String> linewdesign = Files.readAllLines(localDirectoryDesign.toPath(), StandardCharsets.UTF_8);
+				List<SamplewHeaderwD> listwHeaderwD = renvoiDesign.renvoyerDonneesDesign(linewdesign, listwHeader);
+				LOG.info("listwheaderwd {}", listwHeaderwD);
+				//
+
 			} else {
-				throw new IllegalArgumentException(
-						"'" + args[0] + " is a not a file" + " or " + args[1] + " is a not a directory");
-			}
-		} else {
-			if (args.length != 2) {
-				LOG.error("args must be 2");
+				if (args.length == 2) {
+					if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
+						List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
+						List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
+						LOG.debug("listwheader{}", listwHeader);
+
+						for (ICreationJSON creationprime : creationjsonArray) {
+							JSONObject filemqc = creationprime.createJSON(listwHeader);
+							jsonForMqc.ecritureMqc(filemqc,
+									args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
+							LOG.debug("filemqc{}", filemqc);
+						}
+					} else {
+						throw new IllegalArgumentException(
+								"'" + args[0] + " is a not a file" + " or " + args[1] + " is a not a directory");
+					}
+				} else {
+					if (args.length != 2) {
+						LOG.error("args must be 2");
+					}
+				}
 			}
 		}
 	}

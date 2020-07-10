@@ -12,7 +12,8 @@ import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
 public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 	
 	@Override
-	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignesdefichier) {		
+	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignesdefichierInput) {
+		List<String> lignesdefichier = new ArrayList<String>(lignesdefichierInput);
 		List<SamplewHeader> listwHeader = new ArrayList<>();
         String spliter = "\t";
 		String[] colonnewheader = lignesdefichier.get(0).split(spliter);

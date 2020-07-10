@@ -16,7 +16,7 @@ public class SampleValue {
 	}
 	@Override
 	public String toString() {
-		return this.sampleName + " " + this.sampleValue +  " " ;
+		return this.sampleName + " " + this.sampleValue ;
 	}
 	
 }

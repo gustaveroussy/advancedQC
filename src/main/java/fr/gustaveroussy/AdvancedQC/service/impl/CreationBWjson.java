@@ -14,14 +14,25 @@ import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 public class CreationBWjson implements ICreationJSON {
 
 	
-	public JSONObject createwDJSON(List<SamplewHeaderwD> listwHeaderwD) {
+	
+	@Override
+	public JSONObject createwDsgJSON(List<SamplewHeaderwD> listwHeaderwD) {
+		
 		// TODO Auto-generated method stub
-		return null;
+		return createJSONwd(listwHeaderwD);
 	}
+	
+		
+	@Override
+	public JSONObject createJSON(List<SamplewHeader> listwHeader) {
+		return createJSONwd(listwHeader);
+	}
+	
+	
 	
 //CREATION BEESWARM
 	@SuppressWarnings("unchecked")
-	public JSONObject createJSON(List<SamplewHeader> listwHeader) {
+	private JSONObject createJSONwd(List<? extends SamplewHeader> listwHeader) {
 		JSONObject decilemin = calculDecileMin(listwHeader);
 		JSONObject decilemax = calculDecileMax(listwHeader);
 		JSONObject quartileQ1 = calculQ1(listwHeader);
@@ -71,7 +82,7 @@ public class CreationBWjson implements ICreationJSON {
 
 	// Methode PercentilValue permet de calculer les quantiles
 	@SuppressWarnings("unchecked")
-	private JSONObject percentileValue(List<SamplewHeader> listwHeader, Double percentile) {
+	private JSONObject percentileValue(List<? extends SamplewHeader> listwHeader, Double percentile) {
 		JSONObject quantilDetails = new JSONObject();
 		JSONObject quantilGrp = new JSONObject();
 
@@ -88,33 +99,33 @@ public class CreationBWjson implements ICreationJSON {
 	}
 
 	// Déciles
-	private JSONObject calculDecileMin(List<SamplewHeader> listwHeader) {
+	private JSONObject calculDecileMin(List<? extends SamplewHeader> listwHeader) {
 		// TODO Auto-generated method stub
 		JSONObject listD1 = percentileValue(listwHeader, 10.0);
 		LOG.debug("résultat D1: {}", listD1);
 		return listD1;
 	}
 
-	private JSONObject calculDecileMax(List<SamplewHeader> listwHeader) {
+	private JSONObject calculDecileMax(List<? extends SamplewHeader> listwHeader) {
 		JSONObject listD9 = percentileValue(listwHeader, 90.0);
 		LOG.debug("résultat D9: {}", listD9);
 		return listD9;
 	}
 	
 	// Mediane
-	private JSONObject calculMediane(List<SamplewHeader> listwHeader) {
+	private JSONObject calculMediane(List<? extends SamplewHeader> listwHeader) {
 		JSONObject listmed = percentileValue(listwHeader, 50.0);
 		LOG.debug("résultat median: {}", listmed);
 		return listmed;
 	}
 	
 	// Quartiles
-	private JSONObject calculQ1(List<SamplewHeader> listwHeader) {
+	private JSONObject calculQ1(List<? extends SamplewHeader> listwHeader) {
 		JSONObject listQ1 = percentileValue(listwHeader, 25.0);
 		LOG.debug("résultat Q1: {}", listQ1);
 		return listQ1;
 	}
-	private JSONObject calculQ3(List<SamplewHeader> listwHeader) {
+	private JSONObject calculQ3(List<? extends SamplewHeader> listwHeader) {
 		JSONObject listQ3 = percentileValue(listwHeader, 75.0);
 
 		LOG.debug("résultat Q3: {}", listQ3);

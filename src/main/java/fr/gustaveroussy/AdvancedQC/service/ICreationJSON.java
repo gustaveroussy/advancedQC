@@ -7,6 +7,6 @@ import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 
 public interface ICreationJSON {
 	JSONObject createJSON (List<SamplewHeader> listwHeader);
-	JSONObject createwDJSON(List<SamplewHeaderwD> listwHeaderwD);
+	JSONObject createwDsgJSON(List<SamplewHeaderwD> listwHeaderwD);
 	
 	}

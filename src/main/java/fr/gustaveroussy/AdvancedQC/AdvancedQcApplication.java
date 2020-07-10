@@ -43,7 +43,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			ICreationJSON creationjson1 = new CreationBWjson();
 			ICreationJSON creationjson2 = new CreationBGjson();
 			ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-			//creationjsonArray.add(creationjson1);
+		    creationjsonArray.add(creationjson1);
 			creationjsonArray.add(creationjson2);
 			IEcritureMqc jsonForMqc = new EcritureMqc();
 
@@ -64,12 +64,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				//
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					JSONObject filemqc = creationprime.createwDJSON(listwHeaderwD);
+					JSONObject filemqc = creationprime.createwDsgJSON(listwHeaderwD);
 					jsonForMqc.ecritureMqc(filemqc,args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
 					LOG.debug("filemqc{}", filemqc);
 				}
-				
-
+			
 			} else {
 				if (args.length == 2) {
 					if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {

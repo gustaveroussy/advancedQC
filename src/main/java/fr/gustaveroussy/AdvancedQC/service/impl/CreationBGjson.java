@@ -13,7 +13,7 @@ import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 public class CreationBGjson implements ICreationJSON{	
 	
 	@Override
-	public JSONObject createwDJSON(List<SamplewHeaderwD> listwHeaderwD) {
+	public JSONObject createwDsgJSON(List<SamplewHeaderwD> listwHeaderwD) {
 		
 		// TODO Auto-generated method stub
 		return createJSONinternal(listwHeaderwD);

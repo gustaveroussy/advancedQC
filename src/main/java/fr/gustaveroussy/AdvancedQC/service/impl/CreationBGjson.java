@@ -14,21 +14,20 @@ public class CreationBGjson implements ICreationJSON{
 	
 	@Override
 	public JSONObject createwDsgJSON(List<SamplewHeaderwD> listwHeaderwD) {
-		
+	
 		// TODO Auto-generated method stub
 		return createJSONinternal(listwHeaderwD);
 	}
 	
 		
-	@Override
 	public JSONObject createJSON(List<SamplewHeader> listwHeader) {
-		return createJSONinternal(listwHeader);
+		return createJSON(listwHeader);
 	}
 	
 	//CREATION BARGRAPH	
 		@SuppressWarnings("unchecked")
 		
-		private JSONObject createJSONinternal(List<? extends SamplewHeader> listwHeader) {
+		private JSONObject createJSONinternal(List<? extends SamplewHeaderwD> listwHeader) {
 			
 			JSONObject percentotal = pourcenTotale(listwHeader);
 			// construction du bloc header
@@ -70,21 +69,22 @@ public class CreationBGjson implements ICreationJSON{
 
 		// creation d'une liste avec nom de l'echantillon et le pourcentage de valeur nulle associé
 		@SuppressWarnings({ "unchecked" })
-		private JSONObject pourcenTotale(List<? extends SamplewHeader> listwHeader) {
+		private JSONObject pourcenTotale(List<? extends SamplewHeaderwD> listwHeader) {
 
 			JSONObject percentList = new JSONObject();
 			//for (int i = 0; i < listwHeader.size(); i++) {
-				for (SamplewHeader samplewheader : listwHeader) {
+				for (SamplewHeaderwD samplewheaderwd : listwHeader) {
 				JSONObject currsampl = new JSONObject();// key=samplewheader.getSampleID et val=samplepercent
 				JSONObject samplepercent = new JSONObject();// key= pourcentage val nul et val =percent
-				LOG.debug("liste avec les headers {}", samplewheader);
-				Double currPercent = pourcentTotal(samplewheader);
+				LOG.debug("liste avec les headers {}", samplewheaderwd);
+				Double currPercent = pourcentTotal(samplewheaderwd);
 				double nonNulPercent= 100 - currPercent ;
 				LOG.debug("currPercent{}", currPercent);
-				samplepercent.put(" null values", currPercent);
+				String condition = samplewheaderwd.getSampleCondition().toString().concat("null values");//ajout condition ds la légende
+				samplepercent.put(condition, currPercent);
 				samplepercent.put("non null values", nonNulPercent);
 				LOG.debug("samplepercent{}", samplepercent);
-				currsampl.put(samplewheader.getSampleID(), samplepercent);
+				currsampl.put(samplewheaderwd.getSampleID(), samplepercent);
 				LOG.debug("le pourcentage de val nul {}", currsampl);
 				percentList.putAll(currsampl);// add"
 			}

@@ -14,25 +14,10 @@ import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 public class CreationBWjson implements ICreationJSON {
 
 	
-	
-	@Override
-	public JSONObject createwDsgJSON(List<SamplewHeaderwD> listwHeaderwD) {
-		
-		// TODO Auto-generated method stub
-		return createJSONwd(listwHeaderwD);
-	}
-	
-		
-	@Override
-	public JSONObject createJSON(List<SamplewHeader> listwHeader) {
-		return createJSONwd(listwHeader);
-	}
-	
-	
-	
-//CREATION BEESWARM
 	@SuppressWarnings("unchecked")
-	private JSONObject createJSONwd(List<? extends SamplewHeader> listwHeader) {
+	@Override
+	public JSONObject createJSON(List<? extends SamplewHeader> listwHeader) {
+
 		JSONObject decilemin = calculDecileMin(listwHeader);
 		JSONObject decilemax = calculDecileMax(listwHeader);
 		JSONObject quartileQ1 = calculQ1(listwHeader);

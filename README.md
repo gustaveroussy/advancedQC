@@ -30,7 +30,7 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 
 - `<local directory>` is the directory where the json files will be created.
 - `<absolute_path>/optional-design.tsv` is the path to the design file, this one is optional.
--the designe file should look like this:
+- the design file should look like this:
 
 Downstream_file|	Upstream_file	|Sample_id	|Design 1|	Design 2
 ---------------|---------------|----------|--------|---------

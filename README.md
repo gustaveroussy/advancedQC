@@ -31,10 +31,10 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 - `<local directory>` is the directory where the json files will be created.
 - `<absolute_path>/optional-design.tsv` is the path to the design file, this one is optional.
 -the designe file should look like this:
-Downstream_file |	Upstream_file	|Sample_id	|Design 1|	Design 2|	..
-----------------|---------------|----------|--------|---------|
-/mnt/beegfs/scratch/bioinfo_core/B19090_CHWI_02/bakcup/P30_CHWI_4/28_UT7_parentale_SRSF2_WT_S28_R2_001.fastq.gz	|/mnt/beegfs/scratch/bioinfo_core/B19090_CHWI_02/bakcup/P30_CHWI_4/28_UT7_parentale_SRSF2_WT_S28_R1_001.fastq.gz|	28_UT7_parentale_SRSF2_WT_S28|	S1 |	T1 |	
-/mnt/beegfs/scratch/bioinfo_core/B19090_CHWI_02/bakcup/P30_CHWI_4/29_UT7_parentale_SRSF2_WT_S29_R2_001.fastq.gz	|/mnt/beegfs/scratch/bioinfo_core/B19090_CHWI_02/bakcup/P30_CHWI_4/29_UT7_parentale_SRSF2_WT_S29_R1_001.fastq.gz|	29_UT7_parentale_SRSF2_WT_S29|	S2	| T2 |	
+Downstream_file |	Upstream_file	|Sample_id	|Design 1|	Design 2
+----------------|---------------|----------|--------|---------
+/mnt/beegfs/scratch/bioinfo_core/...fastq.gz	|/mnt/beegfs/scratch/bioinfo_core/...fastq.gz|	28_UT7_parentale_SRSF2_WT_S28|	S1 |	T1 |	
+/mnt/beegfs/scratch/bioinfo_core/...fastq.gz	|/mnt/beegfs/scratch/bioinfo_core/...fastq.gz|	29_UT7_parentale_SRSF2_WT_S29|	S2	| T2 |	
 
 To be recognize, the samples must have exactly the same ID in both files.
 In order to create a MultiQc report you have to scan the directory where the json files are saved.

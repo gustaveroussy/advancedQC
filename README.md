@@ -38,6 +38,7 @@ Downstream_file|	Upstream_file	|Sample_id	|Design 1|	Design 2
 /mnt/beegfs/scratch/...fastq.gz	|/mnt/beegfs/scratch/..fastq.gz|	29_UT7_parentale_SRSF2_WT_S29|	S2	| T2 	
 
 To be recognize, the samples must have exactly the same ID in both files.
+
 In order to create a MultiQc report you have to scan the directory where the json files are saved.
 - You must also add the customized config file named "multiqc_config.yaml". This command is necessary to obtain the beeswarm.
 - The emplacement of the report can be chose by adding this command:`-o <local directory>/report/`

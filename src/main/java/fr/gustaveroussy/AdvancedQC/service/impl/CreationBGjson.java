@@ -75,10 +75,10 @@ public class CreationBGjson implements ICreationJSON {
 			samplepercent.put("non null values", nonNulPercent);
 			samplepercent.put(label, currPercent);
 			
-			LOG.info("samplepercent{}", samplepercent);
+			LOG.debug("samplepercent{}", samplepercent);
 			//currmaptree.put(samplewheader.getSampleID(), samplepercent);
 			JsonElement currsamplJSON = gSONparser.toJsonTree(samplepercent, TreeMap.class);
-			LOG.info("currsampleJSON{}", currsamplJSON);
+			LOG.debug("currsampleJSON{}", currsamplJSON);
 			percentList.add(samplewheader.getSampleID(), currsamplJSON);
 		}
 		LOG.debug("liste de % {}", percentList);

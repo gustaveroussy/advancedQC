@@ -1,10 +1,12 @@
 package fr.gustaveroussy.AdvancedQC.service;
 
 import java.util.List;
-import org.json.simple.JSONObject;
+
+import com.google.gson.JsonObject;
+
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 
 public interface ICreationJSON {
-	JSONObject createJSON(List<? extends SamplewHeader> listwHeader);
+	JsonObject createJSON(List<? extends SamplewHeader> listwHeader);
 	
 	}

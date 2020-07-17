@@ -5,12 +5,15 @@ import java.util.List;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.google.gson.JsonElement;
+
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
@@ -61,7 +64,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				LOG.debug("listwheaderwd {}", listwHeaderwD);
 				
 				for (ICreationJSON creationprime : creationjsonArray) {
-					JSONObject filemqc = creationprime.createJSON(listwHeaderwD);
+					JsonElement filemqc = creationprime.createJSON(listwHeaderwD);
 					jsonForMqc.ecritureMqc(filemqc,
 							args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
 					LOG.debug("filemqc{}", filemqc);
@@ -85,7 +88,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 					LOG.debug("listwheader{}", listwHeader);
 
 					for (ICreationJSON creationprime : creationjsonArray) {
-						JSONObject filemqc = creationprime.createJSON(listwHeader);
+						JsonElement filemqc = creationprime.createJSON(listwHeader);
 						jsonForMqc.ecritureMqc(filemqc,
 								args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
 						LOG.debug("filemqc{}", filemqc);

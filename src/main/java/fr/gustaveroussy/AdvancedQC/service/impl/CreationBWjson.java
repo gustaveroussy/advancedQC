@@ -4,61 +4,56 @@ import java.util.Collection;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
+
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 
 public class CreationBWjson implements ICreationJSON {
 
-	
-	@SuppressWarnings("unchecked")
 	@Override
-	public JSONObject createJSON(List<? extends SamplewHeader> listwHeader) {
-
-		JSONObject decilemin = calculDecileMin(listwHeader);
-		JSONObject decilemax = calculDecileMax(listwHeader);
-		JSONObject quartileQ1 = calculQ1(listwHeader);
-		JSONObject quartileQ3 = calculQ3(listwHeader);
-		JSONObject mediane = calculMediane(listwHeader);
+	public JsonObject createJSON(List<? extends SamplewHeader> listwHeader) {
+		JsonObject bwJSONfinal = new JsonObject();
+		JsonObject decilemin = calculDecileMin(listwHeader);
+		JsonObject decilemax = calculDecileMax(listwHeader);
+		JsonObject quartileQ1 = calculQ1(listwHeader);
+		JsonObject quartileQ3 = calculQ3(listwHeader);
+		JsonObject mediane = calculMediane(listwHeader);
 		LOG.debug("D1 {}", decilemin + "D9 {}", decilemax + "mediane {}", mediane + "Q1 {}", quartileQ1 + "Q3 {}",
 				quartileQ3);
-		JSONObject headerBW = new JSONObject();
-		JSONObject pconfigCompletBW = new JSONObject();// =2nde partie du header, permet d'avoir la bonne mise en forme
+		JsonObject headerBW = new JsonObject();
+		JsonObject pconfigCompletBW = new JsonObject();// =2nde partie du header, permet d'avoir la bonne mise en forme
 														// de pconfig
-		JSONObject pconfigBW1 = new JSONObject();// infos brutes du pconfig
-
-		headerBW.put("id", "beeswarm");
-		headerBW.put("section_name", "Beeswarm");
-		headerBW.put("plot_type", "table");
+		
+		// ensemble des données constituant le header fichier json 
+		bwJSONfinal.addProperty("id", "beeswarm");
+		bwJSONfinal.addProperty("section_name", "Beeswarm");
+		bwJSONfinal.addProperty("plot_type", "table");
 		LOG.debug("header1{}", headerBW);
 
-		pconfigBW1.put("id", "custom data json table");
-		pconfigBW1.put("title", " beeswarms quantiles");
-		pconfigBW1.put("ytype", "linear");
+		JsonObject pconfigBW1 = new JsonObject();// infos brutes du pconfig
+		pconfigBW1.addProperty("id", "custom data json table");
+		pconfigBW1.addProperty("title", " beeswarms quantiles");
+		pconfigBW1.addProperty("ytype", "linear");
 		LOG.debug("pconfig{}", pconfigBW1);
 
-		pconfigCompletBW.put("pconfig", pconfigBW1);
+		bwJSONfinal.add("pconfig", pconfigBW1);
 		LOG.debug("header2{}", pconfigCompletBW);
 
 		// construction du bloc data BW
-		JSONObject data = new JSONObject();
-		JSONObject quantiles = new JSONObject();
-		quantiles.putAll(decilemin);
-		quantiles.putAll(decilemax);
-		quantiles.putAll(quartileQ1);
-		quantiles.putAll(mediane);
-		quantiles.putAll(quartileQ3);
+		
+		JsonObject data = new JsonObject();
+		data.add("Decile Min",calculDecileMin(listwHeader));
+		data.add("Decile Max",calculDecileMax(listwHeader));
+		data.add("Quantile Min",calculQ1(listwHeader));
+		data.add("Quantile Max",calculQ3(listwHeader));
+		data.add("Mediane",calculMediane(listwHeader));
+		
+		bwJSONfinal.add("data", data);
 
-		data.put("data", quantiles);
-
-		// ensemble des données constituant le fichier json cad header+data
-		JSONObject bwJSONfinal = new JSONObject();
-		bwJSONfinal.putAll(headerBW);// putAll ne rajoute pas de quote supp
-		bwJSONfinal.putAll(pconfigCompletBW);
-		bwJSONfinal.putAll(data);
 
 		LOG.debug("beeswarm {}", bwJSONfinal);
 
@@ -66,10 +61,9 @@ public class CreationBWjson implements ICreationJSON {
 	}
 
 	// Methode PercentilValue permet de calculer les quantiles
-	@SuppressWarnings("unchecked")
-	private JSONObject percentileValue(List<? extends SamplewHeader> listwHeader, Double percentile) {
-		JSONObject quantilDetails = new JSONObject();
-		JSONObject quantilGrp = new JSONObject();
+	private JsonObject percentileValue(List<? extends SamplewHeader> listwHeader, Double percentile) {
+		JsonObject quantilDetails = new JsonObject();
+		
 
 		for (int i = 0; i < listwHeader.size(); i++) {
 			Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
@@ -77,41 +71,40 @@ public class CreationBWjson implements ICreationJSON {
 			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
 			double percentilecal = StatUtils.percentile(valsamplefinal, percentile);
 			LOG.debug("decilemin{}", percentilecal);
-			quantilDetails.put(listwHeader.get(i).getSampleID(), percentilecal);
-			quantilGrp.put(percentile, quantilDetails);
+			quantilDetails.addProperty(listwHeader.get(i).getSampleID(), percentilecal);
 		}
-		return quantilGrp;
+		return quantilDetails;
 	}
 
 	// Déciles
-	private JSONObject calculDecileMin(List<? extends SamplewHeader> listwHeader) {
+	private JsonObject calculDecileMin(List<? extends SamplewHeader> listwHeader) {
 		// TODO Auto-generated method stub
-		JSONObject listD1 = percentileValue(listwHeader, 10.0);
+		JsonObject listD1 = percentileValue(listwHeader, 10.0);
 		LOG.debug("résultat D1: {}", listD1);
 		return listD1;
 	}
 
-	private JSONObject calculDecileMax(List<? extends SamplewHeader> listwHeader) {
-		JSONObject listD9 = percentileValue(listwHeader, 90.0);
+	private JsonObject calculDecileMax(List<? extends SamplewHeader> listwHeader) {
+		JsonObject listD9 = percentileValue(listwHeader, 90.0);
 		LOG.debug("résultat D9: {}", listD9);
 		return listD9;
 	}
 	
 	// Mediane
-	private JSONObject calculMediane(List<? extends SamplewHeader> listwHeader) {
-		JSONObject listmed = percentileValue(listwHeader, 50.0);
+	private JsonObject calculMediane(List<? extends SamplewHeader> listwHeader) {
+		JsonObject listmed = percentileValue(listwHeader, 50.0);
 		LOG.debug("résultat median: {}", listmed);
 		return listmed;
 	}
 	
 	// Quartiles
-	private JSONObject calculQ1(List<? extends SamplewHeader> listwHeader) {
-		JSONObject listQ1 = percentileValue(listwHeader, 25.0);
+	private JsonObject calculQ1(List<? extends SamplewHeader> listwHeader) {
+		JsonObject listQ1 = percentileValue(listwHeader, 25.0);
 		LOG.debug("résultat Q1: {}", listQ1);
 		return listQ1;
 	}
-	private JSONObject calculQ3(List<? extends SamplewHeader> listwHeader) {
-		JSONObject listQ3 = percentileValue(listwHeader, 75.0);
+	private JsonObject calculQ3(List<? extends SamplewHeader> listwHeader) {
+		JsonObject listQ3 = percentileValue(listwHeader, 75.0);
 
 		LOG.debug("résultat Q3: {}", listQ3);
 		return listQ3;

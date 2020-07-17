@@ -4,11 +4,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
+
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 
 public class CreationBGjson implements ICreationJSON {
 
@@ -16,40 +24,28 @@ public class CreationBGjson implements ICreationJSON {
 	// CREATION BARGRAPH
 	@SuppressWarnings("unchecked")
 	@Override
-	public JSONObject createJSON(List<? extends SamplewHeader> listwHeader) {
-
-		JSONObject percentotal = pourcenTotale(listwHeader);
+	public JsonObject createJSON(List<? extends SamplewHeader> listwHeader) {
+		
+		// ensemble des données constituant le fichier json cad header+data
+		JsonObject bgJSONfinal = new JsonObject();
 		// construction du bloc header
-		JSONObject headerBG = new JSONObject();
-		JSONObject pconfigCompletBG = new JSONObject();
-		JSONObject pconfigBG1 = new JSONObject();
-
-		headerBG.put("id", "bargraph");
-		headerBG.put("section_name", "Bargraph");
-		headerBG.put("plot_type", "bargraph");
-		LOG.debug("header1{}", headerBG);
-
-		pconfigBG1.put("id", "custom data json bargraph");
-		pconfigBG1.put("title", " counting null values");
-		pconfigBG1.put("ylab", "Number");
+		
+		bgJSONfinal.addProperty("id", "bargraph");
+		bgJSONfinal.addProperty("section_name", "Bargraph");
+		bgJSONfinal.addProperty("plot_type", "bargraph");
+		
+		JsonObject pconfigBG1 =new JsonObject();
+		pconfigBG1.addProperty("id", "custom data json bargraph");
+		pconfigBG1.addProperty("title", " counting null values");
+		pconfigBG1.addProperty("ylab", "Number");
 		LOG.debug("pconfig{}", pconfigBG1);
 
-		pconfigCompletBG.put("pconfig", pconfigBG1);
-		LOG.debug("pconfig{}", pconfigCompletBG);
+		bgJSONfinal.add("pconfig", pconfigBG1);
 
 		// construction du bloc data BG
-		JSONObject data = new JSONObject();
-		JSONObject percentData = new JSONObject();
-		percentData.putAll(percentotal);
+		bgJSONfinal.add("data", percenTotal(listwHeader));
 
-		data.put("data", percentData);
-		LOG.debug("data bargraph{}", data);
-
-		// ensemble des données constituant le fichier json cad header+data
-		JSONObject bgJSONfinal = new JSONObject();
-		bgJSONfinal.putAll(headerBG);
-		bgJSONfinal.putAll(pconfigCompletBG);
-		bgJSONfinal.putAll(data);
+		
 
 		LOG.debug("fichierJSONfinale {}", bgJSONfinal);
 
@@ -59,15 +55,16 @@ public class CreationBGjson implements ICreationJSON {
 	// creation d'une liste avec nom de l'echantillon et le pourcentage de valeur
 	// nulle associé
 	@SuppressWarnings({ "unchecked" })
-	private JSONObject pourcenTotale(List<? extends SamplewHeader> listwHeader) {
-
-		JSONObject percentList = new JSONObject();
+	private JsonElement percenTotal(List<? extends SamplewHeader> listwHeader) {
+		Gson gSONparser = new Gson();
+		JsonObject percentList = new JsonObject();
 		// for (int i = 0; i < listwHeader.size(); i++) {
 		for (SamplewHeader samplewheader : listwHeader) {
-			JSONObject currsampl = new JSONObject();// key=samplewheader.getSampleID et val=samplepercent
+			// Map<String,Gson> currmaptree =new TreeMap<String, Gson>();//map trié
+			 
 			LinkedHashMap<String, Double> samplepercent = new LinkedHashMap<String, Double>();// key= pourcentage val nul et val =percent
 			LOG.debug("liste avec les headers {}", samplewheader);
-			Double currPercent = pourcentTotal(samplewheader);
+			Double currPercent = countPercValNul(samplewheader);
 			double nonNulPercent = 100 - currPercent;
 			LOG.debug("currPercent{}", currPercent);
 			String label = "null values";
@@ -79,9 +76,10 @@ public class CreationBGjson implements ICreationJSON {
 			samplepercent.put(label, currPercent);
 			
 			LOG.info("samplepercent{}", samplepercent);
-			currsampl.put(samplewheader.getSampleID(), new JSONObject(samplepercent));
-			LOG.info("le pourcentage de val nul currsampl {}", currsampl);
-			percentList.putAll(currsampl);// add"
+			//currmaptree.put(samplewheader.getSampleID(), samplepercent);
+			JsonElement currsamplJSON = gSONparser.toJsonTree(samplepercent, TreeMap.class);
+			LOG.info("currsampleJSON{}", currsamplJSON);
+			percentList.add(samplewheader.getSampleID(), currsamplJSON);
 		}
 		LOG.debug("liste de % {}", percentList);
 		return percentList;
@@ -89,7 +87,7 @@ public class CreationBGjson implements ICreationJSON {
 		
 	// Méthode comptage des valeurs nulles et calcul du pourcentage de celles-ci
 	// dans l'echantillon
-	private double pourcentTotal(SamplewHeader samplewheader) {
+	private double countPercValNul(SamplewHeader samplewheader) {
 		double counter = 0;
 		Map<String, Double> maMap = samplewheader.getSampleGeneVal();
 		for (Entry<String, Double> entry : maMap.entrySet()) {

@@ -5,14 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,7 +19,6 @@ public class CreationBGjson implements ICreationJSON {
 
 
 	// CREATION BARGRAPH
-	@SuppressWarnings("unchecked")
 	@Override
 	public JsonObject createJSON(List<? extends SamplewHeader> listwHeader) {
 		
@@ -54,7 +50,6 @@ public class CreationBGjson implements ICreationJSON {
 
 	// creation d'une liste avec nom de l'echantillon et le pourcentage de valeur
 	// nulle associé
-	@SuppressWarnings({ "unchecked" })
 	private JsonElement percenTotal(List<? extends SamplewHeader> listwHeader) {
 		Gson gSONparser = new Gson();
 		JsonObject percentList = new JsonObject();

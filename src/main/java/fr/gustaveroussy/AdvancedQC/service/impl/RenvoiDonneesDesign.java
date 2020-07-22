@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 
+@Service
 public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 
 	@SuppressWarnings("null")

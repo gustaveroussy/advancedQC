@@ -6,10 +6,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.google.gson.JsonObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 
+@Service
 public class CreationBWjson implements ICreationJSON {
 
 	@Override
@@ -74,9 +77,8 @@ public class CreationBWjson implements ICreationJSON {
 		return quantilDetails;
 	}
 
-	// Déciles
+	// Deciles
 	private JsonObject calculDecileMin(List<? extends SamplewHeader> listwHeader) {
-		// TODO Auto-generated method stub
 		JsonObject listD1 = percentileValue(listwHeader, 10.0);
 		LOG.debug("résultat D1: {}", listD1);
 		return listD1;

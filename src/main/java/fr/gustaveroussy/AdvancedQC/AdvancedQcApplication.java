@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,36 +20,39 @@ import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBWjson;
-import fr.gustaveroussy.AdvancedQC.service.impl.EcritureMqc;
-import fr.gustaveroussy.AdvancedQC.service.impl.RenvoiDonneesDesign;
-import fr.gustaveroussy.AdvancedQC.service.impl.RenvoiDonneesTraitees;
 
 @SpringBootApplication
 public class AdvancedQcApplication implements CommandLineRunner {
 
 	private static Logger LOG = LoggerFactory.getLogger(AdvancedQcApplication.class);
 
-	public static void main(String[] args) {
+	@Autowired
+	private CreationBWjson creationjson1;
+	@Autowired
+	private CreationBGjson creationjson2;
+	@Autowired
+	private IEcritureMqc jsonForMqc;
+	@Autowired
+	private IRenvoiDonnesTraitees renvoiMesDonnees;
+	@Autowired
+	private IRenvoiDonneesDesign renvoiDesign;
 
+	public static void main(String[] args) {
 		SpringApplication.run(AdvancedQcApplication.class, args);
 		LOG.info("Done");
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		//Add here new ICreationJSON class service for new format export
+		ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
+		creationjsonArray.add(creationjson1);
+		creationjsonArray.add(creationjson2);
 
 		if (args.length == 2) {
 			File localDirectoryData = new File(args[0]);
 			File localDirectoryjson = new File(args[1]);
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
-				ICreationJSON creationjson1 = new CreationBWjson();
-				ICreationJSON creationjson2 = new CreationBGjson();
-				ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-				creationjsonArray.add(creationjson1);
-				creationjsonArray.add(creationjson2);
-				IEcritureMqc jsonForMqc = new EcritureMqc();
-				IRenvoiDonnesTraitees renvoiMesDonnees = new RenvoiDonneesTraitees();
-
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
 				LOG.debug("listwheader{}", listwHeader);
@@ -60,8 +64,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 					LOG.debug("filemqc{}", filemqc);
 				}
 			}else {
-				throw new IllegalArgumentException("args incorrect :" + args[0] + " is a not a file" + " or " + args[1]
-						+ " is a not a directory" + " or " + args[1] + " is not a file. ");
+				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
+						+ " is a not a directory.");
 
 			}
 		} else if (args.length == 3) {
@@ -71,20 +75,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory() & localDirectoryDesign.isFile()) {
 
-				ICreationJSON creationjson1 = new CreationBWjson();
-				ICreationJSON creationjson2 = new CreationBGjson();
-				IEcritureMqc jsonForMqc = new EcritureMqc();
-				IRenvoiDonnesTraitees renvoiMesDonnees = new RenvoiDonneesTraitees();
-				ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-				creationjsonArray.add(creationjson1);
-				creationjsonArray.add(creationjson2);
-
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
 				LOG.debug("listwheader{}", listwHeader);
 
 				// ajout du fichier design
-				IRenvoiDonneesDesign renvoiDesign = new RenvoiDonneesDesign();
 				List<String> linewdesign = Files.readAllLines(localDirectoryDesign.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeaderwD> listwHeaderwD = renvoiDesign.renvoyerDonneesDesign(linewdesign, listwHeader);
 				LOG.debug("listwheaderwd {}", listwHeaderwD);
@@ -101,20 +96,9 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 			}
 		} else {
-			LOG.error("usage: java -jar <absolute_path>/advancedQC-1.0.0.jar <absolute_path>/fichier.tsv <local directory> <absolute_path>/optional-design.tsv");
+			LOG.error("usage: java -jar <absolute_path>/advancedQC-<version>.jar <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
 		}
 
-		
+
 	}
 }
-
-
-
-	
-
-				
-
-	
-
-
-	

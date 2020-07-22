@@ -16,12 +16,12 @@ import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
 import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBWjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.EcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.impl.RenvoiDonneesDesign;
-import fr.gustaveroussy.AdvancedQC.service.impl.RenvoieDonneesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.impl.RenvoiDonneesTraitees;
 
 @SpringBootApplication
 public class AdvancedQcApplication implements CommandLineRunner {
@@ -47,7 +47,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				creationjsonArray.add(creationjson1);
 				creationjsonArray.add(creationjson2);
 				IEcritureMqc jsonForMqc = new EcritureMqc();
-				IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
+				IRenvoiDonnesTraitees renvoiMesDonnees = new RenvoiDonneesTraitees();
 
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
@@ -74,7 +74,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				ICreationJSON creationjson1 = new CreationBWjson();
 				ICreationJSON creationjson2 = new CreationBGjson();
 				IEcritureMqc jsonForMqc = new EcritureMqc();
-				IRenvoieDonnesTraitees renvoiMesDonnees = new RenvoieDonneesTraitees();
+				IRenvoiDonnesTraitees renvoiMesDonnees = new RenvoiDonneesTraitees();
 				ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
 				creationjsonArray.add(creationjson1);
 				creationjsonArray.add(creationjson2);

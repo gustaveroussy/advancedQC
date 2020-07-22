@@ -7,9 +7,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoieDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 
-public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
+public class RenvoiDonneesTraitees implements IRenvoiDonnesTraitees {
 	
 	@Override
 	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignesdefichierInput) {
@@ -46,5 +46,5 @@ public class RenvoieDonneesTraitees implements IRenvoieDonnesTraitees {
 		return (maMap) ;
 	}
 	private static Logger LOG = LoggerFactory
-	.getLogger(RenvoieDonneesTraitees.class);
+	.getLogger(RenvoiDonneesTraitees.class);
 }

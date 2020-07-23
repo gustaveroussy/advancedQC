@@ -23,8 +23,8 @@ public class CreationBPjson implements ICreationJSON {
 	IEcritureFiles ecriturePlotly;
 
 	@Override
-	public JsonObject createJSON (List<? extends SamplewHeader> listwHeader ) {
-		JsonObject bpJSONfinal = new JsonObject();
+	public JsonElement createJSON (List<? extends SamplewHeader> listwHeader ) {
+		JsonArray bpJSONfinal = new JsonArray();
 		JsonArray myConfig = new JsonArray();
 		
 		for (SamplewHeader samplh : listwHeader) {			 
@@ -38,7 +38,7 @@ public class CreationBPjson implements ICreationJSON {
 			double med = StatUtils.percentile(valsamplefinal, 50);
 			
 				JsonArray y = new JsonArray();
-				JsonObject propriety = new JsonObject();
+				JsonObject property = new JsonObject();
 
 				y.add(decilmin);
 				y.add(decilmax);
@@ -47,12 +47,13 @@ public class CreationBPjson implements ICreationJSON {
 				y.add(med);
 				LOG.debug("y{},", y);
 				
-				propriety.addProperty("name", samplh.getSampleID());
-				propriety.addProperty("type", "box");
-				propriety.add("y", y);
-				myConfig.add(propriety);
+				property.add("y",y);
+				property.addProperty("name",samplh.getSampleID());
+				property.addProperty("type","box");
+			
+				bpJSONfinal.add(property);
 				
-				bpJSONfinal.add("myConfig", myConfig);
+				
 				LOG.debug("bpjson{},", bpJSONfinal);
 			}
 			LOG.debug("myconfig {}", myConfig);
@@ -62,9 +63,9 @@ public class CreationBPjson implements ICreationJSON {
 
 	@Override
 	public void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
-		JsonElement filemqc = this.createJSON(listwHeader);
-		ecriturePlotly.ecriturePlotly(filemqc, filePath + this.getClass().getSimpleName().concat("_mqc.json"));
-		LOG.info("filemqc{}", filemqc);
+		JsonElement fileplotly = this.createJSON(listwHeader);
+		ecriturePlotly.ecriturePlotly(fileplotly, filePath + this.getClass().getSimpleName().concat("_mqc.html"));
+		LOG.info("fileplotly{}", fileplotly);
 		//return filemqc;
 
 	}

@@ -1,7 +1,7 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
@@ -15,23 +15,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureFiles;
 
 @Service
 public class CreationBPjson implements ICreationJSON {
 	@Autowired
-	IEcritureMqc ecritureMqc;
+	IEcritureFiles ecriturePlotly;
 
 	@Override
 	public JsonObject createJSON (List<? extends SamplewHeader> listwHeader ) {
 		JsonObject bpJSONfinal = new JsonObject();
 		JsonArray myConfig = new JsonArray();
-		JsonObject propriety = new JsonObject();
 		
-		for (SamplewHeader samplh : listwHeader) {	
-			// for(int i=0; i<listwHeader.size(); i++) {	 
+		for (SamplewHeader samplh : listwHeader) {			 
 			Collection<Double> valsampleinter1 = samplh.getSampleGeneVal().values();
-				//	Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
 			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
 			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
 			double decilmin = StatUtils.percentile(valsamplefinal, 10);
@@ -41,17 +38,22 @@ public class CreationBPjson implements ICreationJSON {
 			double med = StatUtils.percentile(valsamplefinal, 50);
 			
 				JsonArray y = new JsonArray();
+				JsonObject propriety = new JsonObject();
+
 				y.add(decilmin);
 				y.add(decilmax);
 				y.add(Q1);
 				y.add(Q3);
 				y.add(med);
-				LOG.info("y{},", y);
+				LOG.debug("y{},", y);
+				
 				propriety.addProperty("name", samplh.getSampleID());
 				propriety.addProperty("type", "box");
+				propriety.add("y", y);
 				myConfig.add(propriety);
-				myConfig.add(y);
+				
 				bpJSONfinal.add("myConfig", myConfig);
+				LOG.debug("bpjson{},", bpJSONfinal);
 			}
 			LOG.debug("myconfig {}", myConfig);
 			return bpJSONfinal;
@@ -61,8 +63,9 @@ public class CreationBPjson implements ICreationJSON {
 	@Override
 	public void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
 		JsonElement filemqc = this.createJSON(listwHeader);
-		ecritureMqc.ecritureMqc(filemqc, filePath + this.getClass().getSimpleName().concat("_mqc.json"));
-		LOG.debug("filemqc{}", filemqc);
+		ecriturePlotly.ecriturePlotly(filemqc, filePath + this.getClass().getSimpleName().concat("_mqc.json"));
+		LOG.info("filemqc{}", filemqc);
+		//return filemqc;
 
 	}
 

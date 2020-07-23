@@ -11,16 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.google.gson.JsonElement;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureFiles;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBPjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBWjson;
+import fr.gustaveroussy.AdvancedQC.service.impl.EcritureFiles;
 
 @SpringBootApplication
 public class AdvancedQcApplication implements CommandLineRunner {
@@ -33,8 +33,11 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	private CreationBGjson creationjson2;
 	@Autowired 
 	private CreationBPjson creationjson3;
+
+	@Autowired 
+	private IEcritureFiles ecritureMqc;
 	@Autowired
-	private IEcritureMqc jsonForMqc;
+	private IEcritureFiles ecriturePlotly;
 	@Autowired
 	private IRenvoiDonnesTraitees renvoiMesDonnees;
 	@Autowired
@@ -62,7 +65,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				LOG.debug("listwheader{}", listwHeader);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);					
+					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);	
+					LOG.info("creationprime{}",creationprime);
 				}
 			}else {
 				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
@@ -86,10 +90,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				LOG.debug("listwheaderwd {}", listwHeaderwD);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					JsonElement filemqc = creationprime.createJSON(listwHeaderwD);
-					jsonForMqc.ecritureMqc(filemqc,
-							localDirectoryjson + creationprime.getClass().getSimpleName().concat("_mqc.json"));
-					LOG.debug("filemqc{}", filemqc);
+					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);					
 				}
 			}else {
 				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson

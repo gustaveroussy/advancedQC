@@ -14,12 +14,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureFiles;
 
 @Service
 public class CreationBWjson implements ICreationJSON {
 	@Autowired
-	IEcritureMqc ecritureMqc;
+	IEcritureFiles ecritureMqc;
 
 
 	@Override
@@ -126,6 +126,7 @@ public class CreationBWjson implements ICreationJSON {
 			ecritureMqc.ecritureMqc(filemqc,
 					filePath + this.getClass().getSimpleName().concat("_mqc.json"));
 			LOG.debug("filemqc{}", filemqc);
+			//return filemqc;
 			
 		}
 		

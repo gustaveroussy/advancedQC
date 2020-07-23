@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureFiles;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 @Service
 public class CreationBGjson implements ICreationJSON {
 	@Autowired
-	IEcritureMqc ecritureMqc;
+	IEcritureFiles ecritureMqc;
 
 
 	// CREATION BARGRAPH
@@ -107,11 +107,12 @@ public class CreationBGjson implements ICreationJSON {
 	private static Logger LOG = LoggerFactory.getLogger(CreationBGjson.class);
 
 	@Override
-	public void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
+	public  void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
 		JsonElement filemqc = this.createJSON(listwHeader);
 		ecritureMqc.ecritureMqc(filemqc,
 				filePath + this.getClass().getSimpleName().concat("_mqc.json"));
 		LOG.debug("filemqc{}", filemqc);
+		//return filemqc;
 		
 	}
 	

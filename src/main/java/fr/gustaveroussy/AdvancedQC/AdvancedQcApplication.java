@@ -19,6 +19,7 @@ import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationBPjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBWjson;
 
 @SpringBootApplication
@@ -30,6 +31,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	private CreationBWjson creationjson1;
 	@Autowired
 	private CreationBGjson creationjson2;
+	@Autowired 
+	private CreationBPjson creationjson3;
 	@Autowired
 	private IEcritureMqc jsonForMqc;
 	@Autowired
@@ -48,6 +51,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
 		creationjsonArray.add(creationjson1);
 		creationjsonArray.add(creationjson2);
+		creationjsonArray.add(creationjson3);
 
 		if (args.length == 2) {
 			File localDirectoryData = new File(args[0]);
@@ -58,10 +62,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				LOG.debug("listwheader{}", listwHeader);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					JsonElement filemqc = creationprime.createJSON(listwHeader);
-					jsonForMqc.ecritureMqc(filemqc,
-							args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
-					LOG.debug("filemqc{}", filemqc);
+					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);					
 				}
 			}else {
 				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
@@ -87,7 +88,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				for (ICreationJSON creationprime : creationjsonArray) {
 					JsonElement filemqc = creationprime.createJSON(listwHeaderwD);
 					jsonForMqc.ecritureMqc(filemqc,
-							args[1] + creationprime.getClass().getSimpleName().concat("_mqc.json"));
+							localDirectoryjson + creationprime.getClass().getSimpleName().concat("_mqc.json"));
 					LOG.debug("filemqc{}", filemqc);
 				}
 			}else {

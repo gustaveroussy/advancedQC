@@ -1,19 +1,26 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
+import fr.gustaveroussy.AdvancedQC.service.IEcritureMqc;
 
 @Service
 public class CreationBWjson implements ICreationJSON {
+	@Autowired
+	IEcritureMqc ecritureMqc;
+
 
 	@Override
 	public JsonObject createJSON(List<? extends SamplewHeader> listwHeader) {
@@ -111,4 +118,15 @@ public class CreationBWjson implements ICreationJSON {
 	}
 
 	private static Logger LOG = LoggerFactory.getLogger(CreationBWjson.class);
-}
+
+
+	@Override
+	public void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
+			JsonElement filemqc = this.createJSON(listwHeader);
+			ecritureMqc.ecritureMqc(filemqc,
+					filePath + this.getClass().getSimpleName().concat("_mqc.json"));
+			LOG.debug("filemqc{}", filemqc);
+			
+		}
+		
+	}

@@ -1,5 +1,6 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,16 +84,18 @@ public class CreationBGjson implements ICreationJSON {
 			percentList.add(samplewheader.getSampleID(), currsamplJSON);
 		}
 		LOG.debug("liste de % {}", percentList);
-		return percentList;
+		return percentList; 
 	}
 		
 	// Méthode comptage des valeurs nulles et calcul du pourcentage de celles-ci
 	// dans l'echantillon
 	private double countPercValNul(SamplewHeader samplewheader) {
 		double counter = 0;
+		 Double x = 0.0;//prise en compte de valeur null ou égale à zéro
 		Map<String, Double> maMap = samplewheader.getSampleGeneVal();
 		for (Entry<String, Double> entry : maMap.entrySet()) {
-			if (entry.getValue().equals(0.0)) {
+			
+			if (entry.getValue().equals(x)) {
 				counter = counter + 1;
 			}
 		}
@@ -107,10 +110,10 @@ public class CreationBGjson implements ICreationJSON {
 	private static Logger LOG = LoggerFactory.getLogger(CreationBGjson.class);
 
 	@Override
-	public  void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
+	public  void export(String filePath, List<? extends SamplewHeader> listwHeader) throws IOException {
 		JsonElement filemqc = this.createJSON(listwHeader);
 		ecritureMqc.ecritureMqc(filemqc,
-				filePath + this.getClass().getSimpleName().concat("_mqc.json"));
+				filePath + File.separator+this.getClass().getSimpleName().concat("_mqc.json"));
 		LOG.debug("filemqc{}", filemqc);
 		//return filemqc;
 		

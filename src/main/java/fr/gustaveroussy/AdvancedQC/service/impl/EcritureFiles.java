@@ -24,16 +24,20 @@ public class EcritureFiles implements IEcritureFiles {
 	public JsonElement ecriturePlotly(JsonElement fichierJSONfinal, String absolutePath) throws IOException {
 		@SuppressWarnings("resource")
 		FileWriter fileHtml = new FileWriter(absolutePath);
-		fileHtml.write("<!DOCTYPE html>"+"<html>\n".concat("<meta charset=\"utf-8\"/>\n" + "<head>\n"
+		fileHtml.write("<!--\n" + 
+				"id: 'custom-html'\n" + 
+				"section_name: 'Boxplot'\n" + 
+				"description: 'This section is created using a custom HTML file, with plotly'\n" + 
+				"-->\n"+"<!DOCTYPE html>"+"<html>\n".concat("<meta charset=\"utf-8\"/>\n" + "<head>\n"
 						+ "<script src=\"https://cdn.plot.ly/plotly-latest.min.js\"></script>\n" + "</head>\n" + "\n"
-						+ "<body>"+ "<!-- Chart Placement[2] -->" + "  <div id=\"myChart\"></div>\n" + "\n" + "<script>" + "let myConfig = ").toString());
+						+ "<body>"+ "<!-- Chart Placement[2] -->" + "  <div id=\"ChartBoxPlot\"></div>\n" + "\n" + "<script>" + "let configCustom = ").toString());
 		fileHtml.write(" ".concat(fichierJSONfinal.toString()));
 		fileHtml.write(
-				";\n".concat("TESTER = document.getElementById('myChart');\n" + "Plotly.newPlot( TESTER, myConfig, {\n"
+				";\n".concat("TESTER = document.getElementById('ChartBoxPlot');\n" + "Plotly.newPlot( TESTER, configCustom, {\n"
 						+ "margin: { t: 0 } } );</script>\n" + "\n" + "\n" + "</body>\n" + "</html>").toString());
 		fileHtml.flush();
-LOG.info("fichierJSOnfinall{}",fichierJSONfinal);
-LOG.info("absolutepath{}",absolutePath);
+LOG.debug("fichierJSOnfinall{}",fichierJSONfinal);
+LOG.debug("absolutepath{}",absolutePath);
 		return fichierJSONfinal;
 
 	}

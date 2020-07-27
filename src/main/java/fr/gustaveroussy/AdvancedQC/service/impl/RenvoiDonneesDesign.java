@@ -36,7 +36,6 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 			
 			Map<String, Double>	mapGeneValDsg = getGeneVal(listwh,sampleIDdesign);
 			if(mapGeneValDsg == null) {
-				//TODO throw exception
 				LOG.error("missing {}",sampleIDdesign);
 			}
 			

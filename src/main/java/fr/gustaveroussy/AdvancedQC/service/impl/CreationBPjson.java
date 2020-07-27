@@ -1,5 +1,6 @@
 package fr.gustaveroussy.AdvancedQC.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class CreationBPjson implements ICreationJSON {
 	@Override
 	public JsonElement createJSON (List<? extends SamplewHeader> listwHeader ) {
 		JsonArray bpJSONfinal = new JsonArray();
-		JsonArray myConfig = new JsonArray();
+		//JsonArray myConfig = new JsonArray();
 		
 		for (SamplewHeader samplh : listwHeader) {			 
 			Collection<Double> valsampleinter1 = samplh.getSampleGeneVal().values();
@@ -39,6 +40,7 @@ public class CreationBPjson implements ICreationJSON {
 			
 				JsonArray y = new JsonArray();
 				JsonObject property = new JsonObject();
+				
 
 				y.add(decilmin);
 				y.add(decilmax);
@@ -47,25 +49,26 @@ public class CreationBPjson implements ICreationJSON {
 				y.add(med);
 				LOG.debug("y{},", y);
 				
-				property.add("y",y);
+				property.add("y", y);
 				property.addProperty("name",samplh.getSampleID());
 				property.addProperty("type","box");
+				property.addProperty("boxpoints",false);
 			
 				bpJSONfinal.add(property);
 				
 				
 				LOG.debug("bpjson{},", bpJSONfinal);
 			}
-			LOG.debug("myconfig {}", myConfig);
+		//	LOG.debug("myconfig {}", myConfig);
 			return bpJSONfinal;
 		}
 		
 
 	@Override
-	public void export(String filePath, List<SamplewHeader> listwHeader) throws IOException {
+	public void export(String filePath, List<? extends SamplewHeader> listwHeader) throws IOException {
 		JsonElement fileplotly = this.createJSON(listwHeader);
-		ecriturePlotly.ecriturePlotly(fileplotly, filePath + this.getClass().getSimpleName().concat("_mqc.html"));
-		LOG.info("fileplotly{}", fileplotly);
+		ecriturePlotly.ecriturePlotly(fileplotly, filePath + File.separator+ this.getClass().getSimpleName().concat("_mqc.html"));
+		LOG.debug("fileplotly{}", fileplotly);
 		//return filemqc;
 
 	}

@@ -32,12 +32,12 @@ public class CreationBGjson implements ICreationJSON {
 	public JsonObject createJSON(List<? extends SamplewHeader> listwHeader) {
 		
 		// ensemble des données constituant le fichier json cad header+data
-		JsonObject bgJSONfinal = new JsonObject();
+		JsonObject bgJSON = new JsonObject();
 		// construction du bloc header
 		
-		bgJSONfinal.addProperty("id", "bargraph");
-		bgJSONfinal.addProperty("section_name", "Bargraph");
-		bgJSONfinal.addProperty("plot_type", "bargraph");
+		bgJSON.addProperty("id", "bargraph");
+		bgJSON.addProperty("section_name", "Percentage of null values");
+		bgJSON.addProperty("plot_type", "bargraph");
 		
 		JsonObject pconfigBG =new JsonObject();
 		pconfigBG.addProperty("id", "custom data json bargraph");
@@ -45,17 +45,17 @@ public class CreationBGjson implements ICreationJSON {
 		pconfigBG.addProperty("ylab", "Number");
 		LOG.debug("pconfig{}", pconfigBG);
 
-		bgJSONfinal.add("pconfig", pconfigBG);
+		bgJSON.add("pconfig", pconfigBG);
 		
 
 		// construction du bloc data BG
-		bgJSONfinal.add("data", percenTotal(listwHeader));
+		bgJSON.add("data", percenTotal(listwHeader));
 
 		
 
-		LOG.debug("fichierJSONfinale {}", bgJSONfinal);
+		LOG.debug("fichierJSONfinale {}", bgJSON);
 
-		return bgJSONfinal;
+		return bgJSON;
 	}
 
 	// creation d'une liste avec nom de l'echantillon et le pourcentage de valeur

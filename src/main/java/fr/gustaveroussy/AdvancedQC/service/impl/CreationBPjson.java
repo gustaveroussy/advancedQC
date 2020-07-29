@@ -25,7 +25,7 @@ public class CreationBPjson implements ICreationJSON {
 
 	@Override
 	public JsonElement createJSON (List<? extends SamplewHeader> listwHeader ) {
-		JsonArray bpJSONfinal = new JsonArray();
+		JsonArray bpJSON = new JsonArray();
 		//JsonArray myConfig = new JsonArray();
 		
 		for (SamplewHeader samplh : listwHeader) {			 
@@ -38,29 +38,26 @@ public class CreationBPjson implements ICreationJSON {
 			double Q3 = StatUtils.percentile(valsamplefinal, 75);
 			double med = StatUtils.percentile(valsamplefinal, 50);
 			
-				JsonArray y = new JsonArray();
+				JsonArray dataPercentile = new JsonArray();
 				JsonObject property = new JsonObject();
 				
 
-				y.add(decilmin);
-				y.add(decilmax);
-				y.add(Q1);
-				y.add(Q3);
-				y.add(med);
-				LOG.debug("y{},", y);
+				dataPercentile.add(decilmin);
+				dataPercentile.add(decilmax);
+				dataPercentile.add(Q1);
+				dataPercentile.add(Q3);
+				dataPercentile.add(med);
+				LOG.debug("y{},", dataPercentile);
 				
-				property.add("y", y);
+				property.add("y", dataPercentile);
 				property.addProperty("name",samplh.getSampleID());
 				property.addProperty("type","box");
 				property.addProperty("boxpoints",false);
 			
-				bpJSONfinal.add(property);
-				
-				
-				LOG.debug("bpjson{},", bpJSONfinal);
+				bpJSON.add(property);	
+				LOG.debug("bpjson{},", bpJSON);
 			}
-		//	LOG.debug("myconfig {}", myConfig);
-			return bpJSONfinal;
+			return bpJSON;
 		}
 		
 

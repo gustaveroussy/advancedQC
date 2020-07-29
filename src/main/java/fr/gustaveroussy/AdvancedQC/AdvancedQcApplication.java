@@ -25,7 +25,6 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 	private static Logger LOG = LoggerFactory.getLogger(AdvancedQcApplication.class);
 
-
 	@Autowired
 	private CreationBGjson creationjson1;
 	@Autowired 
@@ -57,12 +56,10 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 				for (ICreationJSON creationprime : creationjsonArray) {
 					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);	
-					LOG.info("creationprime{}",creationprime);
 				}
 			}else {
 				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
 						+ " is a not a directory.");
-
 			}
 		} else if (args.length == 3) {
 			File localDirectoryData = new File(args[0]);

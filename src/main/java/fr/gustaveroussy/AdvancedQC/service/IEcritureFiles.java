@@ -4,6 +4,6 @@ import java.io.IOException;
 import com.google.gson.JsonElement;
 
 public interface IEcritureFiles {
-	JsonElement ecritureMqc(JsonElement fichierJSONfinal, String absolutePath) throws IOException ;
-	JsonElement ecriturePlotly(JsonElement fichierJSONfinal, String absolutePath) throws IOException ;
+	JsonElement ecritureMqc(JsonElement fichierJSON, String absolutePath) throws IOException ;
+	JsonElement ecriturePlotly(JsonElement fichierJSON, String absolutePath) throws IOException ;
 }

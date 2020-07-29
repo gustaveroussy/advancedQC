@@ -1,7 +1,7 @@
-name: multiqc1.8
+name: multiqc1.9
 channels:
   - bioconda
 dependencies:
   - pip
   - pip:
-     - multiqc==1.8
+     - multiqc==1.9

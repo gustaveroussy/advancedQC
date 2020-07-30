@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>fr.gustaveroussy</groupId>
 	<artifactId>advancedQC</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>AdvancedQC</name>
 	<description>generate metric for multiQC report</description>
 

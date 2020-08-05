@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
+import fr.gustaveroussy.AdvancedQC.service.IRenvData2;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
 import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
@@ -33,6 +34,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	private IRenvoiDonnesTraitees renvoiMesDonnees;
 	@Autowired
 	private IRenvoiDonneesDesign renvoiDesign;
+	@Autowired
+	private IRenvData2 renvData2;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdvancedQcApplication.class, args);
@@ -51,11 +54,16 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			File localDirectoryjson = new File(args[1]);
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
-				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
-				LOG.debug("listwheader{}", listwHeader);
+				//List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
+				
+				List<SamplewHeader> listwHeader2= renvData2.renvData2(lineData);
+				//LOG.debug("listwheader{}", listwHeader);
+				LOG.info("listwheader{}", listwHeader2);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);	
+					//creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);
+					
+					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader2);	
 				}
 			}else {
 				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson

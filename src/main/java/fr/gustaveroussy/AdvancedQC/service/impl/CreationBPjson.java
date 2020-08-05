@@ -25,9 +25,7 @@ public class CreationBPjson implements ICreationJSON {
 
 	@Override
 	public JsonElement createJSON (List<? extends SamplewHeader> listwHeader ) {
-		JsonArray bpJSON = new JsonArray();
-		//JsonArray myConfig = new JsonArray();
-		
+		JsonArray bpJSON = new JsonArray();		
 		for (SamplewHeader samplh : listwHeader) {			 
 			Collection<Double> valsampleinter1 = samplh.getSampleGeneVal().values();
 			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
@@ -66,7 +64,6 @@ public class CreationBPjson implements ICreationJSON {
 		JsonElement fileplotly = this.createJSON(listwHeader);
 		ecriturePlotly.ecriturePlotly(fileplotly, filePath + File.separator+ this.getClass().getSimpleName().concat("_mqc.html"));
 		LOG.debug("fileplotly{}", fileplotly);
-		//return filemqc;
 
 	}
 

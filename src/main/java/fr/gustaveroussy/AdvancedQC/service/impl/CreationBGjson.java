@@ -115,8 +115,6 @@ public class CreationBGjson implements ICreationJSON {
 		ecritureMqc.ecritureMqc(filemqc,
 				filePath + File.separator+this.getClass().getSimpleName().concat("_mqc.json"));
 		LOG.debug("filemqc{}", filemqc);
-		//return filemqc;
-		
 	}
 	
 	

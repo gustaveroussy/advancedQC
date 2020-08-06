@@ -29,23 +29,42 @@ public class CreationBPjsonDirect extends CreationBPjson implements ICreationJSO
 	@Autowired
 	IEcritureFiles ecriturePlotly;
 
+	@SuppressWarnings("unused")
 	public JsonElement createJSON(List<? extends SamplewHeader> listwHeader) {
 		JsonArray bpJsonDirect = new JsonArray();
+		
+		
+	for( SamplewHeader splwh : listwHeader) {
 		JsonArray percentildata = new JsonArray();
 		JsonObject property = new JsonObject();
-		for( SamplewHeader splwh : listwHeader) {
+		//for(int i = 0; i<listwHeader.size(); i++) {
+			//Collection<Double> valsampleinter1 = listwHeader.get(i).getSampleGeneVal().values();
+		
+			Collection<Double> valsampleinter1 = splwh.getSampleGeneVal().values();
+			Double[] valsampleinter2 = valsampleinter1.toArray(new Double[valsampleinter1.size()]);
+			double[] valsamplefinal = ArrayUtils.toPrimitive(valsampleinter2);
+
+			for (int j = 0; j<valsamplefinal.length; j++) {
+			double r = valsamplefinal[j];
+			LOG.info("r{}",r);
+			percentildata.add(r);
+			}
 			
-			LOG.debug("y{},", percentildata);
 			property.add("y", percentildata);
-			
+			LOG.info("y{},", percentildata);
 			property.addProperty("type","box");
 			property.addProperty("boxpoints",false);
+			bpJsonDirect.add(property);	
+
 		
-		bpJsonDirect.add(property);	
-		LOG.debug("bpjson{}", bpJsonDirect);
+	}
+		LOG.info("bpjson{}", bpJsonDirect);
+		
 		return bpJsonDirect;
+		
 	}
-	}
+	
+	
 	@Override
 	public void export(String filePath, List<? extends SamplewHeader> listwHeader) throws IOException {
 		JsonElement fileplotly = this.createJSON(listwHeader);

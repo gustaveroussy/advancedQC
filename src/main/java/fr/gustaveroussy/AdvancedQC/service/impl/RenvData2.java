@@ -31,18 +31,16 @@ public class RenvData2 implements IRenvData2{
 			LOG.info("sampleID {} ",sampleID);
 			
 			for(int i = 1; i<nblines.length; i++) {
-				String realvalpercentil= nblines[i];
-				LOG.debug("realvalpercentil {}",realvalpercentil);
+				String valpercentil= nblines[i];
+				LOG.debug("realvalpercentil {}",valpercentil);
 				String namepercentil= nbcolum[i];
 				LOG.debug("namepercentil {}", namepercentil);
-				double valpercentildouble = Double.parseDouble(realvalpercentil);
+				double valpercentildouble = Double.parseDouble(valpercentil);
 				mapData.put(namepercentil, valpercentildouble);
-				LOG.info("mapData {} ", mapData);			
+				LOG.debug("mapData {} ", mapData);			
 			}
 			
-			
-			SamplewHeader samplwh = new SamplewHeader (sampleID,mapData);
-					
+			SamplewHeader samplwh = new SamplewHeader (sampleID,mapData);		
 			LOG.info("samplwh {} ",samplwh);
 			listwHeader.add(samplwh);
 			LOG.info("listwHeader {}",listwHeader);

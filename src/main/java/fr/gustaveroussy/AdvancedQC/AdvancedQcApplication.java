@@ -48,10 +48,15 @@ public class AdvancedQcApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// Add here new ICreationJSON class service for new format export
 		ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-		IRenvDatas renvoiData = new RenvData2();
+		IRenvDatas renvoiData= renvoiData2;
 
 		// si RNAseqCount
-			if (args[0].equals("RNAseqCount")) {
+		if (args.length < 2) {
+			throw new IllegalArgumentException(
+					"usage: java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
+		
+		}	
+		else if (args[0].equals("RNAseqCount")) {
 				creationjsonArray.add(creationjson1);
 				creationjsonArray.add(creationjson2);
 				renvoiData = renvoiData1;
@@ -61,7 +66,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				creationjsonArray.add(creationjson3);
 				renvoiData = renvoiData2;			
 		} else {
-			LOG.error("incorrect keyword,enter 'RNAseqCount'" + "or" + "'DeepTools'.");			
+			throw new IllegalArgumentException("incorrect keyword,enter 'RNAseqCount'" + "or" + "'DeepTools'.");			
 		}	
 		File localDirectoryData = new File(args[1]);
 		File localDirectoryjson = new File(args[2]);
@@ -101,7 +106,7 @@ public class AdvancedQcApplication implements CommandLineRunner {
 			}
 		} else {
 			LOG.error(
-					"usage: java -jar <absolute_path>/advancedQC-<version>.jar <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
+					"USAGE: java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
 		}
 	}
 }

@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.IRenvDatas;
 
 @Service
-public class RenvoiDonneesTraitees implements IRenvoiDonnesTraitees {
+public class RenvData1 implements IRenvDatas {
 
 	@Override
 	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignesdefichierInput) {
@@ -49,5 +49,5 @@ public class RenvoiDonneesTraitees implements IRenvoiDonnesTraitees {
 		return (maMap) ;
 	}
 	private static Logger LOG = LoggerFactory
-	.getLogger(RenvoiDonneesTraitees.class);
+	.getLogger(RenvData1.class);
 }

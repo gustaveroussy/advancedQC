@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
+import fr.gustaveroussy.AdvancedQC.service.IRenvDesign;
 
 @Service
-public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
+public class RenvDesign implements IRenvDesign {
 
 	@SuppressWarnings("null")
 	@Override
@@ -55,5 +55,5 @@ public class RenvoiDonneesDesign implements IRenvoiDonneesDesign {
 		}
 		return null;
 	}
-	private static Logger LOG = LoggerFactory.getLogger(RenvoiDonneesDesign.class);
+	private static Logger LOG = LoggerFactory.getLogger(RenvDesign.class);
 }

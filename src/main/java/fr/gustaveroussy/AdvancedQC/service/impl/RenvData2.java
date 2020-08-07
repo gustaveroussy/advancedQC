@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
-import fr.gustaveroussy.AdvancedQC.service.IRenvData2;
+import fr.gustaveroussy.AdvancedQC.service.IRenvDatas;
 
 @Service
-public class RenvData2 implements IRenvData2{
+public class RenvData2 implements IRenvDatas{
 	@Override
-	public List<SamplewHeader> renvData2(List<String> lignefichierData) {
+	public List<SamplewHeader> renvoyerDonneesTraitees(List<String> lignefichierData) {
 		List<String> linefiles = new ArrayList<String>(lignefichierData);
 		
         String spliter = "\t";
@@ -28,7 +26,7 @@ public class RenvData2 implements IRenvData2{
 			String[] nblines = strline.split(spliter);
 			Map < String, Double>mapData = new HashMap<String,Double>();
 			String sampleID = nblines[0];
-			LOG.info("sampleID {} ",sampleID);
+			LOG.debug("sampleID {} ",sampleID);
 			
 			for(int i = 1; i<nblines.length; i++) {
 				String valpercentil= nblines[i];
@@ -38,12 +36,11 @@ public class RenvData2 implements IRenvData2{
 				double valpercentildouble = Double.parseDouble(valpercentil);
 				mapData.put(namepercentil, valpercentildouble);
 				LOG.debug("mapData {} ", mapData);			
-			}
-			
+			}	
 			SamplewHeader samplwh = new SamplewHeader (sampleID,mapData);		
-			LOG.info("samplwh {} ",samplwh);
+			LOG.debug("samplwh {} ",samplwh);
 			listwHeader.add(samplwh);
-			LOG.info("listwHeader {}",listwHeader);
+			LOG.debug("listwHeader {}",listwHeader);
 		}
 		return listwHeader;
 		}
@@ -52,7 +49,7 @@ public class RenvData2 implements IRenvData2{
 		
 	
 
-	private static Logger LOG = LoggerFactory.getLogger(CreationBPjsonDirect.class);
+	private static Logger LOG = LoggerFactory.getLogger(CreationBPjson2.class);
 }
 
 

@@ -34,7 +34,7 @@ public class EcritureFiles implements IEcritureFiles {
 		fileHtml.write(" ".concat(fichierJSON.toString()));
 		fileHtml.write(
 				";\n".concat("TESTER = document.getElementById('ChartBoxPlot');\n" + "Plotly.newPlot( TESTER, configCustom, {\n"
-						+ "margin: { t: 0 } } );</script>\n" + "\n" + "\n" + "</body>\n" + "</html>").toString());
+						+ "boxmode: 'group' } );</script>\n" + "\n" + "\n" + "</body>\n" + "</html>").toString());
 		fileHtml.flush();
 LOG.debug("fichierJSOnfinall{}",fichierJSON);
 LOG.debug("absolutepath{}",absolutePath);

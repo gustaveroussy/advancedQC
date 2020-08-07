@@ -14,12 +14,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeader;
 import fr.gustaveroussy.AdvancedQC.model.SamplewHeaderwD;
 import fr.gustaveroussy.AdvancedQC.service.ICreationJSON;
-import fr.gustaveroussy.AdvancedQC.service.IRenvData2;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonneesDesign;
-import fr.gustaveroussy.AdvancedQC.service.IRenvoiDonnesTraitees;
+import fr.gustaveroussy.AdvancedQC.service.IRenvDatas;
+import fr.gustaveroussy.AdvancedQC.service.IRenvDesign;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBGjson;
 import fr.gustaveroussy.AdvancedQC.service.impl.CreationBPjson;
-
+import fr.gustaveroussy.AdvancedQC.service.impl.CreationBPjson2;
+import fr.gustaveroussy.AdvancedQC.service.impl.RenvData2;
+import fr.gustaveroussy.AdvancedQC.service.impl.RenvData1;
 
 @SpringBootApplication
 public class AdvancedQcApplication implements CommandLineRunner {
@@ -28,56 +29,61 @@ public class AdvancedQcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CreationBGjson creationjson1;
-	@Autowired 
+	@Autowired
 	private CreationBPjson creationjson2;
 	@Autowired
-	private IRenvoiDonnesTraitees renvoiMesDonnees;
+	private CreationBPjson2 creationjson3;
 	@Autowired
-	private IRenvoiDonneesDesign renvoiDesign;
+	private RenvData1 renvoiData1;
 	@Autowired
-	private IRenvData2 renvData2;
+	private RenvData2 renvoiData2;
+	@Autowired
+	private IRenvDesign renvoiDesign;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdvancedQcApplication.class, args);
 		LOG.info("Done");
 	}
-
 	@Override
 	public void run(String... args) throws Exception {
-		//Add here new ICreationJSON class service for new format export
+		// Add here new ICreationJSON class service for new format export
 		ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-		creationjsonArray.add(creationjson1);
-		creationjsonArray.add(creationjson2);
+		IRenvDatas renvoiData = new RenvData2();
 
-		if (args.length == 2) {
-			File localDirectoryData = new File(args[0]);
-			File localDirectoryjson = new File(args[1]);
+		// si RNAseqCount
+			if (args[0].equals("RNAseqCount")) {
+				creationjsonArray.add(creationjson1);
+				creationjsonArray.add(creationjson2);
+				renvoiData = renvoiData1;
+			}
+			// sinon si DeepTools
+			else if (args[0].equals("DeepTools")) {
+				creationjsonArray.add(creationjson3);
+				renvoiData = renvoiData2;			
+		} else {
+			LOG.error("incorrect keyword,enter 'RNAseqCount'" + "or" + "'DeepTools'.");			
+		}	
+		File localDirectoryData = new File(args[1]);
+		File localDirectoryjson = new File(args[2]);
+
+		 if (args.length == 3) {
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
-				//List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
-				
-				List<SamplewHeader> listwHeader2= renvData2.renvData2(lineData);
-				//LOG.debug("listwheader{}", listwHeader);
-				LOG.info("listwheader{}", listwHeader2);
-
+				List<SamplewHeader> listwHeader = renvoiData.renvoyerDonneesTraitees(lineData);
+				LOG.debug("listwheader{}", listwHeader);
 				for (ICreationJSON creationprime : creationjsonArray) {
-					//creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader);
-					
-					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeader2);	
+					creationprime.export(localDirectoryjson.getAbsolutePath(), listwHeader);
 				}
-			}else {
-				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
-						+ " is a not a directory.");
+			} else {
+				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or "
+						+ localDirectoryjson + " is a not a directory.");
 			}
-		} else if (args.length == 3) {
-			File localDirectoryData = new File(args[0]);
-			File localDirectoryjson = new File(args[1]);
-			File localDirectoryDesign = new File(args[2]);
-
+		} else if (args.length == 4) {
+			File localDirectoryDesign = new File(args[3]);
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory() & localDirectoryDesign.isFile()) {
 
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
-				List<SamplewHeader> listwHeader = renvoiMesDonnees.renvoyerDonneesTraitees(lineData);
+				List<SamplewHeader> listwHeader = renvoiData1.renvoyerDonneesTraitees(lineData);
 				LOG.debug("listwheader{}", listwHeader);
 
 				// ajout du fichier design
@@ -86,17 +92,16 @@ public class AdvancedQcApplication implements CommandLineRunner {
 				LOG.debug("listwheaderwd {}", listwHeaderwD);
 
 				for (ICreationJSON creationprime : creationjsonArray) {
-					creationprime.export(localDirectoryjson.getAbsolutePath(),listwHeaderwD);					
+					creationprime.export(localDirectoryjson.getAbsolutePath(), listwHeaderwD);
 				}
-			}else {
-				throw new IllegalArgumentException("args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
-						+ " is a not a directory" + " or " + localDirectoryDesign + " is not a file. ");
-
+			} else {
+				throw new IllegalArgumentException(
+						"args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
+								+ " is a not a directory" + " or " + localDirectoryDesign + " is not a file. ");
 			}
 		} else {
-			LOG.error("usage: java -jar <absolute_path>/advancedQC-<version>.jar <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
+			LOG.error(
+					"usage: java -jar <absolute_path>/advancedQC-<version>.jar <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
 		}
-
-
 	}
 }

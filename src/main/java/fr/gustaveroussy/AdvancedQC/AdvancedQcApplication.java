@@ -44,34 +44,36 @@ public class AdvancedQcApplication implements CommandLineRunner {
 		SpringApplication.run(AdvancedQcApplication.class, args);
 		LOG.info("Done");
 	}
+
 	@Override
 	public void run(String... args) throws Exception {
 		// Add here new ICreationJSON class service for new format export
 		ArrayList<ICreationJSON> creationjsonArray = new ArrayList<ICreationJSON>();
-		IRenvDatas renvoiData= renvoiData2;
+		IRenvDatas renvoiData = renvoiData2;
 
 		// si RNAseqCount
-		if (args.length < 2) {
-			throw new IllegalArgumentException(
+		if (args.length < 3|| args.length>4) {
+			LOG.error(
 					"usage: java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
-		
-		}	
-		else if (args[0].equals("RNAseqCount")) {
-				creationjsonArray.add(creationjson1);
-				creationjsonArray.add(creationjson2);
-				renvoiData = renvoiData1;
-			}
-			// sinon si DeepTools
-			else if (args[0].equals("DeepTools")) {
-				creationjsonArray.add(creationjson3);
-				renvoiData = renvoiData2;			
-		} else {
+
+		}else if (args[0].equals("RNAseqCount")) {
+			creationjsonArray.add(creationjson1);
+			creationjsonArray.add(creationjson2);
+			renvoiData = renvoiData1;
+		}
+		// sinon si DeepTools
+		 else if (args[0].equals("DeepTools")) {
+			creationjsonArray.add(creationjson3);
+			renvoiData = renvoiData2;
+		}
+		 else {
 			throw new IllegalArgumentException("incorrect keyword,enter 'RNAseqCount'" + "or" + "'DeepTools'.");			
 		}	
-		File localDirectoryData = new File(args[1]);
-		File localDirectoryjson = new File(args[2]);
 
-		 if (args.length == 3) {
+		
+		if (args.length == 3) {
+			File localDirectoryjson = new File(args[2]);
+			File localDirectoryData = new File(args[1]);
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory()) {
 				List<String> lineData = Files.readAllLines(localDirectoryData.toPath(), StandardCharsets.UTF_8);
 				List<SamplewHeader> listwHeader = renvoiData.renvoyerDonneesTraitees(lineData);
@@ -84,6 +86,8 @@ public class AdvancedQcApplication implements CommandLineRunner {
 						+ localDirectoryjson + " is a not a directory.");
 			}
 		} else if (args.length == 4) {
+			File localDirectoryjson = new File(args[2]);
+			File localDirectoryData = new File(args[1]);
 			File localDirectoryDesign = new File(args[3]);
 			if (localDirectoryData.isFile() & localDirectoryjson.isDirectory() & localDirectoryDesign.isFile()) {
 
@@ -104,9 +108,6 @@ public class AdvancedQcApplication implements CommandLineRunner {
 						"args incorrect :" + localDirectoryData + " is a not a file" + " or " + localDirectoryjson
 								+ " is a not a directory" + " or " + localDirectoryDesign + " is not a file. ");
 			}
-		} else {
-			LOG.error(
-					"USAGE: java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/file.tsv <local directory> <absolute_path>/optional-design.tsv");
-		}
+		} 
 	}
 }

@@ -4,7 +4,7 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 --------
 *Requirements:*
 - Java 13
-- [MultiQC](https://github.com/ewels/MultiQC)
+- [MultiQC 1.9](https://github.com/ewels/MultiQC)
 -------
 *How to build a jar:*
 - Download [Maven](https://maven.apache.org/download.cgi)

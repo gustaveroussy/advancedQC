@@ -14,7 +14,7 @@ The goal of this project is to realise  a quality control on NGS data. It allows
 ------
 *Usage*
 
-`Java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/fichier.tsv <local directory> <absolute_path>/optional-design.tsv`
+`java -jar <absolute_path>/advancedQC-<version>.jar keyword <absolute_path>/fichier.tsv <local directory> <absolute_path>/optional-design.tsv`
 
 `multiqc <local directory>`
 
